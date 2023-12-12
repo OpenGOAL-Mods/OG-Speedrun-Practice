@@ -1301,8 +1301,9 @@
       (if sv-156
           (begin-scan sv-152 self)
           )
-      (if (or (= (-> self current-options) *title*) (= (-> self current-options) *options*))
-          (+! s5-0 20)
+      ;; og:preserve-this
+      (if (or (= (-> self current-options) *title-pc*) (= (-> self current-options) *options-pc*))
+          (+! s5-0 10)
           )
       (dotimes (s4-1 (length gp-0))
         (let ((v1-24 sv-144))
@@ -1312,7 +1313,7 @@
         (set! (-> sv-144 origin y) (the float sv-148))
         (set-width! sv-144 355)
         (set-height! sv-144 30)
-        (set! (-> sv-144 flags) (if (= (-> *setting-control* user-default language) (language-enum japanese))
+        (set! (-> sv-144 flags) (if (text-language? japanese) ;; og:preserve-this text-language patch
                                     (font-flags middle middle-vert large)
                                     (font-flags kerning middle middle-vert large)
                                     )
@@ -1324,7 +1325,7 @@
                                     )
                 )
           )
-        ;; added for proper aspect ratio-ing
+        ;; og:preserve-this added for proper aspect ratio-ing
         (#when PC_PORT
           (when (not (-> *pc-settings* use-vis?))
             (set! (-> sv-144 origin x) (the float (the int (adjust-game-x (-> sv-144 origin x)))))
@@ -3265,7 +3266,7 @@
   (-> *progress-state* game-options-vibrations)
   (-> *progress-state* game-options-subtitles)
   (let ((gp-0 #f))
-    (load-level-text-files (the-as int (-> *setting-control* user-current language)))
+    (load-level-text-files (the-as int (#if PC_PORT (-> *pc-settings* text-language) (-> *setting-control* user-current language)))) ;; og:preserve-this text-language patch
     (cond
       ((= (-> *progress-state* game-options-item-picked) #f)
        (cond
