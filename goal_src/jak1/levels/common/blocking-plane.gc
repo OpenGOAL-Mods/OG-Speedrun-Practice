@@ -18,12 +18,22 @@
   :bounds (static-spherem 0 0 0 30))
 
 (defstate blocking-plane-idle (blocking-plane)
-  :code
-    (behavior ()
-      (transform-post)
-      (loop
+  :trans (behavior ()
+    (if (and *debug-segment* *display-path-marks*)
+      (logclear! (-> self draw status) (draw-status skip-bones))  ;; for debugging show blocking planes
+      (logior! (-> self draw status) (draw-status skip-bones))
+      )
+    )
+  :code (behavior ()
+    (transform-post)
+    (loop
+      (when (not *debug-segment*)
         (logior! (-> self mask) (process-mask sleep))
-        (suspend))))
+        )
+      (suspend)
+      )
+    )
+  )
 
 (defbehavior blocking-plane-init-by-other blocking-plane ((arg0 curve-control) (arg1 int))
   (if (or (not arg0) (logtest? (-> arg0 flags) (path-control-flag not-found))) (deactivate self))
