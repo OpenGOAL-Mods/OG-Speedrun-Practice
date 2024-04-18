@@ -5,14 +5,6 @@
 (require "pc/pckernel-common.gc")
 (require "pc/features/autosplit-h.gc")
 
-(define *speedrun-info* (new 'static 'speedrun-info-jak1 
-    :should-display? #t 
-    :should-display-idle-deload-info? #f 
-    :should-display-plant-deload-info? #f 
-    :needs-post-blackout-setup? #f 
-    :show-input-display? #f
-    )
-  )
 
 (define *last-speedrun-practice-option* (speedrun-practice-option none))
 (define *practice-spawn-post-init* (the-as (function none) #f))
@@ -235,12 +227,17 @@
      ;; spawn at end of mountain pass
      (initialize! *game-info* 'game (the-as game-save #f) "ogre-end"))
     (((speedrun-category all-cutscenes))
-     ;; turn play hints back on
-     (set! (-> *setting-control* default play-hints) #t)
-     ;; don't allow cutscene skips
-     (set! (-> *pc-settings* skip-movies?) #f)
-     ;; spawn at the geyser warp gate checkpoint
-     (initialize! *game-info* 'game (the-as game-save #f) "intro-start"))
+      ;; turn play hints back on
+      (set! (-> *setting-control* default play-hints) #t)
+      ;; don't allow cutscene skips
+      (set! (-> *pc-settings* skip-movies?) #f)
+      ;; spawn at the geyser warp gate checkpoint
+      (initialize! *game-info* 'game (the-as game-save #f) "intro-start")
+      )
+    (((speedrun-category low-collect-prac))
+      ;; spawn at the geyser warp gate checkpoint
+      (initialize! *game-info* 'game (the-as game-save #f) "game-start")
+      )
     (else
      (format 0 "start-speedrun: unrecognized category ~S~%" (enum->string speedrun-category (-> *speedrun-info* category)))))
   (enforce-speedrun-pc-settings)
@@ -383,8 +380,12 @@
        (set! (-> *game-info* money) 370.0) ;; 50+50+150+150+150+50 - (90+90+120+120) + 50+200+200+200+50 - (90+90+90+120+120)
        )
       (((speedrun-category all-cutscenes))
-       ;; no post-blackout actions needed
-       )
+        ;; no post-blackout actions needed
+        )
+      (((speedrun-category low-collect-prac))
+        ;; skip keira intro cutscene
+        (close-specific-task! (game-task firecanyon-assistant) (task-status need-reward-speech))
+        )
       (else
        (format 0
                "setup-speedrun-post-blackout: unrecognized category ~S~%"
@@ -733,7 +734,7 @@
   (when (-> *tmp-continue-point* level)
     (set! *practice-spawn-post-init* custom-reset-multi-post-init)
     ;; fully reset game if r2 held too
-    (if (cpad-hold? 0 r2)  
+    (if (cpad-hold? 0 r2)
       (initialize! *game-info* 'game (the-as game-save #f) "default")
       )
     ;; store last real checkpoint to restore later

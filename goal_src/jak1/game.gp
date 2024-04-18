@@ -486,7 +486,8 @@
 (goal-src-sequence
   "levels/"
    :deps ;; no idea what these depend on, make it depend on the whole engine
-   ("$OUT/obj/ticky.o")
+   ("$OUT/obj/ticky.o" "$OUT/obj/speedruns-h.o")
+
 
    "village_common/villagep-obs.gc"
    "village_common/oracle.gc"
