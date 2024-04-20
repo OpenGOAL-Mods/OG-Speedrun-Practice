@@ -6,6 +6,8 @@
 (require "pc/features/autosplit-h.gc")
 
 
+(define *speedrun-info* (new 'static 'speedrun-info-jak1 :should-display? #t :should-display-deload-info? #f :needs-post-blackout-setup? #f :show-input-display? #f))
+
 (define *last-speedrun-practice-option* (speedrun-practice-option none))
 (define *practice-spawn-post-init* (the-as (function none) #f))
 
