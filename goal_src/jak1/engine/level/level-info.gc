@@ -1523,239 +1523,189 @@
        :wait-for-load #f))
 
 (define snow
-  (new 'static
-       'level-load-info
-       :index 15
-       :name 'snow
-       :visname 'snow-vis
-       :nickname 'sno
-       :packages '(snow)
-       :sound-banks '(snow)
-       :music-bank 'snow
-       :ambient-sounds
-       '()
-       :mood '*snow-mood*
-       :mood-func 'update-mood-snow
-       :ocean #f
-       :sky #t
-       :sun-fade 0.5
-       :continues
-       '((new 'static
-             'continue-point
-             :name "snow-start"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 4256260.0 :y 983713.8 :z -14182752.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y 0.7906 :w -0.6122)
-             :camera-trans
-             (new 'static 'vector :x 4303859.5 :y 1012363.7 :z -14156672.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 -0.4804 0.0 0.877 -0.2049 0.9723 -0.1122 -0.8527 -0.2336 -0.4671)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-fort"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 3430875.2 :y 897149.3 :z -13397581.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y 0.0968 :w 0.9952)
-             :camera-trans
-             (new 'static 'vector :x 3428789.8 :y 918241.25 :z -13448724.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 0.9991 0.0 -0.0419 0.0051 0.9925 0.1216 0.0415 -0.1217 0.9916)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-flut-flut"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 2481850.0 :y 1054709.4 :z -13922438.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y 0.8628 :w -0.5055)
-             :camera-trans
-             (new 'static 'vector :x 2497063.0 :y 1069339.9 :z -13900353.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 -0.8224 0.0 0.5688 -0.135 0.9713 -0.1953 -0.5525 -0.2374 -0.7989)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-pass-to-fort"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 3751044.8 :y 917612.1 :z -13828696.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y -0.3387 :w -0.9408)
-             :camera-trans
-             (new 'static 'vector :x 3779776.0 :y 933972.8 :z -13845825.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 0.6061 0.0 0.7953 -0.1493 0.9822 0.1138 -0.7812 -0.1878 0.5953)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-by-ice-lake"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 3151164.5 :y 1049638.1 :z -14246464.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y -0.6226 :w 0.7824)
-             :camera-trans
-             (new 'static 'vector :x 3203905.2 :y 1080037.8 :z -14270850.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 0.4189 0.0 0.9079 -0.2169 0.971 0.1001 -0.8816 -0.2389 0.4068)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-by-ice-lake-alt"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 3053335.0 :y 1048927.9 :z -14058945.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y 0.9997 :w 0.022)
-             :camera-trans
-             (new 'static 'vector :x 3045845.5 :y 1068868.0 :z -14012568.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 -0.987 0.0 -0.1601 0.0195 0.9924 -0.1207 0.1589 -0.1223 -0.9796)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-outside-fort"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 3431014.0 :y 901474.7 :z -13600187.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y -0.0954 :w -0.9954)
-             :camera-trans
-             (new 'static 'vector :x 3429969.0 :y 922565.44 :z -13651353.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 0.9998 0.0 -0.0196 0.0023 0.9926 0.1213 0.0195 -0.1213 0.9924)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-outside-cave"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 3200864.2 :y 907400.4 :z -13676660.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y 0.5867 :w -0.8097)
-             :camera-trans
-             (new 'static 'vector :x 3247600.8 :y 928464.06 :z -13697606.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 0.4062 0.0 0.9137 -0.1107 0.9926 0.0492 -0.907 -0.1211 0.4032)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static
-             'continue-point
-             :name "snow-across-from-flut"
-             :level 'snow
-             :trans
-             (new 'static 'vector :x 2721898.5 :y 1049845.0 :z -13743428.0 :w 1.0)
-             :quat
-             (new 'static 'quaternion :y -0.7688 :w -0.6394)
-             :camera-trans
-             (new 'static 'vector :x 2712702.5 :y 1070288.5 :z -13791593.0 :w 1.0)
-             :camera-rot
-             (new 'static 'array float 9 0.9554 0.0 -0.2951 0.0343 0.9932 0.1111 0.2931 -0.1163 0.9489)
-             :load-commands
-             '()
-             :vis-nick 'sno
-             :lev0 'snow
-             :disp0 'display
-             :lev1 'village3
-             :disp1 'display)
-        (new 'static 'continue-point
-          :name "snow-gondola-flut"
-          :level 'snow
-          :flags (continue-flags speedrun)
-          :trans (new 'static 'vector :x 4171535.2500 :y 981505.9375 :z -14309910.0000 :w 1.0)
-          :quat (new 'static 'quaternion :y 0.7906 :w -0.6122)
-          :camera-trans (new 'static 'vector :x 4117670.2500 :y 1006667.1875 :z -14330434.0000 :w 1.0)
-          :camera-rot (new 'static 'array float 9 0.3559 0.0000 -0.9344  0.1569 0.9858 0.0597  0.9212 -0.1679 0.3509)
-          :load-commands '()
-          :vis-nick 'sno
-          :lev0 'snow
-          :disp0 'display
-          :lev1 'village3
-          :disp1 'display
-          )
-        (new 'static 'continue-point
-          :name "snow-gondola-foot"
-          :level 'snow
-          :flags (continue-flags speedrun)
-          :trans (new 'static 'vector :x 4049160.7500 :y 985297.7500 :z -14270541.00 :w 1.0)
-          :quat (new 'static 'quaternion :y -0.9162 :w -0.4005)
-          :camera-trans (new 'static 'vector :x 4016879.7500 :y 1003751.9375 :z -14240528.000 :w 1.0)
-          :camera-rot (new 'static 'array float 9 -0.6523 -0.0000 -0.7579  0.1098 0.9894 -0.0945  0.7499 -0.1448 -0.6454)
-          :load-commands '()
-          :vis-nick 'sno
-          :lev0 'snow
-          :disp0 'display
-          :lev1 'village3
-          :disp1 'display
-          ))
-       :tasks
-       '(60 61 62 63 64 66 67 65)
-       :priority 100
-       :load-commands
-       '()
-       :alt-load-commands
-       '()
-       :bsp-mask #xffffffffffffffff
-       :bsphere
-       (new 'static 'sphere :x 3072000.0 :y 1142784.0 :z -14028800.0 :w 1290240.0)
-       :buzzer 65
-       :bottom-height (meters 128)
-       :run-packages
-       '("common")
-       :wait-for-load #f))
+  (new 'static 'level-load-info
+    :index 15
+    :name 'snow
+    :visname 'snow-vis
+    :nickname 'sno
+    :packages '(snow)
+    :sound-banks '(snow)
+    :music-bank 'snow
+    :ambient-sounds '()
+    :mood '*snow-mood*
+    :mood-func 'update-mood-snow
+    :ocean #f
+    :sky #t
+    :sun-fade 0.5
+    :continues '((new 'static 'continue-point
+        :name "snow-start"
+        :level 'snow
+        :trans (new 'static 'vector :x 4256260.0 :y 983713.8 :z -14182752.0 :w 1.0)
+        :quat (new 'static 'quaternion :y 0.7906 :w -0.6122)
+        :camera-trans (new 'static 'vector :x 4303859.5 :y 1012363.7 :z -14156672.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 -0.4804 0.0 0.877 -0.2049 0.9723 -0.1122 -0.8527 -0.2336 -0.4671)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-fort"
+        :level 'snow
+        :trans (new 'static 'vector :x 3430875.2 :y 897149.3 :z -13397581.0 :w 1.0)
+        :quat (new 'static 'quaternion :y 0.0968 :w 0.9952)
+        :camera-trans (new 'static 'vector :x 3428789.8 :y 918241.25 :z -13448724.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 0.9991 0.0 -0.0419 0.0051 0.9925 0.1216 0.0415 -0.1217 0.9916)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-flut-flut"
+        :level 'snow
+        :trans (new 'static 'vector :x 2481850.0 :y 1054709.4 :z -13922438.0 :w 1.0)
+        :quat (new 'static 'quaternion :y 0.8628 :w -0.5055)
+        :camera-trans (new 'static 'vector :x 2497063.0 :y 1069339.9 :z -13900353.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 -0.8224 0.0 0.5688 -0.135 0.9713 -0.1953 -0.5525 -0.2374 -0.7989)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-pass-to-fort"
+        :level 'snow
+        :trans (new 'static 'vector :x 3751044.8 :y 917612.1 :z -13828696.0 :w 1.0)
+        :quat (new 'static 'quaternion :y -0.3387 :w -0.9408)
+        :camera-trans (new 'static 'vector :x 3779776.0 :y 933972.8 :z -13845825.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 0.6061 0.0 0.7953 -0.1493 0.9822 0.1138 -0.7812 -0.1878 0.5953)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-by-ice-lake"
+        :level 'snow
+        :trans (new 'static 'vector :x 3151164.5 :y 1049638.1 :z -14246464.0 :w 1.0)
+        :quat (new 'static 'quaternion :y -0.6226 :w 0.7824)
+        :camera-trans (new 'static 'vector :x 3203905.2 :y 1080037.8 :z -14270850.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 0.4189 0.0 0.9079 -0.2169 0.971 0.1001 -0.8816 -0.2389 0.4068)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-by-ice-lake-alt"
+        :level 'snow
+        :trans (new 'static 'vector :x 3053335.0 :y 1048927.9 :z -14058945.0 :w 1.0)
+        :quat (new 'static 'quaternion :y 0.9997 :w 0.022)
+        :camera-trans (new 'static 'vector :x 3045845.5 :y 1068868.0 :z -14012568.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 -0.987 0.0 -0.1601 0.0195 0.9924 -0.1207 0.1589 -0.1223 -0.9796)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-outside-fort"
+        :level 'snow
+        :trans (new 'static 'vector :x 3431014.0 :y 901474.7 :z -13600187.0 :w 1.0)
+        :quat (new 'static 'quaternion :y -0.0954 :w -0.9954)
+        :camera-trans (new 'static 'vector :x 3429969.0 :y 922565.44 :z -13651353.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 0.9998 0.0 -0.0196 0.0023 0.9926 0.1213 0.0195 -0.1213 0.9924)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-outside-cave"
+        :level 'snow
+        :trans (new 'static 'vector :x 3200864.2 :y 907400.4 :z -13676660.0 :w 1.0)
+        :quat (new 'static 'quaternion :y 0.5867 :w -0.8097)
+        :camera-trans (new 'static 'vector :x 3247600.8 :y 928464.06 :z -13697606.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 0.4062 0.0 0.9137 -0.1107 0.9926 0.0492 -0.907 -0.1211 0.4032)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-across-from-flut"
+        :level 'snow
+        :trans (new 'static 'vector :x 2721898.5 :y 1049845.0 :z -13743428.0 :w 1.0)
+        :quat (new 'static 'quaternion :y -0.7688 :w -0.6394)
+        :camera-trans (new 'static 'vector :x 2712702.5 :y 1070288.5 :z -13791593.0 :w 1.0)
+        :camera-rot (new 'static 'array float 9 0.9554 0.0 -0.2951 0.0343 0.9932 0.1111 0.2931 -0.1163 0.9489)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-gondola-flut"
+        :level 'snow
+        :flags (continue-flags speedrun flut)
+        :trans (new 'static 'vector :x (meters 1017.3229) :y (meters 240.3061) :z (meters -3477.9301) :w 1.0)
+        :quat (new 'static 'quaternion :y 0.8294 :w 0.5586)
+        :camera-trans (new 'static 'vector :x (meters 1004.9108) :y (meters 245.4560) :z (meters -3476.4377) :w 1.0)
+        :camera-rot (new 'static 'array float 9 -0.1197 -0.0000 -0.9928 0.1212 0.9925 -0.0146 0.9853 -0.1221 -0.1188)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snow-gondola-foot"
+        :level 'snow
+        :flags (continue-flags speedrun)
+        :trans (new 'static 'vector :x 4049160.7500 :y 985297.7500 :z -14270541.00 :w 1.0)
+        :quat (new 'static 'quaternion :y -0.9162 :w -0.4005)
+        :camera-trans (new 'static 'vector :x 4016879.7500 :y 1003751.9375 :z -14240528.000 :w 1.0)
+        :camera-rot (new 'static 'array float 9 -0.6523 -0.0000 -0.7579  0.1098 0.9894 -0.0945  0.7499 -0.1448 -0.6454)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      )
+    :tasks '(60 61 62 63 64 66 67 65)
+    :priority 100
+    :load-commands '()
+    :alt-load-commands '()
+    :bsp-mask #xffffffffffffffff
+    :bsphere (new 'static 'sphere :x 3072000.0 :y 1142784.0 :z -14028800.0 :w 1290240.0)
+    :buzzer 65
+    :bottom-height (meters 128)
+    :run-packages '("common")
+    :wait-for-load #f
+    )
+  )
 
 (define maincave
   (new 'static
