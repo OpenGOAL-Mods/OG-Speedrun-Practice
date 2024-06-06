@@ -29,7 +29,7 @@ jobs:
       metadataTags: "rng,gameplay-mod"
       metadataWebsiteUrl: "https://www.example.com/this/is/optional"
       skipMacOS: true
-      skipLinux: true
+      skipLinux: false
       toolingBinaryDir: "out/build/Release/bin"
       gameAssetsDir: "game/assets"
       copyEntireBinaryDir: true
