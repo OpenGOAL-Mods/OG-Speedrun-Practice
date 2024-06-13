@@ -30,7 +30,6 @@ jobs:
       metadataWebsiteUrl: "https://www.example.com/this/is/optional"
       skipMacOS: true
       skipLinux: false
-      toolingVersion: "v0.2.12"
       gameAssetsDir: "game/assets"
       copyEntireBinaryDir: true
     secrets:
