@@ -30,7 +30,7 @@ jobs:
       metadataWebsiteUrl: "https://www.example.com/this/is/optional"
       skipMacOS: true
       skipLinux: false
-      gameAssetsDir: "game/assets"
-      copyEntireBinaryDir: true
+      textureReplacementDir: "./custom_assets/jak1/texture_replacements"
+      gameAssetsDir: "./game/assets"
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
