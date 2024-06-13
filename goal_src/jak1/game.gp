@@ -224,11 +224,11 @@
               :tool 'build-level
               :out '(,(string-append "$OUT/obj/" name ".go")))))
 
-;;(defmacro build-actor (name)
-;  (let* ((path (string-append "custom_assets/jak1/models/" name ".glb")))
-;    `(defstep :in ,path
-;              :tool 'build-actor
-;              :out '(,(string-append "$OUT/obj/" name "-ag.go")))))
+(defmacro build-actor (name)
+  (let* ((path (string-append "custom_assets/jak1/models/" name ".glb")))
+    `(defstep :in ,path
+              :tool 'build-actor
+              :out '(,(string-append "$OUT/obj/" name "-ag.go")))))
 
 (defun copy-iso-file (name subdir ext)
   (let* ((path (string-append "$ISO/" subdir name ext))
