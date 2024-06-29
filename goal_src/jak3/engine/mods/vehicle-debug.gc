@@ -1,0 +1,110 @@
+;;-*-Lisp-*-
+(in-package goal)
+
+;; For debug-only additions to the mod-base. Anything defined in this file will be unavailable in retail mode.
+(declare-file (debug))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Additional debug menu(s)
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define *show-vehicle-stats?* #t)
+(define *last-xzvel* 0.0)
+(defun-debug print-vehicle-stats ((arg0 target) (arg1 symbol))
+  (when (and *show-vehicle-stats?*
+             arg0
+             (nonzero? (-> arg0 pilot))
+             (-> arg0 pilot vehicle)
+             )
+    (let ((v (the vehicle (handle->process (-> arg0 pilot vehicle)))))
+      (cond
+        ((type-type? (-> v type) wvehicle)
+          (let* ((wv (the wvehicle v))
+                 (tr (-> wv info transmission))
+                 (transv (new-stack-vector0)))
+            (set! transv (-> wv root transv))
+
+            (format
+              arg1
+              (cond
+                ((< (-> wv gear-select) (-> wv next-gear-select)) ;; up
+                  "gear: ~D / ~3Lnext-gear: ~D ~0L/ shift-state: ~D / gear-count: ~D ~%")
+                ((> (-> wv gear-select) (-> wv next-gear-select)) ;; down
+                  "gear: ~D / ~8Lnext-gear: ~D ~0L/ shift-state: ~D / gear-count: ~D ~%")
+                (else
+                  "gear: ~D / next-gear: ~D / shift-state: ~D / gear-count: ~D ~%")
+                )
+              (-> wv gear-select)
+              (-> wv next-gear-select)
+              (-> wv shift-state)
+              (-> tr gear-count)
+              )
+
+            (format
+              arg1
+              (if (> (-> wv controls throttle) 0.001)
+                "throttle:     ~6L~8,,2f ~0L~%"
+                "throttle:     ~8,,2f ~%"
+                )
+              (-> wv controls throttle)
+              )
+
+            (format
+              arg1
+              (if (> (-> wv controls brake) 0.001)
+                "brake:        ~4L~8,,2f ~0L~%"
+                "brake:        ~8,,2f ~%"
+                )
+              (-> wv controls brake)
+              )
+
+            (format
+              arg1
+              (if (> (-> wv controls handbrake) 0.001)
+                "handbrake:   ~4L~8,,2f ~0L~%"
+                "handbrake:   ~8,,2f ~%"
+                )
+              (-> wv controls handbrake)
+              )
+
+            (format
+              arg1
+              "clutch-grab: ~8,,2f ~%"
+              (-> wv clutch-grab)
+              )
+            
+            (format 
+              arg1
+              "~S~S~S~S ~%"
+              (if (logtest? (-> wv v-flags) (vehicle-flag on-ground)) "on-ground " "")
+              (if (logtest? (-> wv v-flags) (vehicle-flag in-air)) "in-air " "")
+              (if (logtest? (-> wv v-flags) (vehicle-flag reverse-gear)) "reverse-gear " "")
+              (if (logtest? (-> wv v-flags) (vehicle-flag turbo-boost)) "turbo-boost " "")
+              )
+
+            (let* ((vel (vector-length transv))
+                   (xzvel (begin (set! (-> transv y) 0.0) (vector-length transv)))
+                   (delta (- xzvel *last-xzvel*)))
+              (format
+                arg1
+                (cond
+                  ((< 10.0 delta) ;; speedup
+                    "vel:     ~8,,2m ~%XZ-vel: ~8,,2m ~%delta:   ~3L~8,,4m ~0L~%")
+                  ((> -10.0 delta) ;; slowdown
+                    "vel:     ~8,,2m ~%XZ-vel: ~8,,2m ~%delta:   ~8L~8,,4m ~0L~%")
+                  (else
+                    "vel:     ~8,,2m ~%XZ-vel: ~8,,2m ~%delta:   ~8,,4m ~%")
+                  )
+                vel
+                xzvel
+                delta
+                )
+              (set! *last-xzvel* xzvel)
+              )
+            )
+          )
+        )
+      )
+    )
+  (none)
+  )

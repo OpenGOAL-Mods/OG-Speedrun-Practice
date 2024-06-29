@@ -472,4 +472,12 @@
   "debris.o"
   "shield-sphere.o"
   "entity-debug.o" ;; added
+  "mod-debug.o" ;; added
+  "squad-control-h.o"
+  "race-h.o"
+  "race-mesh.o"
+  "race-control.o"
+  "vehicle-h.o"
+  "wvehicle-h.o"
+  "vehicle-debug.o" ;; added
  ))

@@ -279,6 +279,7 @@
   #f
   )
 
+(define-extern print-vehicle-stats (function target symbol none))
 (defun-debug target-print-stats ((arg0 target) (arg1 symbol))
   (local-vars
     (sv-64 int)
@@ -673,6 +674,7 @@
         (debug-print-channels (-> arg0 skel) arg1)
         )
       (draw-history (-> arg0 control))
+      (print-vehicle-stats arg0 arg1)
       (set! pp s5-0)
       )
     #f
