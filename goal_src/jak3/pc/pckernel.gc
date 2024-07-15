@@ -300,11 +300,13 @@
     )
   (none))
 
+(define-extern runs-every-frame (function none))
 (defmethod update-speedrun ((obj pc-settings-jak3))
   "update speedrun module"
   ;; TODO - update to new with-profiler syntax
   ;; (with-profiler "speedrun-update"
   ;(update! *speedrun-info*)
+  (runs-every-frame)
     ;;)
   (none))
 

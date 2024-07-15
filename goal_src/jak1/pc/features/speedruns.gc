@@ -1014,51 +1014,53 @@
 (define-extern draw-plant-deload-info (function none))
 (defun speedrun-mode-update ()
   "A per frame update for speedrunning related stuff"
+  ;; Draw info to the screen
+  (draw-idle-deload-info)
+  (draw-plant-deload-info)
+  ;; Run after-blackout speedrun setup (if needed)
+  (setup-speedrun-post-blackout)
+
+  ;; call post-init function
+  (when (and *practice-spawn-post-init*
+              *target*
+              (-> *setting-control* current allow-pause)
+              (>= (- (-> *display* base-frame-counter) (-> *game-info* blackout-time)) (seconds 0.1))
+              )
+    (*practice-spawn-post-init*)
+    (set! *practice-spawn-post-init* #f)
+    )
+
+  (when (or (cpad-hold? 0 l2) (cpad-pressed? 0 l2))
+    ;; Check for fast reset combo
+    (when (cpad-pressed? 0 up)
+      (format #t "player triggered reset combo~%")
+      (speedrun-practice-spawn)
+      )
+
+    ;; Check for temp checkpoint combo
+    (when (cpad-pressed? 0 down)
+      (format #t "player triggered temp checkpoint combo~%")
+      (speedrun-practice-store-temp-checkpoint)
+      )
+
+    ;; Check for flutflut
+    (when (cpad-pressed? 0 left)
+      (format #t "player triggered flutflut combo~%")
+      (get-on-flutflut)
+      )
+
+    ;; Check for zoomer
+    (when (cpad-pressed? 0 right)
+      (format #t "player triggered zoomer combo~%")
+      (get-on-zoomer)
+      )
+    )
+
   (when (-> *pc-settings* speedrunner-mode?)
     ;; Update auto-splitter
     (update-autosplit-info-jak1)
     ;; Draw info to the screen
-    (draw-idle-deload-info)
-    (draw-plant-deload-info)
     (speedrun-draw-settings)
     (enforce-speedrun-pc-settings)
-    ;; Run after-blackout speedrun setup (if needed)
-    (setup-speedrun-post-blackout)
-
-    ;; call post-init function
-    (when (and *practice-spawn-post-init*
-               *target*
-               (-> *setting-control* current allow-pause)
-               (>= (- (-> *display* base-frame-counter) (-> *game-info* blackout-time)) (seconds 0.1))
-               )
-      (*practice-spawn-post-init*)
-      (set! *practice-spawn-post-init* #f)
-      )
-
-    (when (or (cpad-hold? 0 l2) (cpad-pressed? 0 l2))
-      ;; Check for fast reset combo
-      (when (cpad-pressed? 0 up)
-        (format #t "player triggered reset combo~%")
-        (speedrun-practice-spawn)
-        )
-
-      ;; Check for temp checkpoint combo
-      (when (cpad-pressed? 0 down)
-        (format #t "player triggered temp checkpoint combo~%")
-        (speedrun-practice-store-temp-checkpoint)
-        )
-
-      ;; Check for flutflut
-      (when (cpad-pressed? 0 left)
-        (format #t "player triggered flutflut combo~%")
-        (get-on-flutflut)
-        )
-
-      ;; Check for zoomer
-      (when (cpad-pressed? 0 right)
-        (format #t "player triggered zoomer combo~%")
-        (get-on-zoomer)
-        )
-      )
     )
   (none))
