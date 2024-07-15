@@ -410,34 +410,34 @@
   (when (and (not (-> *pc-settings* speedrunner-mode?))
              *speedrun-manager*)
     (deactivate (-> *speedrun-manager* 0)))
-  ;; do speedrunner mode things
-  (when (-> *pc-settings* speedrunner-mode?)
 
-    ;; call custom checkpoint post-init function, if any
-    (when (and *target*
-               (progress-allowed?)
-               (or (not *progress-process*) (gone? (-> *progress-process* 0)))
-               (>= (- (-> *display* base-clock frame-counter) (-> *game-info* blackout-time)) (seconds 0.1))
-               )
-      (when *practice-spawn-post-init*
-        (*practice-spawn-post-init*)
-        (set! *practice-spawn-post-init* #f)
-        )
+  ;; call custom checkpoint post-init function, if any
+  (when (and *target*
+              (progress-allowed?)
+              (or (not *progress-process*) (gone? (-> *progress-process* 0)))
+              (>= (- (-> *display* base-clock frame-counter) (-> *game-info* blackout-time)) (seconds 0.1))
+              )
+    (when *practice-spawn-post-init*
+      (*practice-spawn-post-init*)
+      (set! *practice-spawn-post-init* #f)
+      )
 
-      (when (cpad-hold? 0 r3)
-        (cond
-          ((cpad-pressed? 0 up)
-            (format 0 "player tried to load tmp checkpoint~%")
-            (speedrun-practice-spawn)
-            )
-          ((cpad-pressed? 0 down)
-            (format 0 "player tried to save tmp checkpoint~%")
-            (speedrun-practice-store-temp-checkpoint)
-            )
+    (when (cpad-hold? 0 r3)
+      (cond
+        ((cpad-pressed? 0 up)
+          (format 0 "player tried to load tmp checkpoint~%")
+          (speedrun-practice-spawn)
+          )
+        ((cpad-pressed? 0 down)
+          (format 0 "player tried to save tmp checkpoint~%")
+          (speedrun-practice-store-temp-checkpoint)
           )
         )
       )
+    )
 
+  ;; do speedrunner mode things
+  (when (-> *pc-settings* speedrunner-mode?)
     ;; Update auto-splitter struct
     (update! *autosplit-info-jak2*)
     ;; see if we should stop drawing the run info (when you escape the fortress!)

@@ -480,4 +480,5 @@
   "vehicle-h.o"
   "wvehicle-h.o"
   "vehicle-debug.o" ;; added
+  "mod-custom-code.o" ;; added
  ))
