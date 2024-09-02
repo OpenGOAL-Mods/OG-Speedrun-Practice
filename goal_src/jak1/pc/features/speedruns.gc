@@ -680,6 +680,10 @@
 (define-extern *mod-version-text* string)
 (defun speedrun-draw-settings ()
   "Draw speedrun related settings in the bottom left corner"
+  ;; hide speedrun verification text if some other helper text is turned on
+  (when (or (-> *speedrun-info* should-display-plant-deload-info?)
+            (-> *speedrun-info* should-display-idle-deload-info?))
+    (hide-speedrun-display))
   (when (and (-> *pc-settings* speedrunner-mode?) (not (paused?)) (-> *speedrun-info* should-display?))
     ;; check if we've landed (either we're on ground/surface/water, or about to target-hit-ground)
     (when (and *target*
@@ -687,7 +691,7 @@
                    (= (-> *target* next-state name) 'target-hit-ground)))
       (true! *has-landed?*))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id subtitle))
-      (draw-string-xy (string-format "Speedrunner Mode ~%PRACTICE MOD ~S ~%Category: ~S ~%Cutscene Skips ~A~%Has Landed? ~A"
+      (draw-string-xy (string-format "Speedrun PRACTICE MOD~%~S ~%Category: ~S ~%Cutscene Skips ~A~%Has Landed? ~A"
                                      *mod-version-text*
                                      (enum->string speedrun-category (-> *speedrun-info* category))
                                      (-> *pc-settings* skip-movies?)
