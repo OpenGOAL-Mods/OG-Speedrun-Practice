@@ -13,6 +13,8 @@
 
 (define *last-real-continue-point* (the-as continue-point #f))
 
+(define *has-landed?* #f)
+
 (define-extern *mod-version-text* string)
 
 (define *hub1-cell-list*
@@ -191,10 +193,8 @@
   (set! (-> *pc-settings* ps2-actor-vis?) #t)
   ;; ensure FPS set to `60`
   (when (!= (-> *pc-settings* target-fps) 60)
-    (set-frame-rate! *pc-settings* 60 #t)
-    )
-  (none)
-  )
+    (set-frame-rate! *pc-settings* 60 #t))
+  (none))
 
 (defun start-speedrun ((category speedrun-category))
   ;; randomize game id so the autosplitter knows to restart
@@ -680,15 +680,25 @@
 (define-extern *mod-version-text* string)
 (defun speedrun-draw-settings ()
   "Draw speedrun related settings in the bottom left corner"
+  ;; hide speedrun verification text if some other helper text is turned on
+  (when (or (-> *speedrun-info* should-display-plant-deload-info?)
+            (-> *speedrun-info* should-display-idle-deload-info?))
+    (hide-speedrun-display))
   (when (and (-> *pc-settings* speedrunner-mode?) (not (paused?)) (-> *speedrun-info* should-display?))
+    ;; check if we've landed (either we're on ground/surface/water, or about to target-hit-ground)
+    (when (and *target*
+               (or (logtest? (-> *target* control status) (cshape-moving-flags onground onsurf on-water))
+                   (= (-> *target* next-state name) 'target-hit-ground)))
+      (true! *has-landed?*))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id subtitle))
-      (draw-string-xy (string-format "Speedrunner Mode ~%~S ~%Category: ~S ~%Cutscene Skips ~A"
+      (draw-string-xy (string-format "Speedrun PRACTICE MOD~%~S ~%Category: ~S ~%Cutscene Skips ~A~%Has Landed? ~A"
                                      *mod-version-text*
                                      (enum->string speedrun-category (-> *speedrun-info* category))
-                                     (-> *pc-settings* skip-movies?))
+                                     (-> *pc-settings* skip-movies?)
+                                     *has-landed?*)
                       buf
                       0
-                      (- 220 (* 8 4))
+                      (- 220 (* 8 5))
                       (font-color flat-yellow)
                       (font-flags shadow kerning))))
   (none))

@@ -446,6 +446,7 @@ TextureAnimator::TextureAnimator(ShaderLibrary& shaders,
   m_shader_id = shader.id();
   m_uniforms.rgba = glGetUniformLocation(shader.id(), "rgba");
   m_uniforms.enable_tex = glGetUniformLocation(shader.id(), "enable_tex");
+  m_uniforms.set_alpha = glGetUniformLocation(shader.id(), "set_alpha");
   m_uniforms.positions = glGetUniformLocation(shader.id(), "positions");
   m_uniforms.uvs = glGetUniformLocation(shader.id(), "uvs");
   m_uniforms.channel_scramble = glGetUniformLocation(shader.id(), "channel_scramble");
@@ -781,6 +782,7 @@ enum class PcTextureAnimCodesJak3 : u16 {
   SET_SHADER = 17,
   DRAW = 18,
   DARKJAK = 22,
+  DARKJAK_HIGHRES = 23,
   SKULL_GEM = 27,
   DEFAULT_WATER = 28,
   DEFAULT_WARP = 29,
@@ -1216,6 +1218,10 @@ void TextureAnimator::handle_texture_anim_data(DmaFollower& dma,
             case PcTextureAnimCodesJak3::DARKJAK: {
               auto p = scoped_prof("darkjak");
               run_clut_blender_group(tf, m_darkjak_clut_blender_idx, frame_idx);
+            } break;
+            case PcTextureAnimCodesJak3::DARKJAK_HIGHRES: {
+              auto p = scoped_prof("darkjak-highres");
+              run_clut_blender_group(tf, m_darkjak_highres_clut_blender_idx, frame_idx);
             } break;
             case PcTextureAnimCodesJak3::SKULL_GEM:
             case PcTextureAnimCodesJak3::DEFAULT_WATER:
@@ -2530,6 +2536,7 @@ void TextureAnimator::run_fixed_animation(FixedAnim& anim, float time) {
       if (true) {  // todo
         glColorMask(true, true, true, false);
         glUniform1f(m_uniforms.alpha_multiply, 2.f);
+        glUniform1i(m_uniforms.set_alpha, 0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         glColorMask(false, false, false, true);
         if (anim.def.set_alpha) {
