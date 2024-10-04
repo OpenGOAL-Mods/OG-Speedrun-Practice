@@ -812,7 +812,9 @@
   (practice-gondola-foot        #x1709)
   (practice-lavawalk-2          #x170a)
   (practice-lavawalk-3          #x170b)
-
+  (practice-stalag-hops         #x170c)
+  (practice-wet-feet            #x170d)
+  (practice-snowy-rocket        #x170e)
   (hub1-options                 #x17fc)
   (hub2-options                 #x17fd)
   (hub3-options                 #x17fe)

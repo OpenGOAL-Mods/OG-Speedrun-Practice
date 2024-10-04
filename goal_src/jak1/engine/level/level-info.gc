@@ -250,12 +250,34 @@
               (special "med-res-level-14" #t)
               (special "med-res-level-22" #t)
               (special "med-res-level-23" #t)
-              (special "fishermans-boat-2" #t))
-             :vis-nick 'vi1
-             :lev0 'village1
-             :disp0 'display
-             :lev1 'misty
-             :disp1 #f))
+          (special "fishermans-boat-2" #t)
+          )
+        :vis-nick 'vi1
+        :lev0 'village1
+        :disp0 'display
+        :lev1 'misty
+        :disp1 #f
+        )
+      	(new 'static 
+      		 'continue-point
+ 	         :name "wet-feet"
+ 	         :level 'village1
+ 	         :flags (continue-flags speedrun)
+ 	         :trans 
+ 	         (new 'static 'vector :x (meters 12.9431) :y (meters 17.4077) :z (meters 12.9865) :w 1.0)
+ 	         :quat 
+ 	         (new 'static 'quaternion :y 0.9067 :w 0.4216)
+ 	         :camera-trans 
+ 	         (new 'static 'vector :x (meters 0.7804) :y (meters 22.5574) :z (meters 15.8704) :w 1.0)
+ 	       	 :camera-rot 
+ 	       	 (new 'static 'array float 9 -0.2320 0.0000 -0.9726 0.1168 0.9927 -0.0278 0.9656 -0.1201 -0.2304)
+ 	         :load-commands 
+ 	         '()
+	    :vis-nick 'vi1
+	    :lev0 'village1
+	    :disp0 'display
+	    :lev1 'misty
+	    :disp1 #f))
        :tasks
        '(10 11 12 13 14 75)
        :priority #xc8
@@ -1384,7 +1406,23 @@
           :disp0 'display
           :lev1 'village2
           :disp1 'display
-          ))
+          )
+        (new 'static 'continue-point
+          :name "stalag-hops"
+          :level 'ogre
+          :flags (continue-flags speedrun)
+          :trans (new 'static 'vector :x (meters 478.0237) :y (meters 15.2127) :z (meters -3330.4184) :w 1.0)
+          :quat (new 'static 'quaternion :y -0.4680 :w 0.8833)
+          :camera-trans (new 'static 'vector :x (meters 483.8198) :y (meters 21.8618) :z (meters -3334.3391) :w 1.0)
+          :camera-rot (new 'static 'array float 9 0.5598 -0.0000 0.8286 -0.2257 0.9621 0.1525 -0.7972 -0.2724 0.5386)
+          :load-commands '()
+          :vis-nick 'ogr
+          :lev0 'ogre
+          :disp0 'display
+          :lev1 'village3
+          :disp1 'display
+          )
+       	)
        :tasks
        '(86 87 110 88)
        :priority 100
@@ -1686,6 +1724,20 @@
         :quat (new 'static 'quaternion :y -0.9162 :w -0.4005)
         :camera-trans (new 'static 'vector :x 4016879.7500 :y 1003751.9375 :z -14240528.000 :w 1.0)
         :camera-rot (new 'static 'array float 9 -0.6523 -0.0000 -0.7579  0.1098 0.9894 -0.0945  0.7499 -0.1448 -0.6454)
+        :load-commands '()
+        :vis-nick 'sno
+        :lev0 'snow
+        :disp0 'display
+        :lev1 'village3
+        :disp1 'display
+        )
+      (new 'static 'continue-point
+        :name "snowy-rocket"
+        :level 'snow
+        :trans (new 'static 'vector :x (meters 739.6586) :y (meters 239.4549) :z (meters -3403.1394) :w 1.0)
+        :quat (new 'static 'quaternion :y 0.9845 :w -0.1748)
+        :camera-trans (new 'static 'vector :x (meters 743.9450) :y (meters 244.6047) :z (meters -3391.3903) :w 1.0)
+        :camera-rot (new 'static 'array float 9 -0.9391 -0.0000 0.3434 -0.0415 0.9926 -0.1136 -0.3409 -0.1210 -0.9322)
         :load-commands '()
         :vis-nick 'sno
         :lev0 'snow
