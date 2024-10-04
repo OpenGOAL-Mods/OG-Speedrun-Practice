@@ -6,10 +6,76 @@
 (define *practice-spawn-post-init* (the-as (function none) #f))
 
 (define *last-real-continue-point* (the-as continue-point #f))
-(defun generic-post-init ()
-  (when *last-real-continue-point*
-    (set! (-> *game-info* current-continue) *last-real-continue-point*)
+
+(define *tmp-continue-point* (new 'static 'continue-point
+                             :name "tmp"
+                             :level #f
+                             :trans (new 'static 'vector :w 1.0)
+                             :camera-trans (new 'static 'vector :w 1.0)
+                             :quat (new 'static 'vector4h :data (new 'static 'array int16 4 0 #x4e76 0 -25885))
+                             :camera-rot (new 'static 'array int16 9 #x6fe8 0 #x3e1a -6936 #x7328 #x30d7 -14302 -14299 #x64ae) ;; idk just stole this from existing continue-point
+                             :on-goto #f
+                             :vis-nick #f
+                             :vehicle-type 0
+                             :want-count 3
+                             :want (new 'static 'inline-array level-buffer-state-small 4
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f))
+                             :want-sound (new 'static 'array symbol 3 #f #f #f))
     )
+
+(define *tmp-bbush-stored* (game-task none))
+
+(defun bbush-task-started? ((arg0 game-task))
+  (let ((v1-1 (-> *game-info* sub-task-list))
+        (int-closed? #f)
+        (res-open? #f))
+    (dotimes (a1-0 (-> v1-1 length))
+      (when (nonzero? a1-0)
+        (let ((a2-3 (-> v1-1 a1-0)))
+          (when (and (= (-> a2-3 task) arg0)
+                     (logtest? (-> a2-3 flags) (game-task-node-flag bbush)))
+            (cond 
+              ((and (logtest? (-> a2-3 flags) (game-task-node-flag close-task))
+                    (game-task-node-info-method-12 a2-3))
+                (format 0 "resolution open!~%")
+                (true! res-open?))
+              ((and (not (logtest? (-> a2-3 flags) (game-task-node-flag close-task)))
+                    (logtest? (-> a2-3 flags) (game-task-node-flag closed)))
+                (format 0 "intro closed!~%")
+                (true! int-closed?)))))))
+    
+    (and res-open? int-closed?)))
+
+(defun bbush-task-restart! ((arg0 game-task))
+  (let ((v1-1 (-> *game-info* sub-task-list)))
+    (dotimes (a1-0 (-> v1-1 length))
+      (when (nonzero? a1-0)
+        (let ((a2-3 (-> v1-1 a1-0)))
+          (when (and (= (-> a2-3 task) arg0) 
+                     (logtest? (-> a2-3 flags) (game-task-node-flag bbush))
+                     (not (logtest? (-> a2-3 flags) (game-task-node-flag close-task))))
+            (open! a2-3 'event)
+            (return #t)
+            )
+          )
+        )
+      )
+    )
+  #f
+  )
+
+(defun generic-post-init ()
+  ;; restore old continue point
+  (when *last-real-continue-point*
+    (set! (-> *game-info* current-continue) *last-real-continue-point*))
+  ;; copy exclusive tasks to re-open
+  (set! (-> *game-info* task-node-exclusive length) *tmp-task-node-exclusive-length*)
+  (when (nonzero? *tmp-bbush-stored*)
+    (bbush-task-restart! *tmp-bbush-stored*))
+
   (none)
   )
 
@@ -48,25 +114,6 @@
   (none)
   )
 
-(define *tmp-continue-point* (new 'static 'continue-point
-                             :name "tmp"
-                             :level #f
-                             :trans (new 'static 'vector :w 1.0)
-                             :camera-trans (new 'static 'vector :w 1.0)
-                             :quat (new 'static 'vector4h :data (new 'static 'array int16 4 0 #x4e76 0 -25885))
-                             :camera-rot (new 'static 'array int16 9 #x6fe8 0 #x3e1a -6936 #x7328 #x30d7 -14302 -14299 #x64ae) ;; idk just stole this from existing continue-point
-                             :on-goto #f
-                             :vis-nick #f
-                             :vehicle-type 0
-                             :want-count 3
-                             :want (new 'static 'inline-array level-buffer-state-small 4
-                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
-                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
-                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
-                                    (new 'static 'level-buffer-state-small :name #f :display? #f))
-                             :want-sound (new 'static 'array symbol 3 #f #f #f))
-    )
-
 (defun speedrun-practice-temp-checkpoint ()
   (when (-> *tmp-continue-point* level)
     (cond
@@ -93,20 +140,24 @@
   (set! (-> dst level) (or (-> src level) (-> *last-real-continue-point* level)))
   (set! (-> dst quat long) (-> src quat long))
   (set! (-> dst vis-nick) (-> src vis-nick))
-  (dotimes (idx 4)
+  (dotimes (idx-used 4)
     ;; clear levels
-    (set! (-> dst want idx name) #f)
-    (set! (-> dst want idx display?) #f)
+    (set! (-> dst want idx-used name) #f)
+    (set! (-> dst want idx-used display?) #f))
+  (let ((idx-used 0))
+    (dotimes (idx 10)
 
-    (when (or (= (-> *level* level idx status) 'active)
-              (= (-> *level* level idx status) 'loaded)
-              (= (-> *level* level idx status) 'loading)
-              )
-      (set! (-> dst want idx name) (-> *level* level idx name))
-      (set! (-> dst want idx display?) (-> *level* level idx display?))
+      (when (and (!= (-> *level* level idx display?) 'special)
+                 (or (= (-> *level* level idx status) 'active)
+                     (= (-> *level* level idx status) 'loaded)
+                     (= (-> *level* level idx status) 'loading)))
+        (set! (-> dst want idx-used name) (-> *level* level idx name))
+        (set! (-> dst want idx-used display?) (-> *level* level idx display?))
 
-      (when (name= (-> *level* level idx name) (-> dst level))
-        (set! (-> dst want idx display?) 'display)
+        (when (name= (-> *level* level idx name) (-> dst level))
+          (set! (-> dst want idx-used display?) 'display)
+          )
+        (+! idx-used 1)
         )
       )
     )
@@ -142,6 +193,14 @@
       (set! (-> *tmp-continue-point* quat w) (the int (* 32767.0 (-> *target* root quat w))))
       (vector-copy! (-> *tmp-continue-point* camera-trans) (-> *camera-combiner* trans))
       (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
+
+      ;; copy exclusive task to re-open
+      (set! *tmp-task-node-exclusive-length* (-> *game-info* task-node-exclusive length))
+      (set! *tmp-bbush-stored* (game-task none))
+      (dotimes (idx (-> *game-info* task-node-exclusive length))
+        (when (bbush-task-started? (the-as game-task (-> *game-info* task-node-exclusive idx)))
+          (format 0 "found bbush started ~S~%" (game-task->string (the-as game-task (-> *game-info* task-node-exclusive idx))))
+          (set! *tmp-bbush-stored* (the-as game-task (-> *game-info* task-node-exclusive idx)))))
 
       (cheats-sound-play #t)
       )
