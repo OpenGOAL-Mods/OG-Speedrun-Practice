@@ -72,7 +72,6 @@
   (when *last-real-continue-point*
     (set! (-> *game-info* current-continue) *last-real-continue-point*))
   ;; copy exclusive tasks to re-open
-  (set! (-> *game-info* task-node-exclusive length) *tmp-task-node-exclusive-length*)
   (when (nonzero? *tmp-bbush-stored*)
     (bbush-task-restart! *tmp-bbush-stored*))
 
@@ -195,7 +194,6 @@
       (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
 
       ;; copy exclusive task to re-open
-      (set! *tmp-task-node-exclusive-length* (-> *game-info* task-node-exclusive length))
       (set! *tmp-bbush-stored* (game-task none))
       (dotimes (idx (-> *game-info* task-node-exclusive length))
         (when (bbush-task-started? (the-as game-task (-> *game-info* task-node-exclusive idx)))
