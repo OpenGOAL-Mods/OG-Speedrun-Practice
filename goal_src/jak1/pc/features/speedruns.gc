@@ -691,7 +691,7 @@
                    (= (-> *target* next-state name) 'target-hit-ground)))
       (true! *has-landed?*))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id subtitle))
-      (draw-string-xy (string-format "Speedrun PRACTICE MOD~%~S ~%Category: ~S ~%Cutscene Skips ~A~%Has Landed? ~A"
+      (draw-string-xy (string-format "Speedrun PRACTICE MOD~%~S /~S ~%Category: ~S ~%Cutscene Skips ~A~%Has Landed? ~A"
                                      *mod-version-text*
                                      *pc-settings-built-sha* *mod-version-text*
                                      (enum->string speedrun-category (-> *speedrun-info* category))
