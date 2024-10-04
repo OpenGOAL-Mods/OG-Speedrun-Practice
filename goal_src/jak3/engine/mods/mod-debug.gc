@@ -4,9 +4,59 @@
 ;; For debug-only additions to the mod-base. Anything defined in this file will be unavailable in retail mode.
 (declare-file (debug))
 
+(defun speedrun-hero-mode-stuff ()
+  (logior! (-> *game-info* secrets) (game-secrets gun-upgrade-ammo-red gun-upgrade-ammo-yellow gun-upgrade-ammo-blue gun-upgrade-ammo-dark
+                                                  gun-upgrade-yellow-1 gun-upgrade-red-1 gun-upgrade-blue-1 gun-upgrade-dark-1
+                                                  gun-upgrade-yellow-2 gun-upgrade-blue-2 gun-upgrade-dark-2
+                                                  gun-upgrade-yellow-3 gun-upgrade-blue-3 gun-upgrade-dark-3
+                                                  vehicle-hit-points unlimited-turbos board-fast
+                                                  endless-ammo invulnerable endless-dark endless-light
+                                                  hero-mode))
+  (logior! (-> *game-info* purchase-secrets) (-> *game-info* secrets))
+  (set! (-> *game-info* gem) 1000.0)
+  (set! (-> *game-info* gem-total) 1000.0)
+  (set! (-> *game-info* skill) 1000.0)
+  (set! (-> *game-info* skill-total) 1000.0)
+  (set! (-> *game-info* skill-high-watermark) 1000.0)
+  (update-task-masks 'event)
+  (none))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Additional debug menu(s)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun dm-speedrun-practice-func ((arg0 int) (arg1 debug-menu-msg))
+  (when *target*
+    (case arg0
+      (('noinvuln)
+        (when (= arg1 (debug-menu-msg press))
+          (logclear! (-> *target* focus-status) (focus-status dead ignore))
+          (logclear! (-> *target* target-flags) (target-flags disable-attacks))
+          )
+        (return #f)
+        )
+      (('invuln1)
+        (when (= arg1 (debug-menu-msg press))
+          (logior! (-> *target* focus-status) (focus-status dead ignore))
+          (logior! (-> *target* target-flags) (target-flags disable-attacks))
+          )
+        (return (and (logtesta? (-> *target* focus-status) (focus-status dead ignore))
+                     (logtest? (-> *target* target-flags) (target-flags disable-attacks))
+                     ))
+        )
+      (('invuln2)
+        (when (= arg1 (debug-menu-msg press))
+          (logclear! (-> *target* focus-status) (focus-status dead ignore))
+          (logior! (-> *target* target-flags) (target-flags disable-attacks))
+          )
+        (return (and (not (logtest? (-> *target* focus-status) (focus-status dead ignore)))
+                     (logtest? (-> *target* target-flags) (target-flags disable-attacks))
+                     ))
+        )
+      )
+    )
+  #f
+  )
 
 (define-extern *show-vehicle-stats?* symbol)
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
@@ -14,6 +64,16 @@
 
     ;; (debug-menu-append-item speedrun-tools-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
     (debug-menu-append-item speedrun-tools-menu (new-dm-func "Vehicle Stats" #f (lambda () (not! *show-vehicle-stats?*))))
+    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Hero Mode Stuff" #f speedrun-hero-mode-stuff))
+    (debug-menu-append-item
+      speedrun-tools-menu
+      (debug-menu-make-from-template
+        ctx
+        '(menu "Invuln"
+          (flag "No Invuln" noinvuln dm-speedrun-practice-func)
+          (flag "Set Invuln1" invuln1 dm-speedrun-practice-func)
+          (flag "Set Invuln2" invuln2 dm-speedrun-practice-func))))
+
     (new-dm-submenu "Speedrun Tools" speedrun-tools-menu)
     )
   )
