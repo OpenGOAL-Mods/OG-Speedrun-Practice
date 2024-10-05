@@ -17,8 +17,14 @@
                              :on-goto #f
                              :vis-nick #f
                              :vehicle-type 0
-                             :want-count 3
-                             :want (new 'static 'inline-array level-buffer-state-small 4
+                             :want-count 10
+                             :want (new 'static 'inline-array level-buffer-state-small 10
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
+                                    (new 'static 'level-buffer-state-small :name #f :display? #f)
                                     (new 'static 'level-buffer-state-small :name #f :display? #f)
                                     (new 'static 'level-buffer-state-small :name #f :display? #f)
                                     (new 'static 'level-buffer-state-small :name #f :display? #f)
@@ -40,11 +46,11 @@
             (cond 
               ((and (logtest? (-> a2-3 flags) (game-task-node-flag close-task))
                     (game-task-node-info-method-12 a2-3))
-                (format 0 "resolution open!~%")
+                ;; (format 0 "resolution open!~%")
                 (true! res-open?))
               ((and (not (logtest? (-> a2-3 flags) (game-task-node-flag close-task)))
                     (logtest? (-> a2-3 flags) (game-task-node-flag closed)))
-                (format 0 "intro closed!~%")
+                ;; (format 0 "intro closed!~%")
                 (true! int-closed?)))))))
     
     (and res-open? int-closed?)))
@@ -68,6 +74,14 @@
   )
 
 (defun generic-post-init ()
+  ;; try give vehicle
+  (cond
+    ((nonzero? (-> *tmp-continue-point* vehicle-type))
+      (send-event *target* 'change-mode 'pilot #f (-> *tmp-continue-point* vehicle-type) #t))
+    ((logtest? (-> *tmp-continue-point* flags) (continue-flags flut))
+      (send-event *target* 'change-mode 'flut #f))
+    )
+
   ;; restore old continue point
   (when *last-real-continue-point*
     (set! (-> *game-info* current-continue) *last-real-continue-point*))
@@ -139,24 +153,20 @@
   (set! (-> dst level) (or (-> src level) (-> *last-real-continue-point* level)))
   (set! (-> dst quat long) (-> src quat long))
   (set! (-> dst vis-nick) (-> src vis-nick))
-  (dotimes (idx-used 4)
+  (dotimes (idx 10)
     ;; clear levels
-    (set! (-> dst want idx-used name) #f)
-    (set! (-> dst want idx-used display?) #f))
-  (let ((idx-used 0))
-    (dotimes (idx 10)
+    (set! (-> dst want idx name) #f)
+    (set! (-> dst want idx display?) #f)
+    (when (or (= (-> *level* level idx status) 'active)
+              (= (-> *level* level idx status) 'loaded)
+              (= (-> *level* level idx status) 'loading))
+      (format 0 "adding ~S to tmp checkpoint, display: ~A~%" (-> *level* level idx name) (-> *level* level idx display?))
+      (set! (-> dst want idx name) (-> *level* level idx name))
+      (set! (-> dst want idx display?) (-> *level* level idx display?))
 
-      (when (and (!= (-> *level* level idx display?) 'special)
-                 (or (= (-> *level* level idx status) 'active)
-                     (= (-> *level* level idx status) 'loaded)
-                     (= (-> *level* level idx status) 'loading)))
-        (set! (-> dst want idx-used name) (-> *level* level idx name))
-        (set! (-> dst want idx-used display?) (-> *level* level idx display?))
-
-        (when (name= (-> *level* level idx name) (-> dst level))
-          (set! (-> dst want idx-used display?) 'display)
-          )
-        (+! idx-used 1)
+      (when (name= (-> *level* level idx name) (-> dst level))
+        (format 0 "  forcing 'display for ~S since this is our continue point level~%" (-> *level* level idx name))
+        (set! (-> dst want idx display?) 'display)
         )
       )
     )
@@ -182,7 +192,7 @@
 (defun speedrun-practice-store-temp-checkpoint ()
   (case (-> *target* state)
     ;; only store temp checkpoint if in one of these states
-    ((target-look-around target-stance target-wade-stance target-swim-stance)
+    ((target-look-around target-stance target-wade-stance target-swim-stance target-pilot-stance target-flut-stance target-indax-stance)
       ;; assume current continue is good enough for the current location
       (continue-point-copy! *tmp-continue-point* (-> *game-info* current-continue))
       (vector-copy! (-> *tmp-continue-point* trans) (-> *target* root trans))
@@ -192,7 +202,19 @@
       (set! (-> *tmp-continue-point* quat w) (the int (* 32767.0 (-> *target* root quat w))))
       (vector-copy! (-> *tmp-continue-point* camera-trans) (-> *camera-combiner* trans))
       (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
-
+      
+      (cond 
+        ((focus-test? *target* pilot)
+          (set! (-> *tmp-continue-point* vehicle-type) (the-as uint (-> *game-info* current-vehicle))))
+        (else
+          (set! (-> *tmp-continue-point* vehicle-type) 0)))
+          
+      (cond 
+        ((focus-test? *target* flut)
+          (logior! (-> *tmp-continue-point* flags) (continue-flags flut)))
+        (else
+          (logclear! (-> *tmp-continue-point* flags) (continue-flags flut))))
+      
       ;; copy exclusive task to re-open
       (set! *tmp-bbush-stored* (game-task none))
       (dotimes (idx (-> *game-info* task-node-exclusive length))
