@@ -31,7 +31,7 @@
                                     (new 'static 'level-buffer-state-small :name #f :display? #f))
                              :want-sound (new 'static 'array symbol 3 #f #f #f))
     )
-
+(define *tmp-boost-count* 0.0)
 (define *tmp-bbush-stored* (game-task none))
 
 (defun bbush-task-started? ((arg0 game-task))
@@ -203,11 +203,14 @@
       (vector-copy! (-> *tmp-continue-point* camera-trans) (-> *camera-combiner* trans))
       (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
       
-      (cond 
-        ((focus-test? *target* pilot)
-          (set! (-> *tmp-continue-point* vehicle-type) (the-as uint (-> *game-info* current-vehicle))))
-        (else
-          (set! (-> *tmp-continue-point* vehicle-type) 0)))
+      ;; vehicle tracking stuff
+      (set! *tmp-boost-count* 0.0)
+      (set! (-> *tmp-continue-point* vehicle-type) 0)
+      (when (focus-test? *target* pilot)
+        (set! (-> *tmp-continue-point* vehicle-type) (the-as uint (-> *game-info* current-vehicle)))
+        (let ((v (the vehicle (handle->process (-> *target* pilot vehicle)))))
+          (when (and v (type-type? (-> v type) wvehicle))
+            (set! *tmp-boost-count* (-> (the wvehicle v) turbo-supply)))))
           
       (cond 
         ((focus-test? *target* flut)

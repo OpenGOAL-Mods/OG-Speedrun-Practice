@@ -233,7 +233,7 @@
 (defun vehicle-spawn ((arg0 vehicle-type) (arg1 traffic-object-spawn-params))
   (let ((gp-0 (the-as process #f)))
     (cond
-      ((level-get *level* (-> *traffic-info* vehicle-levels arg0))
+      ((or (level-get *level* (-> *traffic-info* vehicle-levels arg0)) (= arg0 (vehicle-type vt27))) ;; hack to spawn subrails h-sled for pseudo savestates
        (let* ((a1-3 (type-from-vehicle-type arg0))
               (s3-0 (get-process *default-dead-pool* a1-3 #x4000 1))
               (a0-4 (when s3-0
@@ -347,6 +347,9 @@
      )
     (((vehicle-type test-car))
      test-car
+     )
+    (((vehicle-type vt27))
+     h-sled
      )
     (else
       (the-as type #f)

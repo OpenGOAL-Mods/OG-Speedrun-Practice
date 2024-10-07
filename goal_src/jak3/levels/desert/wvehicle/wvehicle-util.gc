@@ -466,7 +466,9 @@
   (go (method-of-object this hostile))
   )
 
+(define-extern *tmp-boost-count* float)
 (defmethod vehicle-method-132 ((this wvehicle) (arg0 traffic-object-spawn-params))
+  (set! (-> this turbo-supply) *tmp-boost-count*)
   (case (-> arg0 behavior)
     ((3)
      (set! (-> this target-status handle) (-> arg0 handle))
