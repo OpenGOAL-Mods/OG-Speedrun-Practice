@@ -30,6 +30,19 @@
 
 ## Jak 3
 
+### Installation:
+
+1. Install software prerequisites per https://github.com/open-goal/jak-project?tab=readme-ov-file#windows
+2. In powershell/command prompt/terminal clone the repo to your PC: `git clone https://github.com/OpenGOAL-Mods/OG-Speedrun-Practice.git`
+3. Find this newly created `OG-Speedrun-Practice` folder, go into `iso_data` and create a `jak3` folder. Paste your Jak 3 ISO contents in here (mount the .iso, copy/paste all the files within)
+4. Back in the terminal, move into the new folder: `cd OG-Speedrun-Practice`
+5. Switch to jak 3 mode: `task set-game-jak3`
+6. Decompile: `task extract`
+7. Open compiler: `task repl`, and compile: `(mi)`
+8. Either `(e)` to close the compiler REPL, or open a new terminal/tab in the `OG-Speedrun-Practice` folder
+9. Launch game in debug mode: `task boot-game`
+10. Whenever there are updates, pull changes: `git pull` and then re-do steps 7-9
+
 | Button combination | Effect |
 |-|-|
 | Hold R3 and press dpad Down | Set a custom checkpoint at Jak's current position. It should remember side mission storage, and if you are on leaper or in vehicle. Only works if Jak is in an "idle" state. Plays a sound to confirm. |
