@@ -27,3 +27,14 @@
 - If inputs are not working, double check that Speedrunner Mode is enabled under Misc Options
 - Known Issues: 
   - Custom checkpoints don't perfectly restore the camera zoom
+
+## Jak 3
+
+| Button combination | Effect |
+|-|-|
+| Hold R3 and press dpad Down | Set a custom checkpoint at Jak's current position. It should remember side mission storage, and if you are on leaper or in vehicle. Only works if Jak is in an "idle" state. Plays a sound to confirm. |
+| Hold R3 and press dpad Up | Reset to a custom checkpoint. |
+
+- Known Issues: 
+  - Custom checkpoints don't perfectly restore the camera zoom
+  - Not sure all vehicles work yet (e.g. already had to add an extra case for subrails)
