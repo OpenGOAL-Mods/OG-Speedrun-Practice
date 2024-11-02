@@ -441,13 +441,13 @@
               (function "Right" #f ,(lambda () (card-preset-setter #t #f 455 0 (static-rgba 0 0 0 127) 19)))
               (function "Corner" #f ,(lambda () (card-preset-setter #t #f -5 395 (static-rgba 240 100 200 70) 1)))
               (function "Action" #f ,(lambda () (card-preset-setter #f #t 280 250 (static-rgba 110 110 110 15) 6)))
-              (function "British" *british* dm-boolean-toggle-pick-func)
+              (flag "British" *british* dm-boolean-toggle-pick-func)
             )
             (flag "Show stick?" *show-stick?* dm-boolean-toggle-pick-func)
             (flag "Ignore L3/R3?" *ignore-click?* dm-boolean-toggle-pick-func)
             (int-var "X Pos" *card-x-pos* dm-int-var-func 0 5 #t -5 500)
             (int-var "Y Pos" *card-y-pos* dm-int-var-func 0 5 #t 0 500)
-            (int-var "Max Cards" MAX_CARDS dm-int-var-func-cards 0 1 #t 0 20) ;; uses custom dm func
+            (int-var "Max Cards" MAX_CARDS dm-int-var-func-cards 0 1 #t 1 20) ;; uses custom dm func
             (menu "Color"
               (int-var "Red" *card-r* dm-int-var-func 0 1 #t 0 255)
               (int-var "Green" *card-g* dm-int-var-func 0 1 #t 0 255)
