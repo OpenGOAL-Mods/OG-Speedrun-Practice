@@ -469,6 +469,7 @@
   "mod-settings.o" ;; added ;;mod-base-change
   "mod-common-functions.o" ;; added
   "orb-placer.o"  ;; added
+  "card-display.o" ;;added
   "mod-custom-code.o" ;; added
   "mod-debug.o" ;; added
  ))
