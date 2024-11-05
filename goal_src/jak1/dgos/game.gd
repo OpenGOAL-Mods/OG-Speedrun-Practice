@@ -354,6 +354,7 @@
   "orb-placer.o" ;; added
   "mod-debug.o" ;; added
   "mod-custom-code.o" ;; added
+  "card-display.o" ;; added
   ;; keep zoomer stuff loaded
   "target-racer-h.o"
   "racer-part.o"
