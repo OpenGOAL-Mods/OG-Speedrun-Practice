@@ -313,5 +313,6 @@
   "entity-debug.o" ;; added
   "subtitle.o" ;; added
   "default-menu-pc.o" ;; added
+  "card-display.o" ;; added
  ))
 
