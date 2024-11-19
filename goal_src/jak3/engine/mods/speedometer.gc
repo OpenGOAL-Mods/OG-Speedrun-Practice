@@ -1,0 +1,82 @@
+(define *show-speedometer?* #f)
+(define *speedometer-x-pos* 5)
+(define *speedometer-y-pos* 50)
+
+(defun speedometer-on ()
+  (when (not (process-by-name "speedometer" *active-pool*))
+  ;process-spawn-function, spawns a process that runs the function you give it
+  (process-spawn-function process :name "speedometer"
+    ;This lambda is our function
+    (lambda :behavior process ()
+    ;Code before the loop runs once on process spawn
+    ;
+    (set! *show-speedometer?* #t)
+    (let (
+        ;; (bar-x-pos 4)
+        ;; (bar-y-pos 110)
+        (bar-w 87)
+        (bar-h 10)
+        (bar-color (new 'static 'rgba :r 255))
+        (jak-velocity (-> *target* control transv))
+        )
+
+      ;Loop runs once per frame while process is active
+      (loop
+
+        ;Start a bucket thing block so we can use draw functions
+        (with-dma-buffer-add-bucket ((testbuf (-> (current-frame) global-buf)) (bucket-id debug-no-zbuf1))
+          (draw-sprite2d-xy testbuf *speedometer-x-pos* *speedometer-y-pos* bar-w bar-h *color-black* #x3fffff) ;background bar
+          (draw-sprite2d-xy testbuf (+ 1 *speedometer-x-pos*) (+ 1 *speedometer-y-pos*) 
+            (the int (/ (vector-xz-length jak-velocity) 2048)) (- bar-h 2) bar-color #x3fffff) ;speed bar
+              
+          (draw-string-xy-scaled (string-format "XZ V: ~,,2M" (vector-xz-length jak-velocity))
+              testbuf (+ 2 *speedometer-x-pos*) (+ 1 *speedometer-y-pos*) (the font-color 12) (font-flags shadow kerning) 1.0)
+          (draw-string-xy-scaled (string-format "XYZ V: ~,,2M" (vector-length jak-velocity))
+              testbuf (+ 1 *speedometer-x-pos*) (+ *speedometer-y-pos* bar-h) (the font-color 12) (font-flags shadow kerning) 1.0)
+
+          (cond
+            ((<= (vector-xz-length jak-velocity) (meters 12.0)) ;jak moving is ~10m, downhill ~12m
+              (set! bar-color *color-dark-green*)
+            )
+            ((< (vector-xz-length jak-velocity) (meters 30.0)) ;zoomer speed no eco
+              (set! bar-color *color-orange*)
+            )
+            ((< (vector-xz-length jak-velocity) (meters 42.0)) ;full eco'd zoomer is ~42.5m
+              (set! bar-color *color-red*)
+            )
+            (else
+              (set! bar-color *color-blue*) ;hell yeah brother
+            )
+          )
+
+        )
+
+      ;Processes should suspend themselves, the loop will resume next frame
+      (suspend)
+      )
+    )
+    )
+  )
+  )  
+;Lisp returns the last form as the function return
+(none)
+)
+
+
+(defun speedometer-off ()
+  "Kill the process"
+  (set! *show-speedometer?* #f)
+  (kill-by-name "speedometer" *active-pool*)
+  )
+
+;;this adds the Input Cards menu to the debug menu
+(when *debug-segment*
+  (when (-> *debug-menu-context* root-menu)
+    (debug-menu-append-item *speedrun-tools-menu*
+      (debug-menu-make-from-template *debug-menu-context*
+        '(menu "Speedometer"
+            (function "On/Off" #f ,(lambda () (if (not *show-speedometer?*) (speedometer-on) (speedometer-off))))
+            (int-var "X Pos" *speedometer-x-pos* dm-int-var-func 0 5 #t 0 450)
+            (int-var "Y Pos" *speedometer-y-pos* dm-int-var-func 0 5 #t 0 400)
+            ))))
+)
