@@ -175,7 +175,7 @@
 
 (defbehavior card-display-init-by-other card-display ()
   ;;set initial values and cards
-  (set! (-> self text-offset) 15)
+  (set! (-> self text-offset) 16)
   (set! (-> self x-start) *card-x-pos*)
   (set! (-> self y-start) *card-y-pos*)
   (set! (-> self include-stick?) *show-stick?*)
@@ -209,9 +209,9 @@
         ;;draw background rectangle
         (draw-sprite2d-xy testbuf 
         (- (-> self x-start) 20)
-        (- (+ (-> self y-start) (* i (-> self text-offset))) 0)
+        (- (+ (-> self y-start) (* i (-> self text-offset))) 1)
         80
-        16
+        17
         *card-color*)
         ;;draw the frame difference
         (draw-string-xy-scaled (string-format "~2,`0`d" (calc-frames self i))

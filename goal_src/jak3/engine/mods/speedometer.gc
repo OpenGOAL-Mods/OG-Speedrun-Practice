@@ -14,7 +14,7 @@
     (let (
         ;; (bar-x-pos 4)
         ;; (bar-y-pos 110)
-        (bar-w 87)
+        (bar-w 100)
         (bar-h 10)
         (bar-color (new 'static 'rgba :r 255))
         (jak-velocity (-> *target* control transv))
@@ -38,10 +38,10 @@
             ((<= (vector-xz-length jak-velocity) (meters 12.0)) ;jak moving is ~10m, downhill ~12m
               (set! bar-color *color-dark-green*)
             )
-            ((< (vector-xz-length jak-velocity) (meters 30.0)) ;zoomer speed no eco
+            ((< (vector-xz-length jak-velocity) (meters 34.5)) ;3 sideflips is ~35m
               (set! bar-color *color-orange*)
             )
-            ((< (vector-xz-length jak-velocity) (meters 42.0)) ;full eco'd zoomer is ~42.5m
+            ((< (vector-xz-length jak-velocity) (meters 80.0)) ;hopper with good boost
               (set! bar-color *color-red*)
             )
             (else

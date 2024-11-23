@@ -10,12 +10,12 @@
 (define *card-g* 0)
 (define *card-b* 128)
 (define *card-a* 40)
-(define *british* #f)
 
 (defun draw-string-xy-scaled ((str string) (buf dma-buffer) (x int) (y int) (color font-color) (flags font-flags) (scale float))
   "Draw a string at the given xy location, with the given scale."
   (let* ((font-ctxt (new 'stack 'font-context *font-default-matrix* x y 0.0 color flags)))
          (set! (-> font-ctxt scale) scale)
+    (set-context! *font-work* font-ctxt)
     (draw-string str buf font-ctxt))
   (none))
 
@@ -175,7 +175,7 @@
 
 (defbehavior card-display-init-by-other card-display ()
   ;;set initial values and cards
-  (set! (-> self text-offset) 15)
+  (set! (-> self text-offset) 16)
   (set! (-> self x-start) *card-x-pos*)
   (set! (-> self y-start) *card-y-pos*)
   (set! (-> self include-stick?) *show-stick?*)
@@ -186,9 +186,7 @@
   (set! (-> self current-dir) 0)
   (set! (-> self current-vel) 0)
 
-
-
-  (set! (-> self temp-but-string) (new 'process 'string 512 (the string #f)))
+  (set! (-> self temp-but-string) (new 'process 'string 1024 (the string #f)))
   (set! (-> self temp-encoded-string) (new 'process 'string 1024 (the string #f)))
 
   (set! (-> self cards) (new 'process 'card-array MAX_CARDS))
@@ -209,9 +207,9 @@
         ;;draw background rectangle
         (draw-sprite2d-xy testbuf 
         (- (-> self x-start) 20)
-        (- (+ (-> self y-start) (* i (-> self text-offset))) 0)
+        (- (+ (-> self y-start) (* i (-> self text-offset))) 1)
         80
-        16
+        17
         *card-color*
         #x3fffff) ;;new z arg in jak 3
         ;;draw the frame difference
@@ -349,12 +347,10 @@
       (cat-string<-string (-> this temp-but-string) "~22L<~-10H<~-10H<~-54H~0LSel")
     )
     (when (logtest? but (pad-buttons l3))
-      (if *british* (cat-string<-string (-> this temp-but-string) "<FLAG_UK>")
-        (cat-string<-string (-> this temp-but-string) "~22L<~-30H~0LL3"))
+        (cat-string<-string (-> this temp-but-string) "~22L<~-30H~0LL3")
     )
     (when (logtest? but (pad-buttons r3))
-      (if *british* (cat-string<-string (-> this temp-but-string) "<FLAG_UK>")
-        (cat-string<-string (-> this temp-but-string) "~22L<~-30H~0LR3"))
+        (cat-string<-string (-> this temp-but-string) "~22L<~-30H~0LR3")
     )
     (when (logtest? but (pad-buttons start))
       (cat-string<-string (-> this temp-but-string) "~22L<~-12H<~-38H~0LSt")
@@ -442,7 +438,6 @@
               (function "Right" #f ,(lambda () (card-preset-setter #t #f 455 0 (static-rgba 0 0 0 127) 19)))
               (function "Corner" #f ,(lambda () (card-preset-setter #t #f -5 395 (static-rgba 240 100 200 70) 1)))
               (function "Action" #f ,(lambda () (card-preset-setter #f #t 280 250 (static-rgba 110 110 110 15) 6)))
-              (flag "British" *british* dm-boolean-toggle-pick-func)
             )
             (flag "Show stick?" *show-stick?* dm-boolean-toggle-pick-func)
             (flag "Ignore L3/R3?" *ignore-click?* dm-boolean-toggle-pick-func)
