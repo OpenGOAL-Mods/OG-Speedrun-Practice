@@ -481,4 +481,6 @@
   "wvehicle-h.o"
   "vehicle-debug.o" ;; added
   "mod-custom-code.o" ;; added
+  "card-display.o" ;; added
+  "speedometer.o" ;; added
  ))

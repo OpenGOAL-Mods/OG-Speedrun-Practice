@@ -58,15 +58,14 @@
   #f
   )
 
+(define *speedrun-tools-menu* (new 'debug 'debug-menu *debug-menu-context* "Speedrun Tools"))
 (define-extern *show-vehicle-stats?* symbol)
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
-  (let ((speedrun-tools-menu (new 'debug 'debug-menu ctx "Speedrun Tools")))
-
-    ;; (debug-menu-append-item speedrun-tools-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Vehicle Stats" #f (lambda () (not! *show-vehicle-stats?*))))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Hero Mode Stuff" #f speedrun-hero-mode-stuff))
+    ;; (debug-menu-append-item *speedrun-tools-menu* (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
+    (debug-menu-append-item *speedrun-tools-menu* (new-dm-func "Vehicle Stats" #f (lambda () (not! *show-vehicle-stats?*))))
+    (debug-menu-append-item *speedrun-tools-menu* (new-dm-func "Hero Mode Stuff" #f speedrun-hero-mode-stuff))
     (debug-menu-append-item
-      speedrun-tools-menu
+      *speedrun-tools-menu*
       (debug-menu-make-from-template
         ctx
         '(menu "Invuln"
@@ -74,8 +73,7 @@
           (flag "Set Invuln1" invuln1 dm-speedrun-practice-func)
           (flag "Set Invuln2" invuln2 dm-speedrun-practice-func))))
 
-    (new-dm-submenu "Speedrun Tools" speedrun-tools-menu)
-    )
+    (new-dm-submenu "Speedrun Tools" *speedrun-tools-menu*)
   )
 
 (when (-> *debug-menu-context* root-menu)
