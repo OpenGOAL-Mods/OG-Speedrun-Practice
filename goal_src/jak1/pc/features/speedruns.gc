@@ -759,6 +759,7 @@
 (define *tmp-continue-point* (new 'static 'continue-point
                              :name "tmp"
                              :level #f
+                             :flags (continue-flags speedrun)
                              :trans (new 'static 'vector :w 1.0)
                              :quat (new 'static 'quaternion :w 1.0)
                              :camera-trans (new 'static 'vector :w 1.0)
@@ -968,35 +969,43 @@
 
 (defun speedrun-practice-store-temp-checkpoint ()
   ;; outside of bsp breaks shit
-  (when (or (-> *level* level0 inside-boxes?) (-> *level* level1 inside-boxes?))
-    (case (-> *target* state)
-      ;; only store temp checkpoint if in one of these states
-      ((target-stance target-wade-stance target-swim-stance target-flut-stance target-racing)
-        (set! *last-speedrun-practice-option* (speedrun-practice-option none))
+  (cond
+    ((or (-> *level* level0 inside-boxes?) (-> *level* level1 inside-boxes?))
+      (case (-> *target* state)
+        ;; only store temp checkpoint if in one of these states
+        ((target-stance target-wade-stance target-swim-stance target-flut-stance target-racing)
+          (set! *last-speedrun-practice-option* (speedrun-practice-option none))
 
-        ;; assume current continue is good enough for the current location
-        (continue-point-copy! *tmp-continue-point* (-> *game-info* current-continue))
-        (vector-copy! (-> *tmp-continue-point* trans) (-> *target* root trans))
-        (quaternion-copy! (-> *tmp-continue-point* quat) (-> *target* control unknown-quaternion00))
-        (vector-copy! (-> *tmp-continue-point* camera-trans) (-> *camera-combiner* trans))
-        (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
+          ;; assume current continue is good enough for the current location
+          (continue-point-copy! *tmp-continue-point* (-> *game-info* current-continue))
+          (vector-copy! (-> *tmp-continue-point* trans) (-> *target* root trans))
+          (quaternion-copy! (-> *tmp-continue-point* quat) (-> *target* control unknown-quaternion00))
+          (vector-copy! (-> *tmp-continue-point* camera-trans) (-> *camera-combiner* trans))
+          (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
 
-        ;; flag init
-        (set! (-> *tmp-continue-point* flags) (continue-flags speedrun))
-        (set! *full-hp?* (and (!= *target* #f)
-                      (= (-> *target* fact health) 3.0)
-                      (= (-> *target* fact eco-pill) 50.0)
-                      ))
-        (case (-> *target* state)
-          ((target-flut-stance)
-            (logior! (-> *tmp-continue-point* flags) (continue-flags flut))
+          ;; flag init
+          (set! (-> *tmp-continue-point* flags) (continue-flags speedrun))
+          (set! *full-hp?* (and (!= *target* #f)
+                        (= (-> *target* fact health) 3.0)
+                        (= (-> *target* fact eco-pill) 50.0)
+                        ))
+          (case (-> *target* state)
+            ((target-flut-stance)
+              (logior! (-> *tmp-continue-point* flags) (continue-flags flut))
+              )
+            ((target-racing)
+              (logior! (-> *tmp-continue-point* flags) (continue-flags racer))
+              )
             )
-          ((target-racing)
-            (logior! (-> *tmp-continue-point* flags) (continue-flags racer))
-            )
+          (sound-play "select-menu")
           )
-        (sound-play "select-menu")
+        (else
+          (sound-play "caught-eel" :pitch -0.7)
+          )
         )
+      )
+    (else
+      (sound-play "caught-eel" :pitch -0.7)
       )
     )
   (none)
@@ -1071,6 +1080,13 @@
   ;; Draw info to the screen
   (draw-idle-deload-info)
   (draw-plant-deload-info)
+
+  ;; if we're stuck continue-ing at a speedrun checkpoint, it might have bad vis so force it
+  (when (and *target* (= (-> *target* state name) 'target-continue)
+             (logtest? (-> *game-info* current-continue flags) (continue-flags speedrun)))
+    (load-state-want-vis (-> *load-state* want 0 name))
+    )
+
   ;; Run after-blackout speedrun setup (if needed)
   (setup-speedrun-post-blackout)
 
