@@ -1794,6 +1794,8 @@
     )
   )
 
+(define *mole-rng-mode* 0)
+
 ;; run this from outside the whack-a-metal process so it shows when paused
 (defun debug-print-whack-info ((proc process))
   (when (type-type? (-> proc type) whack-a-metal)
@@ -1804,8 +1806,17 @@
             (let ((font-ctx (new 'stack 'font-context *font-default-matrix* 0 100 0.0 (font-color red) (font-flags shadow kerning))))
               (set! (-> font-ctx scale) 3.0)
               (draw-string-adv 
-                (string-format "wave: ~D ~%event: ~D ~%mode: ~D ~%min-time: ~D / min+max-time: ~D ~%event-length (rng): ~D~%"
-                                (-> this wave) (-> this event) (-> s4-0 mode) (-> s4-0 min-time) (+ (-> s4-0 min-time) (-> s4-0 max-time)) (-> this event-length))
+                (case *mole-rng-mode*
+                  ((-1)
+                    (string-format "wave: ~D ~%event: ~D ~%mode: ~D ~%min-time: ~D~%min+max-time: ~D ~%event-length (BAD RNG): ~D~%(L2/R2 to toggle RNG mode)"
+                                    (-> this wave) (-> this event) (-> s4-0 mode) (-> s4-0 min-time) (+ (-> s4-0 min-time) (-> s4-0 max-time)) (-> this event-length)))
+                  ((0) ;; normal
+                    (string-format "wave: ~D ~%event: ~D ~%mode: ~D ~%min-time: ~D~%min+max-time: ~D ~%event-length (true RNG): ~D~%(L2/R2 to toggle RNG mode)"
+                                    (-> this wave) (-> this event) (-> s4-0 mode) (-> s4-0 min-time) (+ (-> s4-0 min-time) (-> s4-0 max-time)) (-> this event-length)))
+                  ((1)
+                    (string-format "wave: ~D ~%event: ~D ~%mode: ~D ~%min-time: ~D~%min+max-time: ~D ~%event-length (GOOD RNG): ~D~%(L2/R2 to toggle RNG mode)"
+                                    (-> this wave) (-> this event) (-> s4-0 mode) (-> s4-0 min-time) (+ (-> s4-0 min-time) (-> s4-0 max-time)) (-> this event-length)))
+                  )
                 buf font-ctx)
               )
             )
@@ -1830,12 +1841,24 @@
   (none))
 
 (defmethod whack-a-metal-method-27 ((this whack-a-metal))
+  (when (cpad-pressed? 0 l2)
+    (-! *mole-rng-mode* 1)
+    (if (< *mole-rng-mode* -1) (set! *mole-rng-mode* 1)) ;; loop around
+    )    
+  (when (cpad-pressed? 0 r2)
+    (+! *mole-rng-mode* 1)
+    (if (> *mole-rng-mode* 1) (set! *mole-rng-mode* -1)) ;; loop around
+    )
   (let ((s4-0 (-> *mole-data* (-> this wave) (-> this event)))
         (s5-0 #t)
         )
     (when (zero? (-> this event-length))
       (set! (-> this event-length)
-            (rand-vu-int-range (the-as int (-> s4-0 min-time)) (the-as int (+ (-> s4-0 min-time) (-> s4-0 max-time))))
+            (case *mole-rng-mode*
+              ((-1) (the-as int (+ (-> s4-0 min-time) (-> s4-0 max-time)))) ;; good RNG
+              ((0) (rand-vu-int-range (the-as int (-> s4-0 min-time)) (the-as int (+ (-> s4-0 min-time) (-> s4-0 max-time))))) ;; normal
+              ((1) (the-as int (-> s4-0 min-time))) ;; bad RNG
+              )
             )
       (set-time! (-> this event-time))
       )
