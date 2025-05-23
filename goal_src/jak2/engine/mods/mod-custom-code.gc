@@ -42,8 +42,8 @@
         (orb-placer-maintenance)
         )
 
-      (when (process-by-type 'whack-a-metal *active-pool*)
-        (debug-print-whack-info (process-by-type 'whack-a-metal *active-pool*)))
+      (when (process-by-type-exact 'whack-a-metal *active-pool*)
+        (debug-print-whack-info (process-by-type-exact 'whack-a-metal *active-pool*)))
       
       (none)
       )
