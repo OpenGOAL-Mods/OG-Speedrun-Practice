@@ -911,6 +911,15 @@
   (speedrun-reset-common-settings)
   (none)
   )
+
+(defun speedrun-practice-citihops-start-run ()
+  (set! *practice-spawn-post-init* get-on-zoomer)
+  (initialize! *game-info* 'game (the-as game-save #f) "lavatube-citihops")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "lavatube-citihops"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
+
 (defun give-seven-flies ((lvl-idx int))
   ;; based on 'buzzer branch of (defmethod adjust game-info)
   (let* ((ctrl (get-task-control (-> *level-task-data* lvl-idx task-info (-> *level-task-data* lvl-idx buzzer-task-index) task-id)))
@@ -1058,6 +1067,9 @@
       )
     (((speedrun-practice-option snowy-rocket))
       (speedrun-practice-snowy-rocket-start-run)
+      )
+    (((speedrun-practice-option citadel-hops))
+      (speedrun-practice-citihops-start-run)
       )
     (else
       (speedrun-practice-temp-checkpoint)

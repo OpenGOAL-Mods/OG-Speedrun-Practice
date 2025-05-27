@@ -1071,7 +1071,9 @@
   0)
 
 (defmethod want-vis ((this load-state) (arg0 symbol))
+  (format 0 "want-vis vis-nick was ~A... " (-> *load-state* vis-nick))
   (set! (-> this vis-nick) arg0)
+  (format 0 "want-vis vis-nick now ~A~%" (-> *load-state* vis-nick))
   0)
 
 (defmethod want-force-vis ((this load-state) (arg0 symbol) (arg1 symbol))
