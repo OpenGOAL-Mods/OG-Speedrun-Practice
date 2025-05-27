@@ -90,6 +90,7 @@
         )
       )
     (set! (-> *load-state* vis-nick) (-> arg0 vis-nick))
+    (format 0 "target-continue vis-nick now ~A~%" (-> *load-state* vis-nick))
     (set! (-> *load-state* want 0 name) (-> arg0 lev0))
     (set! (-> *load-state* want 0 display?) (-> arg0 disp0))
     (set! (-> *load-state* want 0 force-vis?) #f)

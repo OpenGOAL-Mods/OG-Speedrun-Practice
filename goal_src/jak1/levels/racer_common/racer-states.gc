@@ -173,6 +173,12 @@
       (set! (-> self racer speed-rotx) 0.25)
       (set! (-> self racer boost-curve) 0.0)
       (set! (-> self racer boost-level) 0.0)
+      ;; hack to give 6 blue eco for citihops practice checkpoint
+      (when (name= (-> *game-info* current-continue name) 'lavatube-citihops)
+        (format 0 "setting max blue eco for racer~%")
+        (set! (-> self racer boost-level) (-> *RACER-bank* boost-level-max))
+        (set-time! (-> self racer boost-time))
+        )
       (set! (-> self racer boost-target) 0.0)
       (set! (-> self racer boost-output) 0.0)
       (set! (-> self racer boost-time) 0)
