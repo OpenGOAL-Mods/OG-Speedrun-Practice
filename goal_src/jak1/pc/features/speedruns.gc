@@ -729,6 +729,11 @@
   (none)
   )
 
+(defun close-task-helper ((tsk game-task))
+  (logior! (-> *game-info* task-perm-list data (the int tsk) status) (entity-perm-status real-complete))
+  (close-specific-task! tsk (task-status need-resolution))
+  )
+
 (defun speedrun-reset-common-settings ()
   ;; disable hints (this seems to be overriden by your slot 1 save though)
   (set! (-> *setting-control* default play-hints) #f)
@@ -738,6 +743,17 @@
   (set-frame-rate! *pc-settings* 60 #t)
   ;; skip intro cutscene
   (close-specific-task! (game-task intro) (task-status need-resolution))
+  (none)
+  )
+
+(defun full-blue ()
+  (send-event *target* 'get-pickup (pickup-type eco-blue) (-> *FACT-bank* eco-full-inc))
+  (none)
+  )
+
+(defun beach-nolts-post-init ()
+  (full-blue)
+  (close-task-helper (game-task jungle-eggtop))
   (none)
   )
 
@@ -920,6 +936,28 @@
   (none)
   )
 
+(defun speedrun-practice-beach-nolts-start-run ()
+  (set! *practice-spawn-post-init* beach-nolts-post-init)
+  (initialize! *game-info* 'game (the-as game-save #f) "beach-pelican")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "beach-pelican"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
+
+(defun speedrun-practice-swamp-oob-dive-start-run ()
+  (initialize! *game-info* 'game (the-as game-save #f) "swamp-oob-dive")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "swamp-oob-dive"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
+
+(defun speedrun-practice-swamp-flut-oob-start-run ()
+  (initialize! *game-info* 'game (the-as game-save #f) "swamp-flut-oob")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "swamp-flut-oob"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
+
 (defun give-seven-flies ((lvl-idx int))
   ;; based on 'buzzer branch of (defmethod adjust game-info)
   (let* ((ctrl (get-task-control (-> *level-task-data* lvl-idx task-info (-> *level-task-data* lvl-idx buzzer-task-index) task-id)))
@@ -931,11 +969,6 @@
     )
   (set! (-> *game-counts* data lvl-idx buzzer-count) 7)
   (none)
-  )
-
-(defun close-task-helper ((tsk game-task))
-  (logior! (-> *game-info* task-perm-list data (the int tsk) status) (entity-perm-status real-complete))
-  (close-specific-task! tsk (task-status need-resolution))
   )
 
 (defun continue-point-copy! ((dst continue-point) (src continue-point))
@@ -971,8 +1004,8 @@
 
 (defun speedrun-practice-store-temp-checkpoint ()
   ;; outside of bsp breaks shit
-  (cond
-    ((or (-> *level* level0 inside-boxes?) (-> *level* level1 inside-boxes?))
+  ;; (cond
+    ;; ((or (-> *level* level0 inside-boxes?) (-> *level* level1 inside-boxes?))
       (case (-> *target* state)
         ;; only store temp checkpoint if in one of these states
         ((target-stance target-wade-stance target-swim-stance target-flut-stance target-racing)
@@ -1005,11 +1038,11 @@
           (sound-play "caught-eel" :pitch -0.7)
           )
         )
-      )
-    (else
-      (sound-play "caught-eel" :pitch -0.7)
-      )
-    )
+      ;; )
+    ;; (else
+    ;;   (sound-play "caught-eel" :pitch -0.7)
+    ;;   )
+    ;; )
   (none)
   )
 
@@ -1070,6 +1103,15 @@
       )
     (((speedrun-practice-option citadel-hops))
       (speedrun-practice-citihops-start-run)
+      )
+    (((speedrun-practice-option beach-nolts))
+      (speedrun-practice-beach-nolts-start-run)
+      )
+    (((speedrun-practice-option swamp-oob-dive))
+      (speedrun-practice-swamp-oob-dive-start-run)
+      )
+    (((speedrun-practice-option swamp-flut-oob))
+      (speedrun-practice-swamp-flut-oob-start-run)
       )
     (else
       (speedrun-practice-temp-checkpoint)
