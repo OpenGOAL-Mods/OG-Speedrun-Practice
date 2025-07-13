@@ -88,21 +88,38 @@
 
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
   (let ((speedrun-tools-menu (new 'debug 'debug-menu ctx "Speedrun Tools")))
-    ;; general stuff
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Idle Deload Display" #f (lambda () (not! (-> *speedrun-info* should-display-idle-deload-info?)))))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Plant Deload Display" #f (lambda () (not! (-> *speedrun-info* should-display-plant-deload-info?)))))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Show Speedometer" #f (lambda () (if *show-speedometer?* (j1-speedometer-off)(j1-speedometer-on)))))
-    (debug-menu-append-item speedrun-tools-menu (new-dm-func "Masher" #f (lambda () (if *masher-on?* (masher-off)(masher-on)))))
+    ;; eco/invuln/etc toggles
+    (let ((eco-invuln-menu (new 'debug 'debug-menu ctx "Eco/Invuln/Etc")))
+      (debug-menu-append-item eco-invuln-menu (new-dm-func "Full Blue Eco" #f (lambda () (send-event *target* 'get-pickup (pickup-type eco-blue) (-> *FACT-bank* eco-full-inc)))))
+      (debug-menu-append-item eco-invuln-menu (new-dm-func "Full Red Eco" #f (lambda () (send-event *target* 'get-pickup (pickup-type eco-red) (-> *FACT-bank* eco-full-inc)))))
+      (debug-menu-append-item eco-invuln-menu (new-dm-func "Full Yellow Eco" #f (lambda () (send-event *target* 'get-pickup (pickup-type eco-yellow) (-> *FACT-bank* eco-full-inc)))))
+      (debug-menu-append-item eco-invuln-menu (new-dm-func "Nuka Glitch (state-flags dying)" #f (lambda () (set! (-> *target* fact health) 1.0) (logior! (-> *target* state-flags) (state-flags dying)))))
+      (debug-menu-append-item eco-invuln-menu (new-dm-func "Zombie Glitch (0HP)" #f (lambda () (set! (-> *target* fact health) 0.0) (logclear! (-> *target* state-flags) (state-flags dying)))))
 
-    (let ((citadel-hops-menu (new 'debug 'debug-menu ctx "Citadel Hops")))
-      (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
-      ;; (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show bottom-height (death planes)" *show-bottom-height?* dm-boolean-toggle-pick-func))
-      (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show Green Sage cutscene plane" *show-greensage-cutscene-plane?* dm-boolean-toggle-pick-func))
-      
-      (debug-menu-append-item speedrun-tools-menu (new-dm-submenu "Citadel Hops" citadel-hops-menu))
+      (debug-menu-append-item speedrun-tools-menu (new-dm-submenu "Eco/Invuln/Etc" eco-invuln-menu))
       )
+    
+    ;; extra displays
+    (let ((displays-menu (new 'debug 'debug-menu ctx "Extra Displays")))
+      (debug-menu-append-item displays-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
+      (debug-menu-append-item displays-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
+      (debug-menu-append-item displays-menu (new-dm-func "Idle Deload Display" #f (lambda () (not! (-> *speedrun-info* should-display-idle-deload-info?)))))
+      (debug-menu-append-item displays-menu (new-dm-func "Plant Deload Display" #f (lambda () (not! (-> *speedrun-info* should-display-plant-deload-info?)))))
+      (debug-menu-append-item displays-menu (new-dm-func "Show Speedometer" #f (lambda () (if *show-speedometer?* (j1-speedometer-off)(j1-speedometer-on)))))
+      (debug-menu-append-item displays-menu (new-dm-func "Masher" #f (lambda () (if *masher-on?* (masher-off)(masher-on)))))
+
+      (let ((citadel-hops-menu (new 'debug 'debug-menu ctx "Citadel Hops")))
+        (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
+        ;; (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show bottom-height (death planes)" *show-bottom-height?* dm-boolean-toggle-pick-func))
+        (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show Green Sage cutscene plane" *show-greensage-cutscene-plane?* dm-boolean-toggle-pick-func))
+        
+        (debug-menu-append-item displays-menu (new-dm-submenu "Citadel Hops" citadel-hops-menu))
+        )
+      
+      (debug-menu-append-item speedrun-tools-menu (new-dm-submenu "Extra Displays" displays-menu))
+      )
+
+    ;; finalize menu
     (new-dm-submenu "Speedrun Tools" speedrun-tools-menu)
     )
   )

@@ -820,6 +820,9 @@
   (practice-wet-feet            #x170d)
   (practice-snowy-rocket        #x170e)
   (practice-citadel-hops        #x170f)
+  (practice-beach-nolts         #x1710)
+  (practice-swamp-oob-dive      #x1711)
+  (practice-swamp-flut-oob      #x1712)
 
   (hub1-options                 #x17fc)
   (hub2-options                 #x17fd)

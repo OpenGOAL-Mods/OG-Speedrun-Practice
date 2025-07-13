@@ -330,6 +330,26 @@
              :lev0 'beach
              :disp0 'display
              :lev1 'village1
+             :disp1 'display)
+          (new 'static
+             'continue-point
+             :name "beach-pelican"
+             :level 'beach
+             :flags (continue-flags speedrun)
+             :trans
+             (new 'static 'vector :x (meters -166.2648) :y (meters 11.0097) :z (meters -414.9905) :w 1.0)
+             :quat
+             (new 'static 'quaternion :y 0.2802 :w 0.9599)
+             :camera-trans
+             (new 'static 'vector :x (meters -158.3997) :y (meters 15.5135) :z (meters -408.6736) :w 1.0)
+             :camera-rot
+             (new 'static 'array float 9 -0.5931 -0.0000 0.8050 -0.1171 0.9893 -0.0862 -0.7965 -0.1454 -0.5868)
+             :load-commands
+             '()
+             :vis-nick 'bea
+             :lev0 'beach
+             :disp0 'display
+             :lev1 'village1
              :disp1 'display))
        :tasks
        '(15 16 17 18 19 20 21 22)
@@ -1234,7 +1254,58 @@
              :lev0 'swamp
              :disp0 'display
              :lev1 'village2
-             :disp1 'special-vis))
+             :disp1 'special-vis)
+        (new 'static
+             'continue-point
+             :name "swamp-flut-oob"
+             :level 'swamp
+             :flags (continue-flags speedrun flut)
+             :trans
+             (new 'static 'vector :x (meters 533.2805) :y (meters 11.9648) :z (meters -2132.3239) :w 1.0)
+             :quat
+             (new 'static 'quaternion :y -0.9126 :w 0.4087)
+             :camera-trans
+             (new 'static 'vector :x (meters 540.6840) :y (meters 16.9356) :z (meters -2123.1008) :w 1.0)
+             :camera-rot
+             (new 'static 'array float 9 -0.7804 -0.0000 0.6251 -0.0751 0.9927 -0.0938 -0.6206 -0.1201 -0.7748)
+             :load-commands
+             '((special "swamp-blimp-3" #t)
+              (special "precursor-arm-3" #t)
+              (special "swamp-tetherrock-13" #t)
+              (special "swamp-tetherrock-14" #t)
+              (special "swamp-tetherrock-15" #t)
+              (special "swamp-tetherrock-16" #t))
+             :vis-nick 'swa
+             :lev0 'swamp
+             :disp0 'display
+             :lev1 'village2
+             :disp1 'special-vis)
+        (new 'static
+             'continue-point
+             :name "swamp-oob-dive"
+             :level 'swamp
+             :flags (continue-flags speedrun)
+             :trans
+             (new 'static 'vector :x (meters 537.4798) :y (meters -0.4999) :z (meters -1990.3599)  :w 1.0)
+             :quat
+             (new 'static 'quaternion :y 0.8416 :w -0.5399)
+             :camera-trans
+             (new 'static 'vector :x (meters 547.9222) :y (meters 4.6499) :z (meters -1983.4764)  :w 1.0)
+             :camera-rot
+             (new 'static 'array float 9 -0.5495 0.0000 0.8354 -0.1011 0.9926 -0.0665 -0.8292 -0.1210 -0.5455)
+             :load-commands
+             '((special "swamp-blimp-3" #t)
+              (special "precursor-arm-3" #t)
+              (special "swamp-tetherrock-13" #t)
+              (special "swamp-tetherrock-14" #t)
+              (special "swamp-tetherrock-15" #t)
+              (special "swamp-tetherrock-16" #t))
+             :vis-nick 'swa
+             :lev0 'swamp
+             :disp0 'display
+             :lev1 'village2
+             :disp1 'special-vis)   
+          )
        :tasks
        '(36 37 38 39 40 41 42 43)
        :priority 100
