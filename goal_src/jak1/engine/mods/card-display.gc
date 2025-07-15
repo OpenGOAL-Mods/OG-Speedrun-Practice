@@ -445,31 +445,3 @@
   (-> var value)
   )
 
-
-;;this adds the Input Cards menu to the debug menu
-(when *debug-segment*
-  (when (-> *debug-menu-context* root-menu)
-    (debug-menu-append-item (-> *debug-menu-context* root-menu)
-      (debug-menu-make-from-template *debug-menu-context*
-        '(menu "Input Cards"
-            (function "On/Off" #f ,(lambda () (if (not *input-cards-on?*) (card-display-on) (card-display-off))))
-            (menu "Presets"
-              (function "Default" #f ,(lambda () (card-preset-setter #t #f 20 15 (static-rgba 0 0 128 40) 20)))
-              (function "Right" #f ,(lambda () (card-preset-setter #t #f 455 0 (static-rgba 0 0 0 127) 20)))
-              (function "Corner" #f ,(lambda () (card-preset-setter #t #f -5 210 (static-rgba 240 100 200 70) 1)))
-              (function "Action" #f ,(lambda () (card-preset-setter #f #t 280 130 (static-rgba 110 110 110 15) 6)))
-            )
-            (flag "Show stick?" *show-stick?* dm-boolean-toggle-pick-func)
-            (flag "Ignore L3/R3?" *ignore-click?* dm-boolean-toggle-pick-func)
-            (int-var "X Pos" *card-x-pos* dm-int-var-func 0 5 #t -5 500)
-            (int-var "Y Pos" *card-y-pos* dm-int-var-func 0 5 #t 0 210)
-            (int-var "Max Cards" MAX_CARDS dm-int-var-func-cards 0 1 #t 1 20) ;; uses custom dm func
-            (menu "Color"
-              (int-var "Red" *card-r* dm-int-var-func 0 1 #t 0 255)
-              (int-var "Green" *card-g* dm-int-var-func 0 1 #t 0 255)
-              (int-var "Blue" *card-b* dm-int-var-func 0 1 #t 0 255)
-              (int-var "Alpha" *card-a* dm-int-var-func 0 1 #t 0 127))
-              ))))
-              
-)
-

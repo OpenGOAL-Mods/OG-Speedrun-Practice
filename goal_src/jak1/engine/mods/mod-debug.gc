@@ -86,6 +86,11 @@
 ;;       (debug-menu-append-item modding-tools-menu (new-dm-submenu "Orb Placer" orb-placer-menu)))
 ;;     (new-dm-submenu "Modding Tools" modding-tools-menu)))
 
+(defun dm-fcs-pick-func ((i int) (msg debug-menu-msg))
+  (when (= msg (debug-menu-msg press))
+    (set! *debug-fcs-spider-mode* i))
+  (= *debug-fcs-spider-mode* i))
+
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
   (let ((speedrun-tools-menu (new 'debug 'debug-menu ctx "Speedrun Tools")))
     ;; eco/invuln/etc toggles
@@ -101,12 +106,10 @@
     
     ;; extra displays
     (let ((displays-menu (new 'debug 'debug-menu ctx "Extra Displays")))
-      (debug-menu-append-item displays-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
       (debug-menu-append-item displays-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
-      (debug-menu-append-item displays-menu (new-dm-func "Idle Deload Display" #f (lambda () (not! (-> *speedrun-info* should-display-idle-deload-info?)))))
-      (debug-menu-append-item displays-menu (new-dm-func "Plant Deload Display" #f (lambda () (not! (-> *speedrun-info* should-display-plant-deload-info?)))))
+      (debug-menu-append-item displays-menu (new-dm-func "Idle Deload" #f (lambda () (not! (-> *speedrun-info* should-display-idle-deload-info?)))))
+      (debug-menu-append-item displays-menu (new-dm-func "Plant Deload" #f (lambda () (not! (-> *speedrun-info* should-display-plant-deload-info?)))))
       (debug-menu-append-item displays-menu (new-dm-func "Show Speedometer" #f (lambda () (if *show-speedometer?* (j1-speedometer-off)(j1-speedometer-on)))))
-      (debug-menu-append-item displays-menu (new-dm-func "Masher" #f (lambda () (if *masher-on?* (masher-off)(masher-on)))))
 
       (let ((citadel-hops-menu (new 'debug 'debug-menu ctx "Citadel Hops")))
         (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
@@ -114,6 +117,13 @@
         (debug-menu-append-item citadel-hops-menu (new-dm-bool "Show Green Sage cutscene plane" *show-greensage-cutscene-plane?* dm-boolean-toggle-pick-func))
         
         (debug-menu-append-item displays-menu (new-dm-submenu "Citadel Hops" citadel-hops-menu))
+        )
+      (let ((fcs-spider-menu (new 'debug 'debug-menu ctx "FCS ground-point")))
+        (debug-menu-append-item fcs-spider-menu (new-dm-flag "Off" 0 dm-fcs-pick-func))
+        (debug-menu-append-item fcs-spider-menu (new-dm-flag "Always On" 1 dm-fcs-pick-func))
+        (debug-menu-append-item fcs-spider-menu (new-dm-flag "During pull" 2 dm-fcs-pick-func))
+
+        (debug-menu-append-item displays-menu (new-dm-submenu "FCS ground-point" fcs-spider-menu))
         )
       
       (debug-menu-append-item speedrun-tools-menu (new-dm-submenu "Extra Displays" displays-menu))
@@ -124,7 +134,39 @@
     )
   )
 
+(defun-debug debug-menu-make-input-displays-menu ((ctx debug-menu-context))
+  (let ((displays-menu (new 'debug 'debug-menu ctx "Extra Displays")))
+    (debug-menu-append-item displays-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
+    (debug-menu-append-item displays-menu
+      (debug-menu-make-from-template *debug-menu-context*
+            '(menu "Input Cards"
+                (function "On/Off" #f ,(lambda () (if (not *input-cards-on?*) (card-display-on) (card-display-off))))
+                (menu "Presets"
+                  (function "Default" #f ,(lambda () (card-preset-setter #t #f 20 15 (static-rgba 0 0 128 40) 20)))
+                  (function "Right" #f ,(lambda () (card-preset-setter #t #f 455 0 (static-rgba 0 0 0 127) 20)))
+                  (function "Corner" #f ,(lambda () (card-preset-setter #t #f -5 210 (static-rgba 240 100 200 70) 1)))
+                  (function "Action" #f ,(lambda () (card-preset-setter #f #t 280 130 (static-rgba 110 110 110 15) 6)))
+                )
+                (flag "Show stick?" *show-stick?* dm-boolean-toggle-pick-func)
+                (flag "Ignore L3/R3?" *ignore-click?* dm-boolean-toggle-pick-func)
+                (int-var "X Pos" *card-x-pos* dm-int-var-func 0 5 #t -5 500)
+                (int-var "Y Pos" *card-y-pos* dm-int-var-func 0 5 #t 0 210)
+                (int-var "Max Cards" MAX_CARDS dm-int-var-func-cards 0 1 #t 1 20) ;; uses custom dm func
+                (menu "Color"
+                  (int-var "Red" *card-r* dm-int-var-func 0 1 #t 0 255)
+                  (int-var "Green" *card-g* dm-int-var-func 0 1 #t 0 255)
+                  (int-var "Blue" *card-b* dm-int-var-func 0 1 #t 0 255)
+                  (int-var "Alpha" *card-a* dm-int-var-func 0 1 #t 0 127))
+                  )))
+    (debug-menu-append-item displays-menu (new-dm-func "Masher" #f (lambda () (if *masher-on?* (masher-off)(masher-on)))))
+    
+    ;; finalize menu
+    (new-dm-submenu "Input Displays" displays-menu)
+    )
+  )
+
 (when (-> *debug-menu-context* root-menu)
   ;; (debug-menu-append-item (-> *debug-menu-context* root-menu) (debug-menu-make-modding-tools-menu *debug-menu-context*))
+  (debug-menu-append-item (-> *debug-menu-context* root-menu) (debug-menu-make-input-displays-menu *debug-menu-context*))
   (debug-menu-append-item (-> *debug-menu-context* root-menu) (debug-menu-make-speedrun-tools-menu *debug-menu-context*))
   )
