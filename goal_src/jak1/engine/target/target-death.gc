@@ -723,6 +723,20 @@
       (target-exit))
   :trans
     (behavior ()
+      (when (and *debug-segment* 
+                 (or (= *debug-fcs-spider-mode* 1) ;; always on case
+                     (and (not (time-elapsed? *last-fgp-pull-time* (seconds 2))) (= *debug-fcs-spider-mode* 2)) ;; getting pulled case
+                     )
+                 )
+        (debug-draw-find-ground-point
+          (-> *target* control trans)
+          (-> *target* control transv)
+          8192.0
+          40960.0
+          (y-angle (-> *target* control))
+          (-> *target* control root-prim collide-with)
+          )
+        )
       (when (= *cheat-mode* 'debug)
         (when (and (not *pause-lock*) (cpad-hold? (-> self control unknown-cpad-info00 number) r2))
           (pickup-collectable! (-> self fact) (pickup-type eco-green) (the-as float 1.0) (the-as handle #f))
