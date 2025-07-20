@@ -792,6 +792,10 @@
   (none))
 
 (defstate ogreboss-idle (ogreboss)
+  :event
+    (behavior ((proc process) (argc int) (message symbol) (block event-message-block))
+      (case message
+        (('go-stage1) (go ogreboss-stage1))))
   :enter
     (behavior ()
       (when (zero? (-> self try-count))
