@@ -823,6 +823,8 @@
   (practice-beach-nolts         #x1710)
   (practice-swamp-oob-dive      #x1711)
   (practice-swamp-flut-oob      #x1712)
+  (practice-robot-boosted       #x1713)
+  (practice-drunk-cam           #x1714)
 
   (hub1-options                 #x17fc)
   (hub2-options                 #x17fd)

@@ -1493,6 +1493,21 @@
           :lev1 'village3
           :disp1 'display
           )
+        (new 'static 'continue-point
+          :name "drunk-cam"
+          :level 'ogre
+          :flags (continue-flags speedrun)
+          :trans (new 'static 'vector :x (meters 216.0370) :y (meters 34.0567) :z (meters -1962.2309) :w 1.0)
+          :quat (new 'static 'quaternion :x 0.0000 :y -0.9966 :z -0.0000 :w 0.0818)
+          :camera-trans (new 'static 'vector :x (meters 215.2164) :y (meters 40.3044) :z (meters -1941.9609) :w 1.0)
+          :camera-rot (new 'static 'array float 9 -0.9992 0.0000 -0.0390 0.0033 0.9963 -0.0856 0.0389 -0.0857 -0.9955)
+          :load-commands '()
+          :vis-nick 'ogr
+          :lev0 'ogre
+          :disp0 'display
+          :lev1 'village3
+          :disp1 'display
+          )
        	)
        :tasks
        '(86 87 110 88)
@@ -2020,6 +2035,26 @@
              (new 'static 'vector :x 5409966.5 :y -76017.664 :z -11632764.0 :w 1.0)
              :camera-rot
              (new 'static 'array float 9 0.8662 0.0 -0.4996 0.0605 0.9926 0.105 0.4959 -0.1212 0.8598)
+             :load-commands
+             '()
+             :vis-nick 'rob
+             :lev0 'maincave
+             :disp0 'display
+             :lev1 'robocave
+             :disp1 'display)
+        (new 'static
+             'continue-point
+             :name "robocave-boosted"
+             :level 'robocave
+             :flags (continue-flags speedrun)
+             :trans
+             (new 'static 'vector :x (meters 1385.7637) :y (meters 20.3926) :z (meters -2816.7717) :w 1.0)
+             :quat
+             (new 'static 'quaternion :x 0.0000 :y 0.0707 :z 0.0000 :w -0.9974)
+             :camera-trans
+             (new 'static 'vector :x (meters 1386.1009) :y (meters 23.8229) :z (meters -2822.8127) :w 1.0)
+             :camera-rot
+             (new 'static 'array float 9 0.9983 -0.0000 0.0569 -0.0145 0.9666 0.2558 -0.0550 -0.2562 0.9650)
              :load-commands
              '()
              :vis-nick 'rob

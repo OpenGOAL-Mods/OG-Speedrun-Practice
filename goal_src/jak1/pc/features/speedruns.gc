@@ -757,6 +757,22 @@
   (none)
   )
 
+(defun robot-boosted-post-init ()
+  (close-task-helper (game-task cave-swing-poles))
+  (let ((cell (process-by-ename "fuel-cell-56")))
+    (when cell
+      (process-entity-status! cell (entity-perm-status dead) #t)
+      (deactivate cell)))
+  (none)
+  )
+
+(defun drunk-cam-post-init ()
+  (close-specific-task! (game-task ogre-boss) (task-status need-hint))
+  (let ((o (process-by-ename "ogreboss-1")))
+    (when o (send-event o 'go-stage1)))
+  (none)
+  )
+
 (defun full-hp ()
   (pickup-collectable! (-> *target* fact) (pickup-type eco-green) 1.0 (process->handle (-> *target* fact process)))
   (pickup-collectable! (-> *target* fact) (pickup-type eco-green) 1.0 (process->handle (-> *target* fact process)))
@@ -957,6 +973,22 @@
   (speedrun-reset-common-settings)
   (none)
   )
+  
+(defun speedrun-practice-robot-boosted-start-run ()
+  (set! *practice-spawn-post-init* robot-boosted-post-init)
+  (initialize! *game-info* 'game (the-as game-save #f) "robocave-boosted")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "robocave-boosted"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
+  
+(defun speedrun-practice-drunk-cam-start-run ()
+  (set! *practice-spawn-post-init* drunk-cam-post-init)
+  (initialize! *game-info* 'game (the-as game-save #f) "drunk-cam")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "drunk-cam"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
 
 (defun give-seven-flies ((lvl-idx int))
   ;; based on 'buzzer branch of (defmethod adjust game-info)
@@ -1112,6 +1144,12 @@
       )
     (((speedrun-practice-option swamp-flut-oob))
       (speedrun-practice-swamp-flut-oob-start-run)
+      )
+    (((speedrun-practice-option robot-boosted))
+      (speedrun-practice-robot-boosted-start-run)
+      )
+    (((speedrun-practice-option drunk-cam))
+      (speedrun-practice-drunk-cam-start-run)
       )
     (else
       (speedrun-practice-temp-checkpoint)
