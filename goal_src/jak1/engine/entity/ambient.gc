@@ -152,6 +152,11 @@
   (define *level-hint-spool-name* (the string #f)))
 
 (defbehavior level-hint-init-by-other level-hint ((arg0 text-id) (arg1 string) (arg2 entity))
+  (when (not (lookup-text! *common-text* arg0 #t))
+    ;; couldn't lookup text, abort!
+    (deactivate self)
+    (return 0)
+    )
   (mark-text-as-seen *game-info* arg0)
   (set! (-> self text-id-to-display) arg0)
   (set! (-> self sound-to-play) arg1)
