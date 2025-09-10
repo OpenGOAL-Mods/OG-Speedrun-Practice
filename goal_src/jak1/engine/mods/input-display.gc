@@ -431,7 +431,7 @@ Down lets you edit buttons, left lets you edit the sticks, right for dpad, up to
 ;
 
 (defun input-display-on ()
-  (when (not (process-by-name 'button-proc *active-pool*))
+  (when (not (process-by-name 'button-proc *default-pool*))
     ;process-spawn-function, spawns a process that runs the function you give it
     (process-spawn-function process
       :name 'button-proc
@@ -475,6 +475,6 @@ Down lets you edit buttons, left lets you edit the sticks, right for dpad, up to
 
 (defun input-display-off ()
   "Kill the button process"
-  (when (process-by-name 'button-proc *active-pool*)
-    (kill-by-name 'button-proc *active-pool*))
+  (when (process-by-name 'button-proc *default-pool*)
+    (kill-by-name 'button-proc *default-pool*))
   (none))
