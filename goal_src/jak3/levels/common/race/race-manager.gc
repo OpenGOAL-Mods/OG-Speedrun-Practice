@@ -283,6 +283,16 @@
     )
   (when (logtest? (-> this flags) (racer-state-flags rsf7))
     )
+  (when (or (= (-> this rider) 0) (= (-> this rider) 1))
+      (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id debug-no-zbuf1))
+        (let ((font-ctx (new 'stack 'font-context *font-default-matrix* 0 100 0.0 (font-color red) (font-flags shadow kerning))))
+          (set! (-> font-ctx scale) 3.0)
+          (draw-string-adv 
+            (string-format "lap-quadrant: ~D ~%lap-dist: ~f" (-> this lap-quadrant) (-> this lap-distance))
+            buf font-ctx)
+          )
+        )
+      )
   0
   (none)
   )
