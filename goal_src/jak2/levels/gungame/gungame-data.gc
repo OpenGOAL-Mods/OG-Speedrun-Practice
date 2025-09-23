@@ -570,7 +570,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.8
       :num #x37
       :ref-time-num 40
-      :score #x1f4
+      :score 500
       :flags (tpath-flags tpath-rand)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x1b)
@@ -731,7 +731,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x73
       :ref-time-num 100
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 100)
@@ -928,7 +928,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xe1
       :ref-time-num #xdc
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #xdc)
@@ -1146,7 +1146,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x168
       :ref-time-num #x15e
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #xb)
         (new 'static 'tpath-control-frame :time 0.2 :path-pos #x7f :command (tpath-command arise))
@@ -1443,7 +1443,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x249
       :ref-time-num #x244
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x244)
@@ -1560,7 +1560,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 2.25
       :num #x267
       :ref-time-num #x262
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x3)
         (new 'static 'tpath-control-frame :time 0.2 :path-pos #xff :command (tpath-command arise))
@@ -1575,7 +1575,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x269
       :ref-time-num #x267
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x267)
@@ -1591,7 +1591,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x26a
       :ref-time-num #x269
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x269)
@@ -2034,7 +2034,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x2c5
       :ref-time-num #x2c4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 0.7
       :list (new 'static 'boxed-array :type int32 #x2c4)
@@ -2101,7 +2101,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x2dd
       :ref-time-num #x2c6
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x2c6)
@@ -2120,7 +2120,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 3.5
       :num #x2df
       :ref-time-num #x2da
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x38)
         (new 'static 'tpath-control-frame :time 0.2 :command (tpath-command arise))
@@ -2159,7 +2159,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x2e9
       :ref-time-num #x2e4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x2e4)
@@ -2204,7 +2204,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x2fd
       :ref-time-num #x2f8
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x2f8)
@@ -2426,7 +2426,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x37f
       :ref-time-num #x37a
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x37a)
@@ -2494,7 +2494,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x393
       :ref-time-num #x38e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 4.5
       :list (new 'static 'boxed-array :type int32 #x38e)
@@ -2654,7 +2654,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 10.2
       :num #x3d4
       :ref-time-num #x370
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x27)
         (new 'static 'tpath-control-frame :time 0.2 :path-pos #xc :command (tpath-command arise))
@@ -2675,7 +2675,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x3d7
       :ref-time-num #x3d4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus tpath-rand)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x3d4)
@@ -2745,7 +2745,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.7
       :num #x3e8
       :ref-time-num #x3de
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x27)
         (new 'static 'tpath-control-frame :time 0.2 :path-pos #x26 :command (tpath-command arise))
@@ -2858,7 +2858,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.9
       :num #x3fc
       :ref-time-num #x3ee
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x25)
         (new 'static 'tpath-control-frame :time 0.2 :path-pos #x19 :command (tpath-command arise))
@@ -2880,7 +2880,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x401
       :ref-time-num #x3f2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3f2)
@@ -2904,7 +2904,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x406
       :ref-time-num #x3fc
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 0.8
       :list (new 'static 'boxed-array :type int32 #x3fc)
@@ -2998,7 +2998,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x19
       :ref-time-num 20
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 0.5
       :list (new 'static 'boxed-array :type int32 20)
@@ -3038,7 +3038,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x20
       :ref-time-num 30
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 0.5
       :list (new 'static 'boxed-array :type int32 30)
@@ -3167,7 +3167,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x41
       :ref-time-num 60
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 60)
@@ -3223,7 +3223,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x55
       :ref-time-num 80
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 80)
@@ -3256,7 +3256,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x5f
       :ref-time-num 90
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 90)
@@ -3408,7 +3408,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x88
       :ref-time-num #x87
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x87)
@@ -3470,7 +3470,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x91
       :ref-time-num #x8c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x8c)
@@ -3504,7 +3504,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x95
       :ref-time-num #x93
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x93)
@@ -3538,7 +3538,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x9b
       :ref-time-num #x96
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x96)
@@ -3587,7 +3587,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xaf
       :ref-time-num #xaa
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #xaa)
@@ -3620,7 +3620,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xb9
       :ref-time-num #xb4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #xb4)
@@ -3653,7 +3653,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xc3
       :ref-time-num #xbe
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #xbe)
@@ -3837,7 +3837,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xe1
       :ref-time-num #xe0
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 #xe0)
@@ -3953,7 +3953,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xee
       :ref-time-num #xec
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #xec)
@@ -4037,7 +4037,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x113
       :ref-time-num #x10e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x10e)
@@ -4105,7 +4105,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x131
       :ref-time-num #x12c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x12c)
@@ -4123,7 +4123,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x132
       :ref-time-num #x131
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x131)
@@ -4141,7 +4141,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x133
       :ref-time-num #x132
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x132)
@@ -4191,7 +4191,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x145
       :ref-time-num #x140
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x140)
@@ -4313,7 +4313,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x163
       :ref-time-num #x162
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x162)
@@ -4481,7 +4481,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x16a
       :ref-time-num #x169
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x169)
@@ -4927,7 +4927,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1b3
       :ref-time-num #x1b2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x1b2)
@@ -5081,7 +5081,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1d3
       :ref-time-num #x1d2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.7
       :list (new 'static 'boxed-array :type int32 #x1d2)
@@ -5222,7 +5222,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1f9
       :ref-time-num #x1f4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x1f4)
@@ -5272,7 +5272,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x203
       :ref-time-num #x1fe
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x1fe)
@@ -5370,7 +5370,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x226
       :ref-time-num #x21c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x21c)
@@ -5387,7 +5387,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.2
       :num #x230
       :ref-time-num #x21c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 #x21c)
@@ -5404,7 +5404,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.4
       :num #x23a
       :ref-time-num #x21c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 4.0
       :list (new 'static 'boxed-array :type int32 #x21c)
@@ -6351,7 +6351,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.15
       :num #xe18
       :ref-time-num #xe15
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 5.5
       :list (new 'static 'boxed-array :type int32 #xe15)
@@ -6981,7 +6981,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.8
       :num #x37
       :ref-time-num 40
-      :score #x1f4
+      :score 500
       :flags (tpath-flags tpath-rand)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x1b)
@@ -7165,7 +7165,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x73
       :ref-time-num 100
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 100)
@@ -7955,7 +7955,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x163
       :ref-time-num #x15e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x15e)
@@ -8389,7 +8389,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x249
       :ref-time-num #x244
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x244)
@@ -8506,7 +8506,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 2.25
       :num #x267
       :ref-time-num #x262
-      :score #x1f4
+      :score 500
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x3)
         (new 'static 'tpath-control-frame :time 0.2 :path-pos #xff :command (tpath-command arise))
@@ -8521,7 +8521,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x269
       :ref-time-num #x267
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x267)
@@ -8539,7 +8539,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x26a
       :ref-time-num #x269
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x269)
@@ -9334,7 +9334,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x2e9
       :ref-time-num #x2e4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x2e4)
@@ -9379,7 +9379,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x2fd
       :ref-time-num #x2f8
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.5
       :list (new 'static 'boxed-array :type int32 #x2f8)
@@ -9624,7 +9624,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x384
       :ref-time-num #x37f
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x37f)
@@ -9693,7 +9693,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x393
       :ref-time-num #x38e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x38e)
@@ -9741,7 +9741,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x39d
       :ref-time-num #x398
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x398)
@@ -9788,7 +9788,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x3a7
       :ref-time-num #x3a2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3a2)
@@ -9835,7 +9835,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x3b1
       :ref-time-num #x3ac
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3ac)
@@ -9882,7 +9882,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x3bb
       :ref-time-num #x3b6
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3b6)
@@ -9929,7 +9929,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.4
       :num #x3c5
       :ref-time-num #x3c0
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3c0)
@@ -9976,7 +9976,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.2
       :num #x3cf
       :ref-time-num #x3ca
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3ca)
@@ -10023,7 +10023,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.1
       :num #x3d9
       :ref-time-num #x3d4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3d4)
@@ -10076,7 +10076,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.1
       :num #x3e8
       :ref-time-num #x3e3
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3e3)
@@ -10121,7 +10121,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.1
       :num #x45b
       :ref-time-num #x3f2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x3f2)
@@ -10166,7 +10166,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.1
       :num #x46a
       :ref-time-num #x465
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x465)
@@ -10211,7 +10211,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.15
       :num #x479
       :ref-time-num #x474
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x474)
@@ -10242,7 +10242,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.15
       :num #x483
       :ref-time-num #x47e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x47e)
@@ -10273,7 +10273,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.1
       :num #x48d
       :ref-time-num #x488
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 #x488)
@@ -10314,7 +10314,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :s-time 1.0
       :num #xa
-      :score #x1f4
+      :score 500
       :flags (tpath-flags tpath-rand peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x26)
@@ -10337,7 +10337,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x14
       :ref-time-num 10
-      :score #x1f4
+      :score 500
       :flags (tpath-flags tpath-rand peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x27)
@@ -10383,7 +10383,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 2.0
       :num #x2a
       :ref-time-num 30
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :bonus-time 0.5
       :list (new 'static 'boxed-array :type int32 30)
@@ -10423,7 +10423,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x32
       :ref-time-num 45
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x29)
@@ -10512,7 +10512,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x5a
       :ref-time-num 80
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 1.0
       :list (new 'static 'boxed-array :type int32 80)
@@ -10530,7 +10530,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.1
       :num #x64
       :ref-time-num 80
-      :score #x1f4
+      :score 500
       :flags (tpath-flags tpath-rand peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x2b)
@@ -10568,7 +10568,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x73
       :ref-time-num #x6e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 #x6e)
@@ -10601,7 +10601,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x82
       :ref-time-num #x78
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 #x78)
@@ -10663,7 +10663,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xa0
       :ref-time-num #x8c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x8c)
@@ -10697,7 +10697,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #xb4
       :ref-time-num #xaa
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 3.0
       :list (new 'static 'boxed-array :type int32 #xaa)
@@ -10776,7 +10776,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #xdc
       :ref-time-num #xd2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 7
         (new 'static 'tpath-control-frame :path-num #x33)
@@ -10851,7 +10851,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x10e
       :ref-time-num #x104
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x104)
@@ -10884,7 +10884,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.5
       :num #x122
       :ref-time-num #x118
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x8c)
@@ -10919,7 +10919,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x136
       :ref-time-num #x12c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x12c)
@@ -10953,7 +10953,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x14a
       :ref-time-num #x140
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x140)
@@ -10972,7 +10972,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x154
       :ref-time-num #x14a
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x44)
@@ -11003,7 +11003,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x168
       :ref-time-num #x15e
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x15e)
@@ -11036,7 +11036,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x17c
       :ref-time-num #x172
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x172)
@@ -11069,7 +11069,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x18b
       :ref-time-num #x186
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.0
       :list (new 'static 'boxed-array :type int32 #x186)
@@ -11137,7 +11137,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x1ae
       :ref-time-num #x1a4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x5)
@@ -11187,7 +11187,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.5
       :num #x1b6
       :ref-time-num #x1b4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x1b4)
@@ -11238,7 +11238,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.3
       :num #x1cc
       :ref-time-num #x1c2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x49)
@@ -11271,7 +11271,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1db
       :ref-time-num #x1d6
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x1d6)
@@ -11307,7 +11307,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 2.0
       :num #x1ea
       :ref-time-num #x1e0
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x3)
@@ -11339,7 +11339,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1f9
       :ref-time-num #x1f4
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x12c)
@@ -11357,7 +11357,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1fa
       :ref-time-num #x1f9
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus peace)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x131)
@@ -11375,7 +11375,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x1fb
       :ref-time-num #x1fa
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 3.5
       :list (new 'static 'boxed-array :type int32 #x1fa)
@@ -11409,7 +11409,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x208
       :ref-time-num #x1fe
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x6)
@@ -11425,7 +11425,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x20d
       :ref-time-num #x208
-      :score #x1f4
+      :score 500
       :flags (tpath-flags bonus)
       :bonus-time 2.5
       :list (new 'static 'boxed-array :type int32 #x208)
@@ -11459,7 +11459,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x21c
       :ref-time-num #x212
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x9)
@@ -11476,7 +11476,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x226
       :ref-time-num #x21c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #xa)
@@ -11493,7 +11493,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.0
       :num #x230
       :ref-time-num #x226
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #xb)
@@ -11526,7 +11526,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.5
       :num #x244
       :ref-time-num #x23a
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #xd)
@@ -11607,7 +11607,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 2.0
       :num #x276
       :ref-time-num #x26c
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x46)
@@ -11623,7 +11623,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x280
       :ref-time-num #x276
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x46)
@@ -11640,7 +11640,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 3.0
       :num #x28a
       :ref-time-num #x280
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x16)
@@ -11656,7 +11656,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
     (new 'static 'tpath-info
       :num #x294
       :ref-time-num #x28a
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 8
         (new 'static 'tpath-control-frame :path-num #x14)
@@ -11718,7 +11718,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 5.0
       :num #x2bc
       :ref-time-num #x2b2
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x11)
@@ -11747,7 +11747,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.6
       :num #x2d0
       :ref-time-num #x2c6
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x11)
@@ -11806,7 +11806,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.5
       :num #x2f8
       :ref-time-num #x2ee
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x1a)
@@ -11975,7 +11975,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 3.5
       :num #x33c
       :ref-time-num #x33b
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x1e)
@@ -12074,7 +12074,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 1.5
       :num #x37a
       :ref-time-num #x370
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x20)
@@ -12089,7 +12089,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.8
       :num #x384
       :ref-time-num #x37a
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x20)
@@ -12104,7 +12104,7 @@ For example `20` would mean 4 red gun pickups, or 2 yellow gun pickups"
       :s-time 0.9
       :num #x38e
       :ref-time-num #x384
-      :score #x1f4
+      :score 500
       :flags (tpath-flags peace)
       :anim1 (new 'static 'inline-array tpath-control-frame 6
         (new 'static 'tpath-control-frame :path-num #x20)
