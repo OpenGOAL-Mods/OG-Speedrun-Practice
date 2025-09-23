@@ -681,7 +681,8 @@
   "Draw speedrun related settings in the bottom left corner"
   ;; hide speedrun verification text if some other helper text is turned on
   (when (or (-> *speedrun-info* should-display-plant-deload-info?)
-            (-> *speedrun-info* should-display-idle-deload-info?))
+            (-> *speedrun-info* should-display-idle-deload-info?)
+            (-> *speedrun-info* show-input-display?))
     (hide-speedrun-display))
   (when (and (-> *pc-settings* speedrunner-mode?) (not (paused?)) (-> *speedrun-info* should-display?))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id subtitle))
