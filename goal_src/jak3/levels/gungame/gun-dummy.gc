@@ -25,16 +25,16 @@
 (defenum tpath-flag
   :type uint16
   :bitfield #t
-  (t0 0)
-  (t1 1)
-  (t2 2)
-  (t3 3)
-  (t4 4)
-  (t5 5)
-  (t6 6)
-  (t7 7)
-  (t8 8)
-  (t9 9)
+  (need-to-spawn 0)
+  (broken 1)
+  (citizen 2)
+  (bonus 3) ;; gold
+  (rand 4)
+  (big 5)
+  (peace 6)
+  (explode 7)
+  (gun 8)
+  (conditional 9)
   (shield 10)
   )
 ;; ---tpath-flag
@@ -137,6 +137,41 @@
     )
   )
 
+(define *gun-dummy-str* (new 'global 'string 64 (the-as string #f)))
+(defun print-dummy-score ((this gun-dummy))
+  (when (> (-> this hit-points) 0)
+    ;; start with score
+    (format (clear *gun-dummy-str*) "~D~%" (the int (-> this score)))
+    ;; add random flag (all others are clear from dummy type/state)
+    ;; (when (logtest? (-> this info flags) (tpath-flags tpath-rand))
+    ;;   (format *gun-dummy-str* "R (~D/~D)" (+ (-> this anim-idx) 1) (-> this info num-anims))
+    ;;   )
+
+    ;; print
+    (internal-draw-text-3d-2
+      (bucket-id debug-no-zbuf1)
+      *gun-dummy-str*
+      (-> this root trans)
+      (cond 
+        ((< (-> this score) 0.0)
+          (font-color red) ;; civs
+          ) 
+        ((> (-> this score) 200.0)
+          (font-color yellow) ;; gold
+          ) 
+        ((> (-> this score) 100.0)
+          (font-color cyan) ;; double
+          ) 
+        (else
+          (font-color green)
+          )
+        )
+      (new 'static 'vector2h)
+      #t  ;; BIG
+      )
+    )
+  (none)
+  )
 
 ;; WARN: Return type mismatch symbol vs none.
 (defmethod set-explode-group ((this gun-dummy))
@@ -356,6 +391,7 @@
              )
             (((tpath-cmd cmd2))
              (set! (-> this score) (- (-> this score) (* (-> this score-speed) (seconds-per-frame))))
+             (print-dummy-score this)
              (set! (-> this inout-percent) (fmax 0.0 (- (-> this inout-percent) (* 4.0 (seconds-per-frame)))))
              (let ((s2-4 (new 'stack-no-clear 'vector))
                    (s3-4 (new 'stack-no-clear 'vector))
@@ -423,6 +459,7 @@
              )
             (((tpath-cmd cmd3))
              (set! (-> this score) (- (-> this score) (* (-> this score-speed) (seconds-per-frame))))
+             (print-dummy-score this)
              (set! (-> this inout-percent) (fmax 0.0 (- (-> this inout-percent) (* 4.0 (seconds-per-frame)))))
              (get-point-in-path! s4-0 (-> this root trans) (-> this path-pos) 'interp)
              (set! (-> this first-time-command) #f)
@@ -468,7 +505,7 @@
 (defbehavior gun-dummy-event-handler gun-dummy ((arg0 process) (arg1 int) (arg2 symbol) (arg3 event-message-block))
   (case arg2
     (('prevent-bounce?)
-     (not (logtest? (-> self info flags) (tpath-flag t5)))
+     (not (logtest? (-> self info flags) (tpath-flag big)))
      )
     (('die-fast)
      (deactivate self)
@@ -480,21 +517,21 @@
     (('track)
      (cond
        ((-> arg3 param 0)
-        (if (and (not (logtest? (-> self info flags) (tpath-flag t2))) (> (-> self hit-points) 0))
+        (if (and (not (logtest? (-> self info flags) (tpath-flag citizen))) (> (-> self hit-points) 0))
             #t
             'abort
             )
         )
        (else
-         (and (not (logtest? (-> self info flags) (tpath-flag t2))) (> (-> self hit-points) 0))
+         (and (not (logtest? (-> self info flags) (tpath-flag citizen))) (> (-> self hit-points) 0))
          )
        )
      )
     (('attack)
      (let ((s5-0 (the-as attack-info (-> arg3 param 1))))
        (get-penetrate-using-from-attack-event (the-as process-drawable arg0) arg3)
-       (when (or (not (logtest? (-> self info flags) (tpath-flag t6)))
-                 (and (logtest? (-> self info flags) (tpath-flag t6))
+       (when (or (not (logtest? (-> self info flags) (tpath-flag peace)))
+                 (and (logtest? (-> self info flags) (tpath-flag peace))
                       (or (= (-> s5-0 mode) 'eco-dark) (= (-> s5-0 mode) 'explode))
                       )
                  )
@@ -511,7 +548,7 @@
                (vector-normalize! (vector-! (new 'stack-no-clear 'vector) (target-pos 0) (-> self root trans)) 4096.0)
                )
              (cond
-               ((and (= (-> self hit-points) 2) (logtest? (-> self info flags) (tpath-flag t5)))
+               ((and (= (-> self hit-points) 2) (logtest? (-> self info flags) (tpath-flag big)))
                 (set! (-> self rot-y-offset) 262144.0)
                 (set! (-> self spin-sound) (sound-play "target-spin"))
                 )
@@ -576,7 +613,7 @@
         )
     )
   :exit (behavior ()
-    (logior! (-> self info flags) (tpath-flag t1))
+    (logior! (-> self info flags) (tpath-flag broken))
     )
   :code (behavior ()
     (while (not (-> self done?))
@@ -602,7 +639,7 @@
   :post (behavior ()
     (set! (-> self done?) (not (check-done? self)))
     (when (zero? (-> self hit-points))
-      (logior! (-> self info flags) (tpath-flag t1))
+      (logior! (-> self info flags) (tpath-flag broken))
       (if (>= -100.0 (-> self score))
           (sound-play "score-bad")
           )
@@ -707,10 +744,10 @@
 
 (defmethod gun-dummy-method-35 ((this gun-dummy))
   (cond
-    ((logtest? (-> this info flags) (tpath-flag t3 t5))
+    ((logtest? (-> this info flags) (tpath-flag bonus big))
      2
      )
-    ((logtest? (-> this info flags) (tpath-flag t2))
+    ((logtest? (-> this info flags) (tpath-flag citizen))
      1
      )
     (else
@@ -721,7 +758,7 @@
 
 (defmethod get-draw-mask ((this gun-dummy))
   (cond
-    ((logtest? (-> this info flags) (tpath-flag t3))
+    ((logtest? (-> this info flags) (tpath-flag bonus))
      4
      )
     ((= *gungame-level* 'lgunnorm)
@@ -735,7 +772,7 @@
 
 (defmethod init-tpath ((this gun-dummy) (arg0 tpath-info))
   (cond
-    ((logtest? (-> arg0 flags) (tpath-flag t2))
+    ((logtest? (-> arg0 flags) (tpath-flag citizen))
      (logclear! (-> this mask) (process-mask enemy))
      (logior! (-> this mask) (process-mask crate))
      )
@@ -745,7 +782,7 @@
     )
   (quaternion-copy! (-> this quat) (-> this root quat))
   (+! (-> this root trans y) -16384.0)
-  (if (not (logtest? (-> arg0 flags) (tpath-flag t4)))
+  (if (not (logtest? (-> arg0 flags) (tpath-flag rand)))
       (set! *tpath-rand* (the-as uint (rand-vu-int-count 16)))
       )
   (set! (-> this current)
@@ -758,7 +795,7 @@
       )
     )
   (cond
-    ((logtest? (-> arg0 flags) (tpath-flag t8))
+    ((logtest? (-> arg0 flags) (tpath-flag gun))
      (set! (-> this gun-info gun-state) (the-as uint 1))
      (let ((a0-10 (-> this node-list data 4)))
        (set! (-> a0-10 param0) gun-dummy-gun-aim-jmod-func)
@@ -771,12 +808,13 @@
       )
     )
   (set! (-> this score) (the float (-> arg0 score)))
-  (if (logtest? (-> arg0 flags) (tpath-flag t2))
+  (print-dummy-score this)
+  (if (logtest? (-> arg0 flags) (tpath-flag citizen))
       (set! (-> this score-speed) 0.0)
       (set! (-> this score-speed) (/ (-> this score) (gun-dummy-method-31 this)))
       )
   (set! (-> this info) arg0)
-  (set! (-> this hit-points) (if (logtest? (-> arg0 flags) (tpath-flag t5))
+  (set! (-> this hit-points) (if (logtest? (-> arg0 flags) (tpath-flag big))
                                  2
                                  1
                                  )
@@ -787,7 +825,7 @@
        (+! (-> this hit-points) 1)
        (setup-masks (-> this draw) a1-2 0)
        )
-      ((not (logtest? (-> arg0 flags) (tpath-flag t2)))
+      ((not (logtest? (-> arg0 flags) (tpath-flag citizen)))
        (setup-masks (-> this draw) 0 a1-2)
        )
       )
@@ -880,7 +918,7 @@
   0
   (setup-masks (-> this draw) 0 -1)
   (cond
-    ((logtest? (-> this info flags) (tpath-flag t2))
+    ((logtest? (-> this info flags) (tpath-flag citizen))
      (setup-masks (-> this draw) (gun-dummy-method-35 this) 0)
      )
     (else
@@ -888,7 +926,7 @@
       (setup-masks (-> this draw) (gun-dummy-method-35 this) 0)
       )
     )
-  (if (logtest? (-> this info flags) (tpath-flag t3))
+  (if (logtest? (-> this info flags) (tpath-flag bonus))
       (sound-play "target-bonus")
       (sound-play "target-break")
       )
