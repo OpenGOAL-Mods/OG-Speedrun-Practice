@@ -1160,6 +1160,11 @@
   )
 
 (define-extern draw-plant-deload-info (function none))
+
+(defun mark-speedrun-started ()
+  (true! (-> *speedrun-info* has-started?))
+  (none))
+
 (defun speedrun-mode-update ()
   "A per frame update for speedrunning related stuff"
   ;; Draw info to the screen
@@ -1208,7 +1213,7 @@
       )
     )
 
-  (when (-> *pc-settings* speedrunner-mode?)  
+  (when (-> *pc-settings* speedrunner-mode?)
     ;; Check if run/autosplitter should be started (out of blackout and player has control of jak)
     (when (and (not (-> *speedrun-info* has-started?))
                *target*
@@ -1218,7 +1223,7 @@
                ;; target has landed on ground/water, or we're about to enter target-hit-ground state
                (or (logtest? (-> *target* control status) (cshape-moving-flags onground onsurf on-water))
                    (= (-> *target* next-state name) 'target-hit-ground)))
-      (true! (-> *speedrun-info* has-started?))
+      (mark-speedrun-started)
       ;; spawn a process that resets autosplitter after suspending for 1 frame
       (process-spawn-function process
         (lambda ()
