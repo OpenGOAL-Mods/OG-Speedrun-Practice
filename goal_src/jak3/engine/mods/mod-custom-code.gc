@@ -92,7 +92,10 @@
   (none)
   )
 
+(define-extern draw-torp-info (function none))
 (defun runs-every-frame ()
+  (let ((torp (process-by-type-exact 'htorpedo *active-pool*)))
+    (when torp (draw-torp-info)))
 
   ;; call custom checkpoint post-init function, if any
   (when (and *target*
