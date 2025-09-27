@@ -93,9 +93,13 @@
   )
 
 (define-extern draw-torp-info (function none))
+(define-extern draw-roll-challenge-info (function none))
 (defun runs-every-frame ()
   (let ((torp (process-by-type-exact 'htorpedo *active-pool*)))
     (when torp (draw-torp-info)))
+
+  (let ((mgr (process-by-type-exact 'task-manager-bbush-roll-count *active-pool*)))
+    (when mgr (draw-roll-challenge-info)))
 
   ;; call custom checkpoint post-init function, if any
   (when (and *target*

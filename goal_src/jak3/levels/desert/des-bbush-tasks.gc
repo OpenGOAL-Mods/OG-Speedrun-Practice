@@ -681,6 +681,53 @@
   (none)
   )
 
+(defun draw-roll-challenge-info ()
+  (let ((mgr (process-by-type-exact 'task-manager-bbush-roll-count *active-pool*)))
+    (when (and mgr (nonzero? mgr) (nonzero? (-> (the task-manager-bbush-roll-count mgr) player-vehicle)))
+      (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id debug-no-zbuf1))
+        (let* ((this (the task-manager-bbush-roll-count mgr))
+               (v1-2 (handle->process (-> this player-vehicle))))
+          (when v1-2
+            (let ((vehicle-bone-y (-> (the-as vehicle v1-2) node-list data 0 bone transform uvec y))
+                    (font-ctx (new 'stack 'font-context *font-default-matrix* 0 100 0.0 (font-color red) (font-flags shadow kerning))))
+              (set! (-> font-ctx scale) 3.0)
+              (if (< 0.1 (fabs vehicle-bone-y))
+                ;; vehicle is in threshold for maybe getting half point
+                (if (< (* vehicle-bone-y (-> this y-proj)) 0.0)
+                  ;; should get half point reward
+                  (draw-string-adv 
+                    (string-format "roll-count:      ~F ~%~6Ly-proj:          ~F ~%~4Lvehicle bone y: ~F"
+                      (-> this roll-count)
+                      (-> this y-proj)
+                      vehicle-bone-y
+                      )
+                    buf font-ctx)
+                  ;; no half point
+                  (draw-string-adv 
+                    (string-format "roll-count:      ~F ~%~6Ly-proj:          ~F ~%vehicle bone y: ~F"
+                      (-> this roll-count)
+                      (-> this y-proj)
+                      vehicle-bone-y
+                      )
+                    buf font-ctx)
+                  )
+                ;; vehicle is outside threshold for maybe getting half point
+                (draw-string-adv 
+                  (string-format "roll-count:      ~F ~%y-proj:          ~F ~%~6Lvehicle bone y: ~F"
+                    (-> this roll-count)
+                    (-> this y-proj)
+                    vehicle-bone-y
+                    )
+                  buf font-ctx)       
+                )       
+              )
+            )
+          )
+        )
+      )
+    )
+  (none))
+
 (defmethod task-manager-method-26 ((this task-manager-bbush-roll-count))
   (let ((t9-0 (method-of-type task-manager-vehicle-bbush task-manager-method-26)))
     (t9-0 this)
