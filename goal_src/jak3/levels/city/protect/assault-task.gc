@@ -919,16 +919,18 @@
        )
       (((assault-cmd wait))
        (case (-> gp-0 wait-type)
-         (((assault-cmd-wait-type spawn-delay))
+         (((assault-cmd-wait-type spawn-delay)) ;; 'time
           (time-elapsed? (-> this script-command start-time) (-> gp-0 spawn-delay))
           )
-         (((assault-cmd-wait-type cmd2))
+         (((assault-cmd-wait-type cmd2)) ;; 'total
+          ;; check spawned/remaining of: (assault-citizen-norm 1) and (guard-tazer 3), I think?
           (let ((v1-9 (+ (task-manager-city-port-assault-method-49 this 1) (task-manager-city-port-assault-method-49 this 3)))
                 )
-            (>= (-> gp-0 count) v1-9)
+            (>= (-> gp-0 count) v1-9) ;; command only runs if the count from the cmd is bigger than the current count
             )
           )
-         (((assault-cmd-wait-type cmd1))
+         (((assault-cmd-wait-type cmd1)) ;; 'kg
+          ;; similar to above, but by faction-type? idk
           (>= (-> gp-0 count) (task-manager-city-port-assault-method-49 this (the-as int (-> gp-0 faction-type))))
           )
          )
@@ -939,13 +941,13 @@
 
 (defmethod task-manager-city-port-assault-method-49 ((this task-manager-city-port-assault) (arg0 int))
   0
-  (let ((v0-0 (assault-squad-control-method-10 *assault-squad* arg0)))
+  (let ((v0-0 (assault-squad-control-method-10 *assault-squad* arg0))) ;; get remaining count to spawn for arg0 type?
     (dotimes (v1-2 12)
       (if (= (-> *assault-faction-lookup* (-> this spawners v1-2 current-command spawn-type)) arg0)
-          (+! v0-0 (-> this spawners v1-2 current-command count))
+          (+! v0-0 (-> this spawners v1-2 current-command count)) ;; add current (spawned?) count for arg0 type?
           )
       )
-    v0-0
+    v0-0 ;; return sum of the two
     )
   )
 
@@ -1572,47 +1574,64 @@
 
 (defmethod pickup-spawn-chance ((this task-manager-city-port-assault) (arg0 room-powerup-percentage) (arg1 int))
   (case arg1
-    ((20)
-     (let ((f0-1 (/ (-> *target* fact health) (-> *target* fact health-max))))
+    ((20) ;; special case for (pickup-type health)
+     (let ((f0-1 (/ (-> *target* fact health) (-> *target* fact health-max)))) ;; health as a fraction of max health (between 0.0 and 1.0)
        0.0
-       (let* ((f0-2 (- 1.0 f0-1))
-              (f0-3 (* f0-2 f0-2))
-              (f0-4 (lerp 0.0 7.0 f0-3))
+       (let* ((f0-2 (- 1.0 f0-1)) ;; missing health / damage taken, as a fraction of max health (between 0.0 and 1.0)
+              (f0-3 (* f0-2 f0-2)) ;; missing health squared? so still between 0.0 and 1.0, but with quadratic scaling
+              (f0-4 (lerp 0.0 7.0 f0-3)) ;; scale the squared value to be between 0.0 and 7.0 
               )
-         (* (-> arg0 percentages arg1) f0-4)
+         (* (-> arg0 percentages arg1) f0-4) ;; multiply the chance from the room-powerups table by the lerped value
+         ;; in practice the chance for health in the lookup table is 1.0 for all rooms
+
+         ;; so if you have full HP, this is zeroed - no chance of health drop
+         ;; if you're missing 1/4 HP, the chance is 7/16  (0.44)
+         ;; if you're missing 1/3 HP, the chance is 7/9   (0.77)
+         ;; if you're missing 1/2 HP, the chance is 7/4   (1.75)
+         ;; if you're missing 3/4 HP, the chance is 63/16 (3.95)
          )
        )
      )
     (else
+      ;; anything besides health, we read straight from the lookup table (in assault-script.gc)
       (-> arg0 percentages arg1)
       )
     )
   )
 
 (defmethod check-for-pickup-spawn ((this task-manager-city-port-assault))
+  ;; time to spawn next powerup
   (when (< (-> this next-powerup-spawn-time) (current-time))
     (let* ((f30-0 0.0)
-           (v1-2 (/ (the-as int (rand-uint31-gen *random-generator*)) 256))
-           (v1-3 (the-as number (logior #x3f800000 v1-2)))
-           (f28-0 (+ -1.0 (the-as float v1-3)))
+           (v1-2 (/ (the-as int (rand-uint31-gen *random-generator*)) 256)) ;; generate a random integer between 0 and 2^23 (8388608)
+           (v1-3 (the-as number (logior #x3f800000 v1-2))) ;; add 1065353216
+           (f28-0 (+ -1.0 (the-as float v1-3))) ;; reinterpret bits as float, subtract 1.0 - looks like this effectively generates a random value between 0.0 and 1.0
            )
-      (dotimes (s5-0 51)
+      (dotimes (s5-0 51) ;; for each pickup-type...
+        ;; increment f30-0 with the output of pickup-spawn-chance for this room & pickup-type
         (+! f30-0 (pickup-spawn-chance this (-> *room-powerups* (-> this current-room-index)) s5-0))
         )
-      (let ((f30-1 (* f28-0 f30-0))
-            (f28-1 0.0)
+      ;; okay so f30-0 is the total pickup chance across all pickups, for the current room      
+      (let ((f30-1 (* f28-0 f30-0)) ;; we scale the 0-1 RNG value f28-0 by this, and we'll choose the pickup that covers this value across the possible pickup-chance space
+            (f28-1 0.0) ;; we'll use this to track how far into the pickup chance space we are, until we reach ^ this value
             (s5-1 0)
             )
-        (while (< s5-1 51)
+        (while (< s5-1 51) ;; for each pickup-type...
+          ;; increment f28-1 by the pickup chance for this pickup-type
           (+! f28-1 (pickup-spawn-chance this (-> *room-powerups* (-> this current-room-index)) s5-1))
+          ;; see if we've reached the RNG value yet
           (when (< f30-1 f28-1)
+            ;; we have! spawn whatever we rolled
             (spawn-special-pickup this (the-as pickup-type s5-1))
+            ;; exit outta here so we dont spawn anything else
             (return 0)
             )
+          ;; didnt reach RNG value yet, increment counter
           (set! s5-1 (+ s5-1 1))
           )
         )
       )
+    ;; nothing got spawned sadface
     (the-as int #f)
     )
   )
@@ -1624,6 +1643,7 @@
 
 ;; WARN: Return type mismatch time-frame vs none.
 (defmethod set-next-powerup-spawn-time ((this task-manager-city-port-assault))
+  ;; TLDR on this one - each room has an avg-spawn-rate, but its still RNG. It gets nerfed the more you die on the mission
   (let ((f30-0 0.0)
         (f28-0 10.0)
         )

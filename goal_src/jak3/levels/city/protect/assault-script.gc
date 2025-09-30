@@ -39,9 +39,9 @@
 ;; +++assault-cmd-wait-type
 (defenum assault-cmd-wait-type
   :type uint8
-  (spawn-delay)
-  (cmd1)
-  (cmd2)
+  (spawn-delay) ;; 'time
+  (cmd1) ;; 'kg
+  (cmd2) ;; 'total
   )
 ;; ---assault-cmd-wait-type
 
@@ -49,19 +49,20 @@
 ;; +++assault-cmd-spawn-type
 (defenum assault-cmd-spawn-type
   :type uint16
-  (cmd0)
-  (cmd1)
-  (cmd2)
-  (cmd3)
-  (cmd4)
-  (cmd5)
-  (cmd6)
-  (cmd7)
-  (cmd8)
-  (cmd9)
-  (cmd10)
-  (cmd11)
-  (cmd12)
+  (cmd0)    ;;   none?
+  (cmd1)    ;;   (assault-citizen-norm 1)
+  (cmd2)    ;;   (unk2 2)
+  (cmd3)    ;;   (guard-tazer 3)
+  (cmd4)    ;;   (guard-rifle 4)
+  (cmd5)    ;;   (guard-grenade 5)
+  (cmd6)    ;;   (assault-grunt 6)
+  (cmd7)    ;;   (flitter 7)
+  (cmd8)    ;;   (assault-metalhead-predator 8)
+  (cmd9)    ;;   (roboguard 9)
+  (cmd10)   ;;   (turret 10)
+  (cmd11)   ;;   (spydroid 11)
+  (cmd12)   ;;   (roboguard-giant 12)
+  ;;   (assault-bombbot 13)
   )
 ;; ---assault-cmd-spawn-type
 
@@ -608,273 +609,273 @@
 (define *room-powerups*
   (new 'static 'boxed-array :type room-powerup-percentage
     (new 'static 'room-powerup-percentage :avg-spawn-rate #x1194 :percentages (new 'static 'array float 51
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                1.0
-                                                                                1.0
-                                                                                1.1
-                                                                                0.7
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
+                                                                                0.0 ;;   (none 0)
+                                                                                0.0 ;;   (eco-yellow 1)
+                                                                                0.0 ;;   (eco-red 2)
+                                                                                0.0 ;;   (eco-blue 3)
+                                                                                0.0 ;;   (eco-dark 4)
+                                                                                0.0 ;;   (eco-green 5)
+                                                                                0.0 ;;   (eco-pill-green 6)
+                                                                                1.0 ;; X (eco-pill-dark 7)
+                                                                                0.0 ;;   (eco-pill-light 8)
+                                                                                0.0 ;;   (eco-pill-random 9)
+                                                                                0.0 ;;   (money 10)
+                                                                                0.0 ;;   (fuel-cell 11)
+                                                                                0.0 ;;   (buzzer 12)
+                                                                                0.0 ;;   (darkjak 13)
+                                                                                1.0 ;; X (lightjak 14)
+                                                                                0.0 ;;   (ammo-yellow 15)
+                                                                                0.0 ;;   (ammo-red 16)
+                                                                                0.0 ;;   (ammo-blue 17)
+                                                                                0.0 ;;   (ammo-dark 18)
+                                                                                0.0 ;;   (shield 19)
+                                                                                1.0 ;; X (health 20)
+                                                                                0.0 ;;   (trick-point 21)
+                                                                                0.0 ;;   (trick-judge 22)
+                                                                                0.0 ;;   (gem 23)
+                                                                                0.0 ;;   (skill 24)
+                                                                                0.0 ;;   (karma 25)
+                                                                                0.0 ;;   (gun-red-1 26)
+                                                                                1.0 ;; X (gun-red-2 27)
+                                                                                0.0 ;;   (gun-red-3 28)
+                                                                                0.0 ;;   (gun-yellow-1 29)
+                                                                                1.0 ;; X (gun-yellow-2 30)
+                                                                                1.0 ;; X (gun-yellow-3 31)
+                                                                                1.0 ;; X (gun-blue-1 32)
+                                                                                1.1 ;; X (gun-blue-2 33)
+                                                                                0.7 ;; X (gun-blue-3 34)
+                                                                                0.0 ;;   (gun-dark-1 35)
+                                                                                0.0 ;;   (gun-dark-2 36)
+                                                                                0.0 ;;   (gun-dark-3 37)
+                                                                                0.0 ;;   (board 38)
+                                                                                0.0 ;;   (pass-red 39)
+                                                                                0.0 ;;   (pass-green 40)
+                                                                                0.0 ;;   (pass-yellow 41)
+                                                                                0.0 ;;   (pass-blue 42)
+                                                                                0.0 ;;   (ammo-random 43)
+                                                                                0.0 ;;   (health-max 44)
+                                                                                0.0 ;;   (light-eco-crystal 45)
+                                                                                0.0 ;;   (dark-eco-crystal 46)
+                                                                                0.0 ;;   (pass-slumb-genb 47)
+                                                                                0.0 ;;   (ammo-light-random 48)
+                                                                                0.0 ;;   (ammo-dark-light-random 49)
+                                                                                0.0 ;;   (light-random 50)
                                                                                 )
                                           )
     (new 'static 'room-powerup-percentage :avg-spawn-rate #x1d4c :percentages (new 'static 'array float 51
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.1
-                                                                                0.0
-                                                                                0.0
-                                                                                0.1
-                                                                                0.1
-                                                                                1.5
-                                                                                1.1
-                                                                                0.7
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
+                                                                                0.0 ;;   (none 0)
+                                                                                0.0 ;;   (eco-yellow 1)
+                                                                                0.0 ;;   (eco-red 2)
+                                                                                0.0 ;;   (eco-blue 3)
+                                                                                0.0 ;;   (eco-dark 4)
+                                                                                0.0 ;;   (eco-green 5)
+                                                                                0.0 ;;   (eco-pill-green 6)
+                                                                                1.0 ;; X (eco-pill-dark 7)
+                                                                                0.0 ;;   (eco-pill-light 8)
+                                                                                0.0 ;;   (eco-pill-random 9)
+                                                                                0.0 ;;   (money 10)
+                                                                                0.0 ;;   (fuel-cell 11)
+                                                                                0.0 ;;   (buzzer 12)
+                                                                                0.0 ;;   (darkjak 13)
+                                                                                1.0 ;; X (lightjak 14)
+                                                                                0.0 ;;   (ammo-yellow 15)
+                                                                                0.0 ;;   (ammo-red 16)
+                                                                                0.0 ;;   (ammo-blue 17)
+                                                                                0.0 ;;   (ammo-dark 18)
+                                                                                0.0 ;;   (shield 19)
+                                                                                1.0 ;; X (health 20)
+                                                                                0.0 ;;   (trick-point 21)
+                                                                                0.0 ;;   (trick-judge 22)
+                                                                                0.0 ;;   (gem 23)
+                                                                                0.0 ;;   (skill 24)
+                                                                                0.0 ;;   (karma 25)
+                                                                                0.0 ;;   (gun-red-1 26)
+                                                                                0.1 ;; X (gun-red-2 27)
+                                                                                0.0 ;;   (gun-red-3 28)
+                                                                                0.0 ;;   (gun-yellow-1 29)
+                                                                                0.1 ;; X (gun-yellow-2 30)
+                                                                                0.1 ;; X (gun-yellow-3 31)
+                                                                                1.5 ;; X (gun-blue-1 32)
+                                                                                1.1 ;; X (gun-blue-2 33)
+                                                                                0.7 ;; X (gun-blue-3 34)
+                                                                                0.0 ;;   (gun-dark-1 35)
+                                                                                0.0 ;;   (gun-dark-2 36)
+                                                                                0.0 ;;   (gun-dark-3 37)
+                                                                                0.0 ;;   (board 38)
+                                                                                0.0 ;;   (pass-red 39)
+                                                                                0.0 ;;   (pass-green 40)
+                                                                                0.0 ;;   (pass-yellow 41)
+                                                                                0.0 ;;   (pass-blue 42)
+                                                                                0.0 ;;   (ammo-random 43)
+                                                                                0.0 ;;   (health-max 44)
+                                                                                0.0 ;;   (light-eco-crystal 45)
+                                                                                0.0 ;;   (dark-eco-crystal 46)
+                                                                                0.0 ;;   (pass-slumb-genb 47)
+                                                                                0.0 ;;   (ammo-light-random 48)
+                                                                                0.0 ;;   (ammo-dark-light-random 49)
+                                                                                0.0 ;;   (light-random 50)
                                                                                 )
                                           )
     (new 'static 'room-powerup-percentage :avg-spawn-rate #x1194 :percentages (new 'static 'array float 51
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.5
-                                                                                0.0
-                                                                                0.8
-                                                                                0.5
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
+                                                                                0.0 ;;   (none 0)
+                                                                                0.0 ;;   (eco-yellow 1)
+                                                                                0.0 ;;   (eco-red 2)
+                                                                                0.0 ;;   (eco-blue 3)
+                                                                                0.0 ;;   (eco-dark 4)
+                                                                                0.0 ;;   (eco-green 5)
+                                                                                0.0 ;;   (eco-pill-green 6)
+                                                                                1.0 ;; X (eco-pill-dark 7)
+                                                                                0.0 ;;   (eco-pill-light 8)
+                                                                                0.0 ;;   (eco-pill-random 9)
+                                                                                0.0 ;;   (money 10)
+                                                                                0.0 ;;   (fuel-cell 11)
+                                                                                0.0 ;;   (buzzer 12)
+                                                                                0.0 ;;   (darkjak 13)
+                                                                                1.0 ;; X (lightjak 14)
+                                                                                0.0 ;;   (ammo-yellow 15)
+                                                                                0.0 ;;   (ammo-red 16)
+                                                                                0.0 ;;   (ammo-blue 17)
+                                                                                0.0 ;;   (ammo-dark 18)
+                                                                                0.0 ;;   (shield 19)
+                                                                                1.0 ;; X (health 20)
+                                                                                0.0 ;;   (trick-point 21)
+                                                                                0.0 ;;   (trick-judge 22)
+                                                                                0.0 ;;   (gem 23)
+                                                                                0.0 ;;   (skill 24)
+                                                                                0.0 ;;   (karma 25)
+                                                                                0.0 ;;   (gun-red-1 26)
+                                                                                1.0 ;; X (gun-red-2 27)
+                                                                                0.0 ;;   (gun-red-3 28)
+                                                                                0.0 ;;   (gun-yellow-1 29)
+                                                                                0.0 ;;   (gun-yellow-2 30)
+                                                                                0.5 ;; X (gun-yellow-3 31)
+                                                                                0.0 ;;   (gun-blue-1 32)
+                                                                                0.8 ;; X (gun-blue-2 33)
+                                                                                0.5 ;; X (gun-blue-3 34)
+                                                                                0.0 ;;   (gun-dark-1 35)
+                                                                                0.0 ;;   (gun-dark-2 36)
+                                                                                0.0 ;;   (gun-dark-3 37)
+                                                                                0.0 ;;   (board 38)
+                                                                                0.0 ;;   (pass-red 39)
+                                                                                0.0 ;;   (pass-green 40)
+                                                                                0.0 ;;   (pass-yellow 41)
+                                                                                0.0 ;;   (pass-blue 42)
+                                                                                0.0 ;;   (ammo-random 43)
+                                                                                0.0 ;;   (health-max 44)
+                                                                                0.0 ;;   (light-eco-crystal 45)
+                                                                                0.0 ;;   (dark-eco-crystal 46)
+                                                                                0.0 ;;   (pass-slumb-genb 47)
+                                                                                0.0 ;;   (ammo-light-random 48)
+                                                                                0.0 ;;   (ammo-dark-light-random 49)
+                                                                                0.0 ;;   (light-random 50)
                                                                                 )
                                           )
     (new 'static 'room-powerup-percentage :avg-spawn-rate #x1770 :percentages (new 'static 'array float 51
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.1
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
+                                                                                0.0 ;;   (none 0)
+                                                                                0.0 ;;   (eco-yellow 1)
+                                                                                0.0 ;;   (eco-red 2)
+                                                                                0.0 ;;   (eco-blue 3)
+                                                                                0.0 ;;   (eco-dark 4)
+                                                                                0.0 ;;   (eco-green 5)
+                                                                                0.0 ;;   (eco-pill-green 6)
+                                                                                1.0 ;; X (eco-pill-dark 7)
+                                                                                0.0 ;;   (eco-pill-light 8)
+                                                                                0.0 ;;   (eco-pill-random 9)
+                                                                                0.0 ;;   (money 10)
+                                                                                0.0 ;;   (fuel-cell 11)
+                                                                                0.0 ;;   (buzzer 12)
+                                                                                0.0 ;;   (darkjak 13)
+                                                                                1.0 ;; X (lightjak 14)
+                                                                                0.0 ;;   (ammo-yellow 15)
+                                                                                0.0 ;;   (ammo-red 16)
+                                                                                0.0 ;;   (ammo-blue 17)
+                                                                                0.0 ;;   (ammo-dark 18)
+                                                                                0.0 ;;   (shield 19)
+                                                                                1.0 ;; X (health 20)
+                                                                                0.0 ;;   (trick-point 21)
+                                                                                0.0 ;;   (trick-judge 22)
+                                                                                0.0 ;;   (gem 23)
+                                                                                0.0 ;;   (skill 24)
+                                                                                0.0 ;;   (karma 25)
+                                                                                0.0 ;;   (gun-red-1 26)
+                                                                                0.0 ;;   (gun-red-2 27)
+                                                                                0.0 ;;   (gun-red-3 28)
+                                                                                0.0 ;;   (gun-yellow-1 29)
+                                                                                0.0 ;;   (gun-yellow-2 30)
+                                                                                0.0 ;;   (gun-yellow-3 31)
+                                                                                0.0 ;;   (gun-blue-1 32)
+                                                                                0.1 ;; X (gun-blue-2 33)
+                                                                                0.0 ;;   (gun-blue-3 34)
+                                                                                0.0 ;;   (gun-dark-1 35)
+                                                                                0.0 ;;   (gun-dark-2 36)
+                                                                                0.0 ;;   (gun-dark-3 37)
+                                                                                0.0 ;;   (board 38)
+                                                                                0.0 ;;   (pass-red 39)
+                                                                                0.0 ;;   (pass-green 40)
+                                                                                0.0 ;;   (pass-yellow 41)
+                                                                                0.0 ;;   (pass-blue 42)
+                                                                                0.0 ;;   (ammo-random 43)
+                                                                                0.0 ;;   (health-max 44)
+                                                                                0.0 ;;   (light-eco-crystal 45)
+                                                                                0.0 ;;   (dark-eco-crystal 46)
+                                                                                0.0 ;;   (pass-slumb-genb 47)
+                                                                                0.0 ;;   (ammo-light-random 48)
+                                                                                0.0 ;;   (ammo-dark-light-random 49)
+                                                                                0.0 ;;   (light-random 50)
                                                                                 )
                                           )
     (new 'static 'room-powerup-percentage :avg-spawn-rate #x1194 :percentages (new 'static 'array float 51
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                0.0
-                                                                                0.0
-                                                                                1.0
-                                                                                1.0
-                                                                                1.0
-                                                                                1.1
-                                                                                0.7
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
-                                                                                0.0
+                                                                                0.0 ;;   (none 0)
+                                                                                0.0 ;;   (eco-yellow 1)
+                                                                                0.0 ;;   (eco-red 2)
+                                                                                0.0 ;;   (eco-blue 3)
+                                                                                0.0 ;;   (eco-dark 4)
+                                                                                0.0 ;;   (eco-green 5)
+                                                                                0.0 ;;   (eco-pill-green 6)
+                                                                                1.0 ;; X (eco-pill-dark 7)
+                                                                                0.0 ;;   (eco-pill-light 8)
+                                                                                0.0 ;;   (eco-pill-random 9)
+                                                                                0.0 ;;   (money 10)
+                                                                                0.0 ;;   (fuel-cell 11)
+                                                                                0.0 ;;   (buzzer 12)
+                                                                                0.0 ;;   (darkjak 13)
+                                                                                1.0 ;; X (lightjak 14)
+                                                                                0.0 ;;   (ammo-yellow 15)
+                                                                                0.0 ;;   (ammo-red 16)
+                                                                                0.0 ;;   (ammo-blue 17)
+                                                                                0.0 ;;   (ammo-dark 18)
+                                                                                0.0 ;;   (shield 19)
+                                                                                1.0 ;; X (health 20)
+                                                                                0.0 ;;   (trick-point 21)
+                                                                                0.0 ;;   (trick-judge 22)
+                                                                                0.0 ;;   (gem 23)
+                                                                                0.0 ;;   (skill 24)
+                                                                                0.0 ;;   (karma 25)
+                                                                                0.0 ;;   (gun-red-1 26)
+                                                                                1.0 ;; X (gun-red-2 27)
+                                                                                0.0 ;;   (gun-red-3 28)
+                                                                                0.0 ;;   (gun-yellow-1 29)
+                                                                                1.0 ;; X (gun-yellow-2 30)
+                                                                                1.0 ;; X (gun-yellow-3 31)
+                                                                                1.0 ;; X (gun-blue-1 32)
+                                                                                1.1 ;; X (gun-blue-2 33)
+                                                                                0.7 ;; X (gun-blue-3 34)
+                                                                                0.0 ;;   (gun-dark-1 35)
+                                                                                0.0 ;;   (gun-dark-2 36)
+                                                                                0.0 ;;   (gun-dark-3 37)
+                                                                                0.0 ;;   (board 38)
+                                                                                0.0 ;;   (pass-red 39)
+                                                                                0.0 ;;   (pass-green 40)
+                                                                                0.0 ;;   (pass-yellow 41)
+                                                                                0.0 ;;   (pass-blue 42)
+                                                                                0.0 ;;   (ammo-random 43)
+                                                                                0.0 ;;   (health-max 44)
+                                                                                0.0 ;;   (light-eco-crystal 45)
+                                                                                0.0 ;;   (dark-eco-crystal 46)
+                                                                                0.0 ;;   (pass-slumb-genb 47)
+                                                                                0.0 ;;   (ammo-light-random 48)
+                                                                                0.0 ;;   (ammo-dark-light-random 49)
+                                                                                0.0 ;;   (light-random 50)
                                                                                 )
                                           )
     )
