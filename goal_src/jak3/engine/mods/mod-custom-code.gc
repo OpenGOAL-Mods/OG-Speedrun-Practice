@@ -92,6 +92,43 @@
   (none)
   )
 
+(define *precur-laser-tmp-str* (new 'global 'string 2048 (the-as string #f)))
+
+(defun string-format-precur-laser-beam ((name string))
+  (let ((plb (process-by-ename name)))
+    (if plb 
+      (format *precur-laser-tmp-str* "~S: ~S ~%" name (-> plb state name))
+      (format *precur-laser-tmp-str* "~S: ~A ~%" name #f))
+    )
+  (none)
+  )
+
+(defun draw-precur-laser-info ()
+  (let ((plb2 (the process-drawable (process-by-ename "precur-laser-beam-2"))) ;; main MFer
+        (font-ctx (new 'stack 'font-context *font-default-matrix* 0 100 0.0 (font-color red) (font-flags shadow kerning)))
+        )
+    (clear *precur-laser-tmp-str*)
+    (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id debug-no-zbuf1))
+      (if plb2 
+        (format *precur-laser-tmp-str* "precur-laser-beam-2 (master): ~S ~%~%" (-> plb2 state name)) ;; (/ (- (current-time) (-> plb2 state-time)) TICKS_PER_SECOND))
+        (format *precur-laser-tmp-str* "precur-laser-beam-2 (master): ~A ~%~%" #f))
+      (string-format-precur-laser-beam "precur-laser-beam-3")
+      (string-format-precur-laser-beam "precur-laser-beam-4")
+      (string-format-precur-laser-beam "precur-laser-beam-5")
+      (string-format-precur-laser-beam "precur-laser-beam-6")
+      (string-format-precur-laser-beam "precur-laser-beam-7")
+      (string-format-precur-laser-beam "precur-laser-beam-8")
+      (string-format-precur-laser-beam "precur-laser-beam-9")
+      (string-format-precur-laser-beam "precur-laser-beam-10")
+      (string-format-precur-laser-beam "precur-laser-beam-11")
+      (string-format-precur-laser-beam "precur-laser-beam-12")
+      (string-format-precur-laser-beam "precur-laser-beam-13")
+      (draw-string-adv *precur-laser-tmp-str* buf font-ctx)
+      )
+    )
+  (none)
+  )
+
 (define-extern draw-torp-info (function none))
 (define-extern draw-roll-challenge-info (function none))
 (defun runs-every-frame ()
@@ -100,6 +137,11 @@
 
   (let ((mgr (process-by-type-exact 'task-manager-bbush-roll-count *active-pool*)))
     (when mgr (draw-roll-challenge-info)))
+
+  (when (and *target* 
+             (or (= (-> (level-get-target-inside *level*) name) 'precurb)
+                 (= (-> (level-get-target-inside *level*) name) 'precura)))
+    (draw-precur-laser-info))
 
   ;; call custom checkpoint post-init function, if any
   (when (and *target*
