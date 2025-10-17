@@ -1282,7 +1282,8 @@
                                   lithuanian
                                   czech
                                   croatian
-                                  galician))
+                                  galician
+								  bosnian))
 
 (define *text-languages*
   (static-text-list-array english
@@ -1304,7 +1305,8 @@
                           lithuanian
                           czech
                           croatian
-                          galician))
+                          galician
+						  bosnian))
 
 (define *subtitle-languages*
   (static-text-list-array english
@@ -1322,7 +1324,8 @@
                           lithuanian
                           czech
                           croatian
-                          galician))
+                          galician
+						  bosnian))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;  DYNAMIC MENU THINGS
