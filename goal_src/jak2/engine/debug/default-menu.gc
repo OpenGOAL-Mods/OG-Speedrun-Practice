@@ -780,6 +780,16 @@
     )
   )
 
+(define *vibe-pattern-override* -1)
+(defun dm-vibe-pattern-func ((arg0 int) (arg1 debug-menu-msg))
+  (let ((v1-0 (/ arg0 8)))
+    (if (= arg1 (debug-menu-msg press))
+        (set! *vibe-pattern-override* v1-0)
+        )
+    (= *vibe-pattern-override* v1-0)
+    )
+  )
+
 (defun dm-actor-marks-pick-func ((arg0 symbol) (arg1 debug-menu-msg))
   (if (= arg1 (debug-menu-msg press))
       (set! *display-actor-marks* arg0)
@@ -3095,6 +3105,8 @@
   (logtest? (-> *pc-settings* cheats) (/ arg0 8))
   )
 
+(define *tomb-vibe-name?* #f)
+(define *tomb-vibe-color?* #f)
 (defun debug-menu-context-make-default-menus ((arg0 debug-menu-context))
   (local-vars (sv-16 debug-menu-context))
   (let ((s5-0 (new 'debug 'debug-menu arg0 "Main menu")))
@@ -3104,10 +3116,27 @@
       (debug-menu-make-from-template
         arg0
         '(menu
-           "Speedrun Tools"           
+           "Speedrun Tools"
+            (menu
+             "Invuln"
              (flag "No Invuln" noinvuln dm-speedrun-practice-func)
              (flag "Set Invuln1" invuln1 dm-speedrun-practice-func)
-             (flag "Set Invuln2" invuln2 dm-speedrun-practice-func)
+             (flag "Set Invuln2" invuln2 dm-speedrun-practice-func))
+            (menu
+             "Tombstones"
+             (flag "Pattern Name" *tomb-vibe-name?* dm-boolean-toggle-pick-func)
+             (flag "Pattern Color" *tomb-vibe-color?* dm-boolean-toggle-pick-func)
+             (menu 
+              "Force Pattern"
+              (flag "Random" -1 dm-vibe-pattern-func)
+              (flag "Top Left (311->133)" 0 dm-vibe-pattern-func)
+              (flag "Top Mid (311->7N)" 1 dm-vibe-pattern-func)
+              (flag "Top Right (7N)" 2 dm-vibe-pattern-func)
+              (flag "Bottom Left (4N)" 3 dm-vibe-pattern-func)
+              (flag "Bottom Mid (8 Low)" 4 dm-vibe-pattern-func)
+              (flag "Bottom Right (7 Low)" 5 dm-vibe-pattern-func)
+              )
+             )
            )
         )
       )
@@ -3258,10 +3287,10 @@
            (function "Continue Start" #f ,(lambda () (start 'play (-> *game-info* current-continue))))
            (function "Kiosk Reset" #f ,(lambda () (auto-save-command 'restore 0 0 *default-pool* #f) (none)))
            ;; og:preserve-this new menu option
-           (function "Give Ammo and Collectables" #f ,(lambda () (send-event *target* 'get-pickup (pickup-type ammo-yellow) 1000.0) (send-event *target* 'get-pickup (pickup-type ammo-red) 1000.0) (send-event *target* 'get-pickup (pickup-type ammo-blue) 1000.0) (send-event *target* 'get-pickup (pickup-type ammo-dark) 1000.0) (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 1000.0) (send-event *target* 'get-pickup (pickup-type skill) 1000.0) (send-event *target* 'get-pickup (pickup-type gem) 5000.0)))
+           (function "Give Pickups" #f ,(lambda () (send-event *target* 'get-pickup (pickup-type ammo-yellow) 1000.0) (send-event *target* 'get-pickup (pickup-type ammo-red) 1000.0) (send-event *target* 'get-pickup (pickup-type ammo-blue) 1000.0) (send-event *target* 'get-pickup (pickup-type ammo-dark) 1000.0) (send-event *target* 'get-pickup (pickup-type eco-pill-dark) 1000.0) (send-event *target* 'get-pickup (pickup-type skill) 1000.0) (send-event *target* 'get-pickup (pickup-type gem) 5000.0)))
            (function "Unlock Everything" #f ,(lambda () (logior! (-> *game-info* features) (game-feature gun gun-yellow gun-red gun-blue gun-dark gun-upgrade-speed gun-upgrade-ammo gun-upgrade-damage pass-red pass-green pass-yellow pass-blue board darkjak darkjak-bomb0 darkjak-bomb1 darkjak-invinc darkjak-giant))))
            (function "Finish Story" #f ,(lambda () (task-node-close! (game-task-node city-win-introduction))))
-           (function "Finish Optional Missions"
+           (function "Finish Side Missions"
                      #f
                      ,(lambda ()
                         (task-node-close! (game-task-node city-oracle-level3-training))

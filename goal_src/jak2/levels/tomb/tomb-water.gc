@@ -1745,14 +1745,41 @@
     )
   )
 
-
+(define *vibe-pattern-remap* (new 'static 'array uint32 6
+    4 0 2
+    1 5 3
+    )  
+  )
+;; (define *vibe-pattern-name* (new 'static 'array string 6
+;;     "Top Left (311->133)"   "Top Mid (311->7N)"     "Top Right (7N)"
+;;     "Bottom Left (4N)"      "Bottom Mid (8 Low)"    "Bottom Right (7 Low)"
+;;     )
+;;   )
+(define *vibe-first-name* (new 'static 'array string 6
+    "3-1-1" "4 N" "7 N"
+    "7 Low" "3-1-1" "8 Low"
+    )
+  )
+(define *vibe-third-name* (new 'static 'array string 6
+    "7 N" "" ""
+    "" "1-3-3" ""
+    )
+  )
+(define-extern *vibe-pattern-override* int)
+(define-extern *tomb-vibe-name?* symbol)
+(define-extern *tomb-vibe-color?* symbol)
 (defun print-vibe-index ((this tomb-vibe))
-  ;; (return 0)
-  (case (-> this state name) 
-    (('idle 'vibrate)
+  (set-vector! (-> this draw color-mult) 1.0 1.0 1.0 1.0) ;; reset in case player turned option off
+  (when (and *debug-segment* (>= (-> this pat-index) 0)) ;; debug only
+    ;; maybe label first tombstone, third tombstone
+    (when (and *tomb-vibe-name?*
+              (or (name= (-> this name) 'tomb-vibe-40) ;; first
+                  (name= (-> this name) 'tomb-vibe-37))) ;; third (blank names when not needed)
       (internal-draw-text-3d-2
         (bucket-id screen-filter)
-        (string-format "~D" (-> this pat-tbl (-> this pat-index)))
+        (string-format "~S" (if (name= (-> this name) 'tomb-vibe-40)
+                                (-> *vibe-first-name* (-> this pat-index))
+                                (-> *vibe-third-name* (-> this pat-index))))
         (-> this root trans)
         (case (-> this pat-tbl (-> this pat-index))
           ((0)
@@ -1778,6 +1805,28 @@
         #t  ;; BIG
         )
       )
+    (when *tomb-vibe-color?*
+      (case (-> this pat-tbl (-> this pat-index))
+        ((0)
+          (set-vector! (-> this draw color-mult) 4.0 1.0 1.0 1.0) ;; red
+          ) 
+        ((1)
+          (set-vector! (-> this draw color-mult) 4.0 4.0 1.0 1.0) ;;yellow)
+          )
+        ((2)
+          (set-vector! (-> this draw color-mult) 1.0 4.0 1.0 1.0) ;;green)
+          )
+        ((3)
+          (set-vector! (-> this draw color-mult) 0.0 0.0 4.0 1.0) ;;blue)
+          )
+        ((4)
+          (set-vector! (-> this draw color-mult) 0.0 2.0 4.0 1.0) ;;cyan)
+          )
+        (else ;; (5)
+          (set-vector! (-> this draw color-mult) 5.0 2.0 4.0 1.0) ;;pink)
+          )
+        )
+      )
     )
   (none)
   )
@@ -1789,6 +1838,10 @@
 
 (defstate get-pattern (tomb-vibe)
   :virtual #t
+  :trans (behavior ()
+    (print-vibe-index self)
+    0
+    )
   :code (behavior ()
     (until #f
       (let ((a1-0 (new 'stack-no-clear 'event-message-block)))
@@ -2001,6 +2054,10 @@
   :enter (behavior ((arg0 symbol))
     (process-entity-status! self (entity-perm-status subtask-complete) #t)
     )
+  :trans (behavior ()
+    (print-vibe-index self)
+    0
+    )
   :code (behavior ((arg0 symbol))
     (cond
       (arg0
@@ -2145,6 +2202,9 @@
       (let ((s5-1 (-> this entity extra perm)))
         (when (not (logtest? (-> s5-1 status) (entity-perm-status bit-5)))
           (set! (-> s5-1 user-object 0) (rand-vu-int-range 0 (+ (-> this pat-count) -1)))
+          (when (and *debug-segment* (>= *vibe-pattern-override* 0))
+            (set! (-> s5-1 user-object 0) (-> *vibe-pattern-remap* *vibe-pattern-override*))
+            )
           (logior! (-> s5-1 status) (entity-perm-status bit-5))
           )
         (when (< (-> *event-queue* length) (-> *event-queue* allocated-length))

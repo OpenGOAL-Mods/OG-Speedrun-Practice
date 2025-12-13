@@ -74,6 +74,7 @@
   (pilot-dax 20)
   (record-sig 21)
   (indax 22)
+  (speedrun 23)
   )
 
 ;; +++game-secrets

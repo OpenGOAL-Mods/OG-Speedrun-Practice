@@ -584,10 +584,12 @@
   (update-menu! (the-as popup-menu (ppointer->process (-> this popup-menu))))
   (none))
 
-
+(define *tmp-disable-attacks?* #f)
+(define *tmp-dead-ignore* #f)
 (define *tmp-continue-point* (new 'static 'continue-point
                              :name "tmp"
                              :level #f
+                             :flags (continue-flags speedrun)
                              :trans (new 'static 'vector :w 1.0)
                              :quat (new 'static 'vector :w 1.0)
                              :camera-trans (new 'static 'vector :w 1.0)
@@ -678,6 +680,8 @@
       (vector-copy! (-> *tmp-continue-point* quat) (-> *target* root quat))
       (vector-copy! (-> *tmp-continue-point* camera-trans) (-> *camera-combiner* trans))
       (camera-rot-copy! *tmp-continue-point* (-> *camera-combiner* inv-camera-rot))
+      (set! *tmp-dead-ignore* (logtest? (-> *target* focus-status) (focus-status dead ignore)))
+      (set! *tmp-disable-attacks?* (logtest? (-> *target* state-flags) (state-flags disable-attacks)))
 
       (cheats-sound-play #t)
       )
