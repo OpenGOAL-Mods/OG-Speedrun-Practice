@@ -1770,7 +1770,7 @@
 (define-extern *tomb-vibe-color?* symbol)
 (defun print-vibe-index ((this tomb-vibe))
   (set-vector! (-> this draw color-mult) 1.0 1.0 1.0 1.0) ;; reset in case player turned option off
-  (when (>= (-> this pat-index) 0)
+  (when (and *debug-segment* (>= (-> this pat-index) 0)) ;; debug only
     ;; maybe label first tombstone, third tombstone
     (when (and *tomb-vibe-name?*
               (or (name= (-> this name) 'tomb-vibe-40) ;; first
