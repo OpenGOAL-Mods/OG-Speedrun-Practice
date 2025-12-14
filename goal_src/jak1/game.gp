@@ -2120,6 +2120,7 @@
  "mods/mod-common-functions.gc"
  "mods/mod-debug.gc"
  "mods/mod-custom-code.gc"
+ "mods/mod-debug.gc"
 )
 
 (goal-src "levels/test-zone/test-zone-obs.gc" "process-drawable")

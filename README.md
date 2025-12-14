@@ -21,7 +21,7 @@
 | Button combination | Effect | 
 |-|-|
 | Hold L1+R1+X and press Start or Select | Brings up speedrunner menu for fast resets |
-| Hold R3 and press dpad Down | Set a custom checkpoint at Jak's current position. Only works if Jak is in an "idle" state. Plays a sound to confirm. |
+| Hold R3 and press dpad Down | Set a custom checkpoint at Jak's current position. Only works if Jak is in an "idle" state. Plays a sound to confirm. Not recommended while in water/eco - camera often goes crazy. |
 | Hold R3 and press dpad Up | Reset to a custom checkpoint. |
 
 - If inputs are not working, double check that Speedrunner Mode is enabled under Misc Options
