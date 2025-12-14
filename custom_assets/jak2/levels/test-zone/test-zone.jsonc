@@ -61,10 +61,6 @@
   // Note: Like with art groups, these should also be added to your level's .gd file.
   "custom_models": ["test-actor"],
 
-  // If you have any custom models in the "custom_assets/jak2/models/custom_levels" folder that you want to use in your level, add them to this list.
-  // Note: Like with art groups, these should also be added to your level's .gd file.
-  "custom_models": ["test-actor"],
-
   // Any textures you want to include in your custom level.
   // This is mainly useful for textures which are not in the common level files and have no art group associated with them.
   // To get a list of all the textures, you can extract all of the game's textures

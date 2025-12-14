@@ -16,6 +16,8 @@
 
 (define-extern *mod-version-text* string)
 
+(define-extern *mod-version-text* string)
+
 (define *hub1-cell-list*
   (new 'static
        'boxed-array
