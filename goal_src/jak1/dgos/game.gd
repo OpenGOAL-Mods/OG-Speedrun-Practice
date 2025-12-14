@@ -355,7 +355,6 @@
   "card-display.o" ;; added
   "mod-debug.o" ;; added
   "mod-custom-code.o" ;; added
-  "mod-debug.o" ;; added
   ;; keep zoomer stuff loaded
   "target-racer-h.o"
   "racer-part.o"

@@ -135,7 +135,7 @@
   )
 
 (defun-debug debug-menu-make-input-displays-menu ((ctx debug-menu-context))
-  (let ((displays-menu (new 'debug 'debug-menu ctx "Extra Displays")))
+  (let ((displays-menu (new 'debug 'debug-menu ctx "Input Displays")))
     (debug-menu-append-item displays-menu (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
     (debug-menu-append-item displays-menu
       (debug-menu-make-from-template *debug-menu-context*
