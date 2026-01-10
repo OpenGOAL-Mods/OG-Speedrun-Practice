@@ -850,6 +850,8 @@
   (none)
   )
 
+(define-extern *show-glider-plane?* symbol)
+(define *glider-face* (new 'static 'inline-array vector 4))
 (defmethod apply-gravity! ((this h-glider) (arg0 float))
   (h-glider-method-162 this)
   (set! (-> *game-info* health-bar-vehicle)
@@ -1105,6 +1107,73 @@
         0
         (sound-group)
         #t
+        )
+      )
+    (when (and *debug-segment* *show-glider-plane?*)
+      (let ((v (new-stack-vector0))
+            (d 0.0)
+            (t (new-stack-vector0))
+            (p (new-stack-vector0))
+            (uu (new-stack-vector0))
+            (vv (new-stack-vector0)))
+        (vector-copy! v (-> this progression-plane))
+        (-! (-> v w) 4096.0)
+        ;; (add-debug-vector
+        ;;     #t
+        ;;     (bucket-id debug-no-zbuf1)
+        ;;     (-> this last-ring-pos)
+        ;;     v
+        ;;     (meters 2)
+        ;;     (the-as rgba #x800000ff)
+        ;;     )
+        (set! d (+ (* (-> this root trans x) (-> v x))
+                   (* (-> this root trans y) (-> v y))
+                   (* (-> this root trans z) (-> v z))
+                   (* -1 (-> v w))
+                   ))
+        (/! d (+ (* (-> v x) (-> v x))
+                        (* (-> v y) (-> v y))
+                        (* (-> v z) (-> v z))
+                        ))
+        (vector-! p (-> this root trans) (vector-float*! t v d))
+        
+        ;; (add-debug-vector
+        ;;     #t
+        ;;     (bucket-id debug-no-zbuf1)
+        ;;     p
+        ;;     v
+        ;;     (meters 2)
+        ;;     (the-as rgba #x008000ff)
+        ;;     )
+        (vector-cross! uu (vector-normalize! v 1.0) (new 'static 'vector :x 1.0))
+        (vector-cross! vv v (vector-normalize! uu 1.0))
+        (vector+float*! (-> *glider-face* 0)
+          (vector+float*! (-> *glider-face* 0) p uu (meters 25))
+          vv (meters 25))
+        
+        (vector+float*! (-> *glider-face* 1)
+          (vector+float*! (-> *glider-face* 1) p uu (meters -25))
+          vv (meters 25))
+          
+        (vector+float*! (-> *glider-face* 2)
+          (vector+float*! (-> *glider-face* 2) p uu (meters 25))
+          vv (meters -25))
+          
+        (vector+float*! (-> *glider-face* 3)
+          (vector+float*! (-> *glider-face* 3) p uu (meters -25))
+          vv (meters -25))
+
+        (add-debug-bound (bucket-id debug) *glider-face* 4 (region-enter-color #x40) (region-exit-color #x40) 0)
+        ;; (dotimes (i 4)
+        ;;   (add-debug-vector
+        ;;     #t
+        ;;     (bucket-id debug-no-zbuf1)
+        ;;     (-> *glider-face* i)
+        ;;     v
+        ;;     (meters 2)
+        ;;     (the-as rgba #x008080ff)
+        ;;     )
+        ;;   )
         )
       )
     (when (and (< 0.0 (vector-length-squared (-> this progression-plane)))
