@@ -8,7 +8,7 @@
 ;; Additional debug menu(s)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(define *show-vehicle-stats?* #t)
+(define-extern *show-vehicle-stats?* symbol)
 (define *last-xzvel* 0.0)
 (defun-debug print-vehicle-stats ((arg0 target) (arg1 symbol))
   (when (and *show-vehicle-stats?*
