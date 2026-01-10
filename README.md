@@ -40,7 +40,9 @@
 6. Decompile: `task extract`
 7. Open compiler: `task repl`, and compile: `(mi)`
 8. Either `(e)` to close the compiler REPL, or open a new terminal/tab in the `OG-Speedrun-Practice` folder
-9. Launch game in debug mode: `task boot-game`
+9. Launch game
+   - in debug mode: `task boot-game`
+   - in retail mode: `task boot-game-retail`
 10. Whenever there are updates, pull changes: `git pull` and then re-do steps 7-9
 
 | Button combination | Effect |
