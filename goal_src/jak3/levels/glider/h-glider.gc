@@ -852,6 +852,7 @@
 
 (define-extern *show-glider-plane?* symbol)
 (define *glider-face* (new 'static 'inline-array vector 4))
+(define-extern *glider-face-size* float)
 (defmethod apply-gravity! ((this h-glider) (arg0 float))
   (h-glider-method-162 this)
   (set! (-> *game-info* health-bar-vehicle)
@@ -1148,20 +1149,20 @@
         (vector-cross! uu (vector-normalize! v 1.0) (new 'static 'vector :x 1.0))
         (vector-cross! vv v (vector-normalize! uu 1.0))
         (vector+float*! (-> *glider-face* 0)
-          (vector+float*! (-> *glider-face* 0) p uu (meters 25))
-          vv (meters 25))
+          (vector+float*! (-> *glider-face* 0) p uu *glider-face-size*)
+          vv *glider-face-size*)
         
         (vector+float*! (-> *glider-face* 1)
-          (vector+float*! (-> *glider-face* 1) p uu (meters -25))
-          vv (meters 25))
+          (vector+float*! (-> *glider-face* 1) p uu (* -1.0 *glider-face-size*))
+          vv *glider-face-size*)
           
         (vector+float*! (-> *glider-face* 2)
-          (vector+float*! (-> *glider-face* 2) p uu (meters 25))
-          vv (meters -25))
+          (vector+float*! (-> *glider-face* 2) p uu *glider-face-size*)
+          vv (* -1.0 *glider-face-size*))
           
         (vector+float*! (-> *glider-face* 3)
-          (vector+float*! (-> *glider-face* 3) p uu (meters -25))
-          vv (meters -25))
+          (vector+float*! (-> *glider-face* 3) p uu (* -1.0 *glider-face-size*))
+          vv (* -1.0 *glider-face-size*))
 
         (add-debug-bound (bucket-id debug) *glider-face* 4 (region-enter-color #x40) (region-exit-color #x40) 0)
         ;; (dotimes (i 4)

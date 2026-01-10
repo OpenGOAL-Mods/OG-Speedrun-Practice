@@ -61,9 +61,36 @@
 (define *speedrun-tools-menu* (new 'debug 'debug-menu *debug-menu-context* "Speedrun Tools"))
 (define *show-vehicle-stats?* #f)
 (define *show-glider-plane?* #f)
+(define *glider-face-size* (meters 25))
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
     ;; (debug-menu-append-item *speedrun-tools-menu* (new-dm-func "Input Display" #f (lambda () (not! (-> *speedrun-info* show-input-display?)))))
-    (debug-menu-append-item *speedrun-tools-menu* (new-dm-bool "Glider Progression Plane" *show-glider-plane?* dm-boolean-toggle-pick-func))
+    (debug-menu-append-item
+      *speedrun-tools-menu*
+      (debug-menu-make-from-template
+        ctx
+        '(menu "Glider"
+          (flag "Progression Plane?" *show-glider-plane?* dm-boolean-toggle-pick-func)
+          (float-var "plane size" #f
+            ,(lambda ((arg0 int) (arg1 debug-menu-msg) (arg2 float))
+                (cond
+                  ((= arg1 (debug-menu-msg press))
+                  (set! *glider-face-size* (* 4096.0 arg2))
+                  )
+                  (else
+                    (/ *glider-face-size* 4096.0) ;; show in meters
+                    )
+                  )
+                )
+            2
+            (new 'static 'bfloat :data 5.0)
+            #t
+            0
+            1000
+            0
+            )
+          )
+        )
+      )
     (debug-menu-append-item *speedrun-tools-menu* (new-dm-bool "Vehicle Stats" *show-vehicle-stats?*  dm-boolean-toggle-pick-func))
     (debug-menu-append-item *speedrun-tools-menu* (new-dm-func "Hero Mode Stuff" #f speedrun-hero-mode-stuff))
     (debug-menu-append-item
