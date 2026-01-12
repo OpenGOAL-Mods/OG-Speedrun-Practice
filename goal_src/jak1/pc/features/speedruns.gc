@@ -688,14 +688,14 @@
     (hide-speedrun-display))
   (when (and (-> *pc-settings* speedrunner-mode?) (not (paused?)) (-> *speedrun-info* should-display?))
     (with-dma-buffer-add-bucket ((buf (-> (current-frame) global-buf)) (bucket-id subtitle))
-      (draw-string-xy (string-format "Speedrun PRACTICE Mod~%Mod Version: ~S ~%Category: ~S ~S~%Run Started: ~S"
+      (draw-string-xy (string-format "Speedrun PRACTICE Mod~%YOU CANNOT SUBMIT RUNS OF THIS MOD!~%Mod Version: ~S ~%Category: ~S ~S~%Run Started: ~S"
                                      *mod-version-text*
                                      (enum->string speedrun-category (-> *speedrun-info* category))
                                      (if (-> *pc-settings* skip-movies?) "(CS Skips)" "(No CS Skips)")
                                      (if (-> *speedrun-info* has-started?) "Yes" "No"))
                       buf
                       4
-                      (- 222 (* 8 4))
+                      (- 222 (* 8 5))
                       (font-color flat-yellow)
                       (font-flags shadow kerning))))
   (none))
