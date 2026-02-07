@@ -45,6 +45,7 @@
    (should-display-idle-deload-info? symbol)
    (should-display-plant-deload-info? symbol)
    (show-input-display? symbol)
+   (show-flying-lurker-start-trigger? symbol)
    )
   )
 

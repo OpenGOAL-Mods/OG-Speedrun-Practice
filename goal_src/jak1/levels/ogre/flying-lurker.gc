@@ -746,6 +746,8 @@
   :trans
     (behavior ()
       (spool-push *art-control* "flying-lurker-intro" 0 self -99.0)
+      (when (and *debug-segment* (-> *speedrun-info* show-flying-lurker-start-trigger?) (first?))
+        (add-debug-sphere #t (bucket-id debug-no-zbuf) (-> self root trans) 172032.0 (new 'static 'rgba :r #xff :g #xff :a #x80)))
       (if (and (-> self take-off) (first?)) (go flying-lurker-start)))
   :code
     (behavior ()

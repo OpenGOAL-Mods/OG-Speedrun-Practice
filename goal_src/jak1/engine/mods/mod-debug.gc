@@ -109,6 +109,7 @@
       (debug-menu-append-item displays-menu (new-dm-bool "Show blocking-planes" *show-blocking-planes?* dm-boolean-toggle-pick-func))
       (debug-menu-append-item displays-menu (new-dm-func "Idle Deload" #f (lambda () (not! (-> *speedrun-info* should-display-idle-deload-info?)))))
       (debug-menu-append-item displays-menu (new-dm-func "Plant Deload" #f (lambda () (not! (-> *speedrun-info* should-display-plant-deload-info?)))))
+      (debug-menu-append-item displays-menu (new-dm-func "MP Race Start" #f (lambda () (not! (-> *speedrun-info* show-flying-lurker-start-trigger?)))))
       (debug-menu-append-item displays-menu (new-dm-func "Show Speedometer" #f (lambda () (if *show-speedometer?* (j1-speedometer-off)(j1-speedometer-on)))))
 
       (let ((citadel-hops-menu (new 'debug 'debug-menu ctx "Citadel Hops")))
