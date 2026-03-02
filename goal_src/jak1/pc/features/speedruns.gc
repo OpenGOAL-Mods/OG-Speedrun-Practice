@@ -12,7 +12,8 @@
   :should-display-idle-deload-info? #f 
   :should-display-plant-deload-info? #f 
   :show-input-display? #f 
-  :show-flying-lurker-start-trigger? #f 
+  :show-flying-lurker-start-trigger? #f
+  :show-dmg-abort-triggers? #f
   :has-started? #f))
 
 (define *last-speedrun-practice-option* (speedrun-practice-option none))
@@ -1171,6 +1172,26 @@
 
 (define-extern draw-plant-deload-info (function none))
 
+(define *dmg-abort-state* 0)
+(defun draw-dmg-aborts ()
+  (when (and *debug-segment* (-> *speedrun-info* show-dmg-abort-triggers?))
+    (when (cpad-pressed? 0 l3)
+      (+! *dmg-abort-state* 1)
+      (set! *dmg-abort-state* (mod *dmg-abort-state* 5))
+      )
+    ;; copied from gorge-start-racing below
+    (if (or (= *dmg-abort-state* 0) (= *dmg-abort-state* 1))
+      (add-debug-sphere #t (bucket-id debug-no-zbuf) (new 'static 'vector :x -696320.0 :y 122880.0 :z -6828032.0) 163840.0 (new 'static 'rgba :r #xff :g #xff :a #x80)))
+    (if (or (= *dmg-abort-state* 0) (= *dmg-abort-state* 2))
+      (add-debug-sphere #t (bucket-id debug-no-zbuf) (new 'static 'vector :x -847872.0 :y 143360.0 :z -6828032.0) 163840.0 (new 'static 'rgba :r #xff :g #xff :a #x80)))
+    (if (or (= *dmg-abort-state* 0) (= *dmg-abort-state* 3))
+      (add-debug-sphere #t (bucket-id debug-no-zbuf) (new 'static 'vector :x -417792.0 :y 143360.0 :z -6004736.0) 266240.0 (new 'static 'rgba :r #xff :g #xff :a #x80)))
+    (if (or (= *dmg-abort-state* 0) (= *dmg-abort-state* 4))
+      (add-debug-sphere #t (bucket-id debug-no-zbuf) (new 'static 'vector :x -647168.0 :y 143360.0 :z -6025216.0) 163840.0 (new 'static 'rgba :r #xff :g #xff :a #x80)))
+    )
+  (none)
+  )
+
 (defun mark-speedrun-started ()
   (true! (-> *speedrun-info* has-started?))
   (none))
@@ -1180,6 +1201,7 @@
   ;; Draw info to the screen
   (draw-idle-deload-info)
   (draw-plant-deload-info)
+  (draw-dmg-aborts)
 
   ;; if we're stuck continue-ing at a speedrun checkpoint, it might have bad vis so force it
   (when (and *target* (= (-> *target* state name) 'target-continue)

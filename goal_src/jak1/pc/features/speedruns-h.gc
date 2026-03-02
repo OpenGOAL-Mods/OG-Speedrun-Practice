@@ -46,6 +46,7 @@
    (should-display-plant-deload-info? symbol)
    (show-input-display? symbol)
    (show-flying-lurker-start-trigger? symbol)
+   (show-dmg-abort-triggers? symbol)
    )
   )
 
