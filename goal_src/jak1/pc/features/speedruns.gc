@@ -823,10 +823,6 @@
     (if (cpad-hold? 0 r2)
       (initialize! *game-info* 'game (the-as game-save #f) "default")
       )
-    ;; store last real checkpoint to restore later
-    (when (not (string= (-> *game-info* current-continue name) "tmp"))
-      (set! *last-real-continue-point* (-> *game-info* current-continue))
-      )
     (set! (-> *game-info* current-continue) *tmp-continue-point*)
     (initialize! *game-info* 'dead (the-as game-save #f) (the-as string #f))
     (speedrun-reset-common-settings)
@@ -1054,6 +1050,11 @@
         ((target-stance target-wade-stance target-swim-stance target-flut-stance target-racing)
           (set! *last-speedrun-practice-option* (speedrun-practice-option none))
 
+          ;; store last real checkpoint to restore later
+          (when (not (string= (-> *game-info* current-continue name) "tmp"))
+            (set! *last-real-continue-point* (-> *game-info* current-continue))
+            )
+
           ;; assume current continue is good enough for the current location
           (continue-point-copy! *tmp-continue-point* (-> *game-info* current-continue))
           (vector-copy! (-> *tmp-continue-point* trans) (-> *target* root trans))
@@ -1206,7 +1207,7 @@
   ;; if we're stuck continue-ing at a speedrun checkpoint, it might have bad vis so force it
   (when (and *target* (= (-> *target* state name) 'target-continue)
              (logtest? (-> *game-info* current-continue flags) (continue-flags speedrun)))
-    (load-state-want-vis (-> *load-state* want 0 name))
+    (load-state-want-force-vis (-> *game-info* current-continue level) #t)
     )
 
   ;; call post-init function
