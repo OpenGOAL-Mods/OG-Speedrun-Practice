@@ -34,6 +34,7 @@
 
 | Button combination | Effect |
 |-|-|
+| Hold L1+R1+X and press Start or Select | Brings up speedrunner menu for fast resets |
 | Hold R3 and press dpad Down | Set a custom checkpoint at Jak's current position. It should remember side mission storage, and if you are on leaper or in vehicle. Only works if Jak is in an "idle" state. Plays a sound to confirm. |
 | Hold R3 and press dpad Up | Reset to a custom checkpoint. |
 
