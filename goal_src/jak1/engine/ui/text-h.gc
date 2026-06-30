@@ -827,6 +827,7 @@
   (practice-swamp-flut-oob      #x1712)
   (practice-robot-boosted       #x1713)
   (practice-drunk-cam           #x1714)
+  (practice-mirrors-cs-skip     #x1715)
 
   (hub1-options                 #x17fc)
   (hub2-options                 #x17fd)

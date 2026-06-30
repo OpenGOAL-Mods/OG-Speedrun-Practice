@@ -403,6 +403,25 @@
              :lev0 'jungle
              :disp0 'display
              :lev1 'village1
+             :disp1 'display)
+         (new 'static
+             'continue-point
+             :name "mirrors-cs-skip"
+             :level 'jungle
+             :trans
+             (new 'static 'vector :x (meters 222.2627) :y (meters 1.8901) :z (meters -120.5749)  :w 1.0)
+             :quat
+             (new 'static 'quaternion :x 0.0000 :y -0.4362 :z 0.0000 :w 0.8998)
+             :camera-trans
+             (new 'static 'vector :x (meters 224.8554) :y (meters 7.0358) :z (meters -132.8071) :w 1.0)
+             :camera-rot
+             (new 'static 'array float 9 0.9760 -0.0000 0.2174 -0.0258 0.9929 0.1159 -0.2158 -0.1188 0.9691)
+             :load-commands
+             '()
+             :vis-nick 'jun
+             :lev0 'jungle
+             :disp0 'display
+             :lev1 'village1
              :disp1 'display))
        :tasks
        '(2 3 4 5 7 8 9)

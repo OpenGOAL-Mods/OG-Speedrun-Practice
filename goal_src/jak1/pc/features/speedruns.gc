@@ -784,6 +784,25 @@
   (none)
   )
 
+(defun mirrors-cs-skip-post-init ()
+  ;; (close-specific-task! (game-task ogre-boss) (task-status need-hint))
+  (let ((p11 (entity-by-name "periscope-11"))
+        (p12 (entity-by-name "periscope-12"))
+        (p13 (entity-by-name "periscope-13"))
+        (p14 (entity-by-name "periscope-14"))
+        ;; (p15 (entity-by-name "periscope-15"))
+        )
+    ;; finish first 4 mirrors
+    (when p11 (logior! (-> p11 extra perm status) (entity-perm-status complete)))
+    (when p12 (logior! (-> p12 extra perm status) (entity-perm-status complete)))
+    (when p13 (logior! (-> p13 extra perm status) (entity-perm-status complete)))
+    (when p14 (logior! (-> p14 extra perm status) (entity-perm-status complete)))
+    ;; last mirror setup by 4th mirror being complete
+    (reset-actors 'debug)
+    )
+  (none)
+  )
+
 (defun full-hp ()
   (pickup-collectable! (-> *target* fact) (pickup-type eco-green) 1.0 (process->handle (-> *target* fact process)))
   (pickup-collectable! (-> *target* fact) (pickup-type eco-green) 1.0 (process->handle (-> *target* fact process)))
@@ -997,6 +1016,14 @@
   (none)
   )
 
+(defun speedrun-practice-mirrors-cs-skip-start-run ()
+  (set! *practice-spawn-post-init* mirrors-cs-skip-post-init)
+  (initialize! *game-info* 'game (the-as game-save #f) "mirrors-cs-skip")
+  (set! (-> *game-info* current-continue) (get-continue-by-name *game-info* "mirrors-cs-skip"))
+  (speedrun-reset-common-settings)
+  (none)
+  )
+
 (defun give-seven-flies ((lvl-idx int))
   ;; based on 'buzzer branch of (defmethod adjust game-info)
   (let* ((ctrl (get-task-control (-> *level-task-data* lvl-idx task-info (-> *level-task-data* lvl-idx buzzer-task-index) task-id)))
@@ -1162,6 +1189,9 @@
       )
     (((speedrun-practice-option drunk-cam))
       (speedrun-practice-drunk-cam-start-run)
+      )
+    (((speedrun-practice-option mirrors-cs-skip))
+      (speedrun-practice-mirrors-cs-skip-start-run)
       )
     (else
       (speedrun-practice-temp-checkpoint)
