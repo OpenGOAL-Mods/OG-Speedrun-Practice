@@ -3011,6 +3011,7 @@
 
 (define *tomb-vibe-name?* #f)
 (define *tomb-vibe-color?* #f)
+(define *show-gungame-points?* #f)
 (defun debug-menu-context-make-default-menus ((arg0 debug-menu-context))
   (local-vars (sv-16 debug-menu-context))
   (let ((s5-0 (new 'debug 'debug-menu arg0 "Main menu")))
@@ -3026,6 +3027,7 @@
              (flag "No Invuln" noinvuln dm-speedrun-practice-func)
              (flag "Set Invuln1" invuln1 dm-speedrun-practice-func)
              (flag "Set Invuln2" invuln2 dm-speedrun-practice-func))
+            (flag "Gun Course Points" *show-gungame-points?* dm-boolean-toggle-pick-func)
             (menu
              "Tombstones"
              (flag "Pattern Name" *tomb-vibe-name?* dm-boolean-toggle-pick-func)

@@ -138,8 +138,9 @@
   )
 
 (define *gun-dummy-str* (new 'global 'string 64 (the-as string #f)))
+(define-extern *show-gungame-points?* symbol)
 (defun print-dummy-score ((this gun-dummy))
-  (when (> (-> this hit-points) 0)
+  (when (and *debug-segment* *show-gungame-points?* (> (-> this hit-points) 0))
     ;; start with score
     (format (clear *gun-dummy-str*) "~D~%" (the int (-> this score)))
     ;; add random flag (all others are clear from dummy type/state)
