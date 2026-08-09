@@ -19,13 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-    <ProjectGuid>{97A3A89B-E023-48CD-905F-CDBDE8D951DE}</ProjectGuid>
-    <RootNamespace>testdialog</RootNamespace>
-========
     <ProjectGuid>{C4E04D18-EF76-4B42-B4C2-16A1BACDC1A3}</ProjectGuid>
     <RootNamespace>testpower</RootNamespace>
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -90,11 +85,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-      <TypeLibraryName>.\Debug/testdialog.tlb</TypeLibraryName>
-========
       <TypeLibraryName>.\Debug/testpower.tlb</TypeLibraryName>
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
     </Midl>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /utf-8</AdditionalOptions>
@@ -121,11 +112,7 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>X64</TargetEnvironment>
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-      <TypeLibraryName>.\Debug/testdialog.tlb</TypeLibraryName>
-========
       <TypeLibraryName>.\Debug/testpower.tlb</TypeLibraryName>
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
     </Midl>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /utf-8</AdditionalOptions>
@@ -152,16 +139,10 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>Win32</TargetEnvironment>
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-      <TypeLibraryName>.\Release/testdialog.tlb</TypeLibraryName>
-    </Midl>
-    <ClCompile>
-========
       <TypeLibraryName>.\Release/testpower.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /utf-8</AdditionalOptions>
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
       <AdditionalIncludeDirectories>$(SolutionDir)/../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -182,16 +163,10 @@
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <TargetEnvironment>X64</TargetEnvironment>
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-      <TypeLibraryName>.\Release/testdialog.tlb</TypeLibraryName>
-    </Midl>
-    <ClCompile>
-========
       <TypeLibraryName>.\Release/testpower.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /utf-8</AdditionalOptions>
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
       <AdditionalIncludeDirectories>$(SolutionDir)/../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -208,10 +183,6 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(TreatWarningsAsError)'!=''">
     <ClCompile>
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-========
-      <AdditionalOptions>%(AdditionalOptions) /utf-8</AdditionalOptions>
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
       <TreatWarningAsError>$(TreatWarningsAsError)</TreatWarningAsError>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -230,11 +201,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<<< HEAD:third-party/SDL/VisualC/tests/testdialog/testdialog.vcxproj
-    <ClCompile Include="..\..\..\test\testdialog.c" />
-========
     <ClCompile Include="..\..\..\test\testpen.c" />
->>>>>>>> origin/main:third-party/SDL/VisualC/tests/testpen/testpen.vcxproj
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,6 @@
 /*
   Simple DirectMedia Layer
-<<<<<<<< HEAD:third-party/SDL/src/video/x11/SDL_x11settings.h
-  Copyright 2024 Igalia S.L.
-========
-  Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
->>>>>>>> origin/main:third-party/SDL/src/video/SDL_stb_c.h
+  Copyright (C) 1997-2026 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
