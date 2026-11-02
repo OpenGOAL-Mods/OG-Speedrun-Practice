@@ -61,6 +61,9 @@
 (define *speedrun-tools-menu* (new 'debug 'debug-menu *debug-menu-context* "Speedrun Tools"))
 (define *show-vehicle-stats?* #f)
 (define *show-gungame-points?* #f)
+(define *show-torpedo-stats?* #f)
+(define *show-roll-stats?* #f)
+(define *show-dark-laser-stats?* #f)
 (define *show-glider-plane?* #f)
 (define *glider-face-size* (meters 25))
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
@@ -91,8 +94,17 @@
           )
         )
       )
-    (debug-menu-append-item *speedrun-tools-menu* (new-dm-bool "Vehicle Stats" *show-vehicle-stats?*  dm-boolean-toggle-pick-func))
-    (debug-menu-append-item *speedrun-tools-menu* (new-dm-bool "Gun Course Points" *show-gungame-points?*  dm-boolean-toggle-pick-func))
+    (debug-menu-append-item
+      *speedrun-tools-menu*
+      (debug-menu-make-from-template
+        ctx
+        '(menu "Extra Stats/Displays"
+          (flag "Vehicle Stats" *show-vehicle-stats?* dm-boolean-toggle-pick-func)
+          (flag "Gun Course Points" *show-gungame-points?* dm-boolean-toggle-pick-func)
+          (flag "Roll Challenge Info" *show-roll-stats?* dm-boolean-toggle-pick-func)
+          (flag "Dax Torpedo Stats" *show-torpedo-stats?* dm-boolean-toggle-pick-func)
+          (flag "Dark Ship Laser Info" *show-dark-laser-stats?* dm-boolean-toggle-pick-func)
+          )))
     (debug-menu-append-item *speedrun-tools-menu* (new-dm-func "Hero Mode Stuff" #f speedrun-hero-mode-stuff))
     (debug-menu-append-item
       *speedrun-tools-menu*

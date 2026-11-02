@@ -219,12 +219,16 @@ an orb |#
 (define-extern draw-roll-challenge-info (function none))
 (defun runs-every-frame ()
   (let ((torp (process-by-type-exact 'htorpedo *active-pool*)))
-    (when torp (draw-torp-info)))
+    (when (and *show-torpedo-stats?* torp)
+      (draw-torp-info)))
 
   (let ((mgr (process-by-type-exact 'task-manager-bbush-roll-count *active-pool*)))
-    (when mgr (draw-roll-challenge-info)))
+    (when (and *show-roll-stats?* mgr)
+      (draw-roll-challenge-info)))
 
-  (when (and *target* 
+  (when (and *target*
+             *show-dark-laser-stats?*
+             (not (paused?)) (not (movie?))
              (or (= (-> (level-get-target-inside *level*) name) 'precurb)
                  (= (-> (level-get-target-inside *level*) name) 'precura)))
     (draw-precur-laser-info))
