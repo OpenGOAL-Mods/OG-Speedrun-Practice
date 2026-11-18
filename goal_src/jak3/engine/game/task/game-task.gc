@@ -1281,6 +1281,17 @@
             :play-continue "desert-bbush-desb-4"
             :kiosk-play-continue #f
             )
+          
+          (new 'static 'game-task-info
+            :name "desert-glide-skip"
+            :text-name (text-id progress-missions-desert-glide)
+            :pre-play-node (game-task-node desert-glide-skip-introduction)
+            :kiosk-play-node (game-task-node desert-glide-skip-templetop)
+            :pre-play-continue "hanga-preplay"
+            :play-node (game-task-node desert-glide-skip-templetop)
+            :play-continue "hanga-preskip"
+            :kiosk-play-continue #f
+            )
           )
         )
   (set! (-> game-info sub-task-list)
@@ -23350,6 +23361,147 @@
               )
             :suck-death-count #xa5
             :command-index #x4b
+            :faction-commands '()
+            )
+          (new 'static 'game-task-node-info
+            :level 'desert
+            :task (game-task desert-glide-skip)
+            :name "desert-glide-skip-introduction"
+            :when-open #f
+            :flags (game-task-node-flag save-on-life act1)
+            :parent-node (new 'static 'array game-task-node 4
+              (game-task-node temple-climb-resolution)
+              (game-task-node none)
+              (game-task-node none)
+              (game-task-node none)
+              )
+            :on-open #f
+            :manager #f
+            :borrow '()
+            :open? #f
+            :on-close #f
+            :reset #f
+            :suck-death-count #xa5
+            :command-index #x1b
+            :faction-commands '()
+            )
+          (new 'static 'game-task-node-info
+            :level 'desert
+            :task (game-task desert-glide-skip)
+            :name "desert-glide-skip-templetop"
+            :when-open #f
+            :flags (game-task-node-flag save-on-life act1)
+            :parent-node (new 'static 'array game-task-node 4
+              (game-task-node desert-glide-skip-introduction)
+              (game-task-node none)
+              (game-task-node none)
+              (game-task-node none)
+              )
+            :on-open #f
+            :manager (new 'static 'task-manager-info
+              :mask (task-manager-mask resolution-scene)
+              :level 'hanga
+              :type-to-spawn 'task-manager-desert-glide
+              :intro-scene #f
+              :resolution-scene "desert-glide-res"
+              :resolution-scene-continue #f
+              :final-node (game-task-node desert-glide-skip-resolution)
+              :vehicle-type #x1b
+              :on-complete #f
+              :on-fail #f
+              )
+            :borrow '()
+            :open? #f
+            :on-close #f
+            :reset (new 'static 'task-reset-info
+              :restart-info (new 'static 'resetter-params
+                :message (resetter-message mission-retry)
+                :flags (resetter-flag auto-reset text-message)
+                :fail (new 'static 'resetter-spec :continue #f :reset-mode 'try :execute #f)
+                :retry (new 'static 'resetter-spec :continue "hanga-preskip" :reset-mode 'try :execute #f)
+                :reset-delay (seconds 6.5)
+                )
+              :quit-info (new 'static 'resetter-params
+                :message (resetter-message mission-retry)
+                :flags (resetter-flag auto-reset)
+                :fail (new 'static 'resetter-spec :continue #f :reset-mode 'life :execute #f)
+                :retry (new 'static 'resetter-spec :continue "hanga-preskip" :reset-mode 'try :execute #f)
+                :reset-delay (seconds 6.5)
+                )
+              :fail-info (new 'static 'resetter-params
+                :flags (resetter-flag auto-reset)
+                :fail (new 'static 'resetter-spec :continue "hanga-preskip" :reset-mode 'life :execute #f)
+                :retry (new 'static 'resetter-spec :continue #f :reset-mode 'try :execute #f)
+                :reset-delay (seconds 6.5)
+                )
+              :death-info (new 'static 'resetter-params
+                :flags (resetter-flag auto-reset text-message no-audio no-slow-down)
+                :fail (new 'static 'resetter-spec :continue "hanga-preskip" :reset-mode 'life :execute #f)
+                :retry (new 'static 'resetter-spec :continue #f :reset-mode 'try :execute #f)
+                )
+              )
+            :suck-death-count #xa5
+            :command-index #x1b
+            :description (text-id progress-missions-desert-glide)
+            :faction-commands '()
+            )
+          (new 'static 'game-task-node-info
+            :level 'desert
+            :task (game-task desert-glide-skip)
+            :name "desert-glide-skip-resolution"
+            :when-open #f
+            :flags (game-task-node-flag close-task act1)
+            :parent-node (new 'static 'array game-task-node 4
+              (game-task-node desert-glide-skip-templetop)
+              (game-task-node none)
+              (game-task-node none)
+              (game-task-node none)
+              )
+            :on-open #f
+            :manager #f
+            :borrow '()
+            :open? #f
+            :on-close #f
+            :reset (new 'static 'task-reset-info
+              :restart-info (new 'static 'resetter-params
+                :message (resetter-message mission-retry)
+                :flags (resetter-flag auto-reset text-message)
+                :fail (new 'static 'resetter-spec :continue #f :reset-mode 'try :execute #f)
+                :retry (new 'static 'resetter-spec
+                  :continue "hanga-preskip"
+                  :node (game-task-node desert-glide-skip-templetop)
+                  :reset-mode 'try
+                  :execute #f
+                  )
+                :reset-delay (seconds 6.5)
+                )
+              :quit-info (new 'static 'resetter-params
+                :message (resetter-message mission-retry)
+                :flags (resetter-flag auto-reset)
+                :fail (new 'static 'resetter-spec :continue #f :reset-mode 'life :execute #f)
+                :retry (new 'static 'resetter-spec
+                  :continue "hanga-preskip"
+                  :node (game-task-node desert-glide-skip-templetop)
+                  :reset-mode 'try
+                  :execute #f
+                  )
+                :reset-delay (seconds 6.5)
+                )
+              :fail-info (new 'static 'resetter-params
+                :flags (resetter-flag auto-reset)
+                :fail (new 'static 'resetter-spec :continue "hanga-halfway" :reset-mode 'life :execute #f)
+                :retry (new 'static 'resetter-spec :continue #f :reset-mode 'try :execute #f)
+                :reset-delay (seconds 6.5)
+                )
+              :death-info (new 'static 'resetter-params
+                :flags (resetter-flag auto-reset text-message no-audio no-slow-down)
+                :fail (new 'static 'resetter-spec :continue "hanga-halfway" :reset-mode 'life :execute #f)
+                :retry (new 'static 'resetter-spec :continue #f :reset-mode 'try :execute #f)
+                )
+              )
+            :suck-death-count #xa5
+            :command-index #x1b
+            :description (text-id progress-missions-desert-glide)
             :faction-commands '()
             )
           )

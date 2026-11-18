@@ -18032,6 +18032,26 @@
                     :want-sound (new 'static 'array symbol 3 'hang1 'hang2 'hang3)
                     )
                   (new 'static 'continue-point
+                    :name "hanga-preskip"
+                    :level 'hanga
+                    :flags (continue-flags no-auto race)
+                    :trans (new 'static 'vector :x (meters 3438.3571) :y (meters 240.4687) :z (meters 2962.3022) :w 1.0)
+                    :camera-trans (new 'static 'vector :x (meters 3452.5766) :y (meters 245.0029) :z (meters 2963.8083) :w 1.0)
+                    :quat (new 'static 'vector4h :data (new 'static 'array int16 4 -4963 22068 5689 -23014))
+                    :camera-rot (new 'static 'array int16 9 -3445 0 32585 -10698 30950 -1130 -30778 -10758 -3254)
+                    :on-goto #f
+                    :vis-nick 'hanga
+                    :vehicle-type #x9
+                    :want-count 3
+                    :want (new 'static 'inline-array level-buffer-state-small 4
+                      (new 'static 'level-buffer-state-small :name 'templex :display? 'display)
+                      (new 'static 'level-buffer-state-small :name 'hanga :display? 'display)
+                      (new 'static 'level-buffer-state-small :name 'hangb :display? 'display)
+                      (new 'static 'level-buffer-state-small)
+                      )
+                    :want-sound (new 'static 'array symbol 3 'hang1 'hang2 'hang3)
+                    )
+                  (new 'static 'continue-point
                     :name "hanga-halfway"
                     :level 'hanga
                     :flags (continue-flags no-auto race)

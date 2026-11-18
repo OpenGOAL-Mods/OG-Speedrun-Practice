@@ -1218,10 +1218,20 @@
                                     )
                                 )
                )
+         (v1-6 (-> *game-info* sub-task-list (game-task-node desert-glide-skip-templetop)))
+         (v1-7 (handle->process (if (-> v1-6 manager)
+                                    (-> v1-6 manager manager)
+                                    (the-as handle #f)
+                                    )
+                                )
+               )
          )
-    (if v1-5
-        (task-manager-desert-glide-method-37 (the-as task-manager-desert-glide v1-5) arg0)
-        )
+    (cond
+      (v1-5
+        (task-manager-desert-glide-method-37 (the-as task-manager-desert-glide v1-5) arg0))
+      (v1-7
+        (task-manager-desert-glide-method-37 (the-as task-manager-desert-glide v1-7) arg0))
+      )
     )
   0
   (none)
@@ -1237,10 +1247,19 @@
         (set! (-> a1-0 message) 'fail)
         (let ((t9-1 send-event-function)
               (v1-5 (-> *game-info* sub-task-list (game-task-node desert-glide-templetop)))
+              (v1-6 (-> *game-info* sub-task-list (game-task-node desert-glide-skip-templetop)))
               )
           (t9-1
             (handle->process (if (-> v1-5 manager)
                                  (-> v1-5 manager manager)
+                                 (the-as handle #f)
+                                 )
+                             )
+            a1-0
+            )
+          (t9-1
+            (handle->process (if (-> v1-6 manager)
+                                 (-> v1-6 manager manager)
                                  (the-as handle #f)
                                  )
                              )

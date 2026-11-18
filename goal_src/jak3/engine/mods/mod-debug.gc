@@ -58,6 +58,12 @@
   #f
   )
 
+(defun start-individual-level ((tsk game-task))
+  (format 0 "starting gmae task ~A~%" (enum->string game-task tsk))
+  (start 'play (get-continue-by-name *game-info* (play-task tsk 'debug 'play)))
+  (set-master-mode 'game)
+  )
+
 (define *speedrun-tools-menu* (new 'debug 'debug-menu *debug-menu-context* "Speedrun Tools"))
 (define *show-vehicle-stats?* #f)
 (define *show-gungame-points?* #f)
@@ -65,6 +71,7 @@
 (define *show-roll-stats?* #f)
 (define *show-dark-laser-stats?* #f)
 (define *show-glider-plane?* #f)
+(define *show-glider-physics?* #f)
 (define *glider-face-size* (meters 25))
 (defun-debug debug-menu-make-speedrun-tools-menu ((ctx debug-menu-context))
     (debug-menu-append-item
@@ -72,6 +79,9 @@
       (debug-menu-make-from-template
         ctx
         '(menu "Glider"
+          (function "Real Checkpoint" #f ,(lambda ((arg0 int) (arg1 debug-menu-msg) (arg2 float)) (start-individual-level (game-task desert-glide))))
+          (function "Skip Checkpoint" #f ,(lambda ((arg0 int) (arg1 debug-menu-msg) (arg2 float)) (start-individual-level (game-task desert-glide-skip))))
+          (flag "Show Physics?" *show-glider-physics?* dm-boolean-toggle-pick-func)
           (flag "Progression Plane?" *show-glider-plane?* dm-boolean-toggle-pick-func)
           (float-var "plane size" #f
             ,(lambda ((arg0 int) (arg1 debug-menu-msg) (arg2 float))
